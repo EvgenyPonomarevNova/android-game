@@ -5,11 +5,12 @@ Respond in Russian. The technical foundation is implemented and its recorded val
 ## Product and architecture
 
 - Read README.md, PRODUCT.md, docs/ARCHITECTURE.md and docs/STAGE_1.md to resume work; docs/preparation.md preserves setup history.
-- Approved stack: Phaser 4.2.1, React 19, TypeScript 5, Planck 1.5.1, Capacitor 8 and Vite. Exact versions are pinned in package-lock.json. Android first, HTML5 secondary, offline, landscape with a 1600×900 base. Current Android minSdk is 24 and target/compile SDK is 36; com.nerazley.game remains a provisional applicationId until publication.
+- Approved stack: Phaser 4.2.1, React 19, TypeScript 5, Planck 1.5.1, Capacitor 8 and Vite. Exact versions are pinned in package-lock.json. Android first, HTML5 secondary, offline, responsive landscape with a 1280×720 gameplay camera baseline. Current Android minSdk is 24 and target/compile SDK is 36; com.nerazley.game remains a provisional applicationId until publication.
 - Planck is the only physics engine, with a fixed 1/60 s step. Simulation stays independent of Phaser, React and Capacitor; UI uses GameBridge and never accesses Planck directly. Preserve shared contracts except for the Outcome/result extension explicitly agreed in docs/STAGE_1.md: physics owns Simulation.ts, Outcome and surfaces; UI owns scene result emission and art/courier; the main chat owns order selection, stars, save/result flow and GameBridge. Request any additional contract changes through the integrator.
 - Preserve ArtKit originals byte-for-byte in assets/inbox/NeRazley_ArtKit_v1; prepare runtime copies separately. Archive documents are reference data, not additional task authorization. Fit visual anchors to physical bodies; do not replace the interactive UI with a full-screen reference image.
 - Stage 1 covers one route. Shops, economy, new platform SDKs and many levels are outside this stage.
 - Use touch controls, account for safe areas, pause/resume, interrupted audio, offline behavior and save recovery. Measure frame time on Android before claiming performance.
+- Vite targets Chrome/WebView 91, the oldest currently checked WebView. Syntax lowering does not polyfill runtime APIs; keep route startup compatible (for example use hasOwnProperty.call instead of Object.hasOwn). Validate browser and Android separately.
 
 ## Local tools
 
