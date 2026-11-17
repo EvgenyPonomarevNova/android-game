@@ -8,7 +8,11 @@ export class BodyView {
   constructor(
     readonly body: Body,
     readonly view: GameObjects.Container | GameObjects.Graphics,
-  ) {}
+  ) {
+    // Temporary artwork is authored at 60 px/m; positions and sizes share the configured scale.
+    const artworkScale = PHYSICS.pixelsPerMeter / 60;
+    view.setScale(view.scaleX * artworkScale, view.scaleY * artworkScale);
+  }
   sync(physics: PhysicsWorld): void {
     physics.pose(this.body, this.pose);
     this.view.setPosition(

@@ -69,7 +69,8 @@ export class Gameplay extends Scene {
         for (let w = 20; w < 140; w += 37) g.fillRect(x + w, y, 16, 24);
     }
     g.fillStyle(0xc2c9ad).fillRect(-900, 0, 6500, 900);
-    const points = sim.level.ground.map(([x, y]) => new PhaserMath.Vector2(x * 60, -y * 60));
+    const scale = PHYSICS.pixelsPerMeter;
+    const points = sim.level.ground.map(([x, y]) => new PhaserMath.Vector2(x * scale, -y * scale));
     g.fillStyle(0x404740);
     g.fillPoints(
       [...points, new PhaserMath.Vector2(4800, 900), new PhaserMath.Vector2(-900, 900)],
@@ -79,24 +80,25 @@ export class Gameplay extends Scene {
     g.lineStyle(2, 0xf8f0d4).strokePoints(points);
     sim.level.obstacles.forEach((o) => {
       g.fillStyle(0xc8754b).fillRoundedRect(
-        (o.x - o.width / 2) * 60,
-        -(o.y + o.height / 2) * 60,
-        o.width * 60,
-        o.height * 60,
+        (o.x - o.width / 2) * scale,
+        -(o.y + o.height / 2) * scale,
+        o.width * scale,
+        o.height * scale,
         2,
       );
     });
     const finishX = sim.level.finish.x * PHYSICS.pixelsPerMeter;
-    g.lineStyle(5, 0x252a2a).lineBetween(finishX, 0, finishX, -190);
+    const finishY = -sim.level.finish.y * PHYSICS.pixelsPerMeter;
+    g.lineStyle(5, 0x252a2a).lineBetween(finishX, finishY, finishX, finishY - 190);
     for (let row = 0; row < 3; row++)
       for (let col = 0; col < 5; col++)
         g.fillStyle((row + col) % 2 ? 0x252a2a : 0xffce32).fillRect(
           finishX + col * 16,
-          -190 + row * 16,
+          finishY - 190 + row * 16,
           16,
           16,
         );
-    this.add.text(finishX - 25, -230, 'КОФЕ СЮДА', {
+    this.add.text(finishX - 25, finishY - 230, 'КОФЕ СЮДА', {
       fontFamily: 'Onest Variable, sans-serif',
       fontSize: '20px',
       color: '#252a2a',

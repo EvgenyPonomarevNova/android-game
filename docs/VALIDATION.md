@@ -20,7 +20,7 @@
 | Package | `com.nerazley.game` — временно |
 | Version | `0.1.0`, code `1` |
 | Размер | **4 767 752 байта** (~4.55 MiB) |
-| SHA-256 | `b618be075bc371d370614ff18a316796408fc93a41a4a4aa0e4269495baaabc0` |
+| SHA-256 | `cabf86e3b9d7244148e0172a9853f1e33edc0d9e5ef86af12db668dc39491173` |
 | SDK | min 24, target/compile 36 |
 | Подпись | Android Debug, RSA 2048, v2 подтверждена |
 
@@ -31,6 +31,7 @@
 Только выделенный **Game_API31**, Android 12/API 31, x86_64, WebView 91.0.4472.114. Физический телефон не подключён.
 
 - Установка APK: `Success`; `am start -W`: `Status: ok`, MainActivity в foreground.
+- После устранения литералов масштаба финальный APK повторно установлен: меню → игра → ADB gas (7 км/ч, 2% пути) → Android Back/пауза подтверждены.
 - Landscape, полноэкранность, локальный шрифт, меню, сцена и HUD видны на screenshot.
 - Газ через реальное ADB touchscreen hold: скорость выросла до 10 км/ч, прогресс до 6%; управление отпущено после жеста.
 - Android Back открывает паузу.

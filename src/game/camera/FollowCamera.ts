@@ -1,5 +1,5 @@
 import type { Cameras } from 'phaser';
-import { CAMERA } from '../../config/game';
+import { CAMERA, PHYSICS } from '../../config/game';
 
 export class FollowCamera {
   private initialized = false;
@@ -11,7 +11,7 @@ export class FollowCamera {
     const c = this.camera;
     const ahead = Math.max(
       -CAMERA.maxLookAhead,
-      Math.min(CAMERA.maxLookAhead, velocityX * CAMERA.lookAhead * 60),
+      Math.min(CAMERA.maxLookAhead, velocityX * CAMERA.lookAhead * PHYSICS.pixelsPerMeter),
     );
     const targetX = x + ahead - (c.width / c.zoom) * 0.38;
     const targetY = y - (c.height / c.zoom) * 0.57;
