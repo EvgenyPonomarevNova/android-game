@@ -20,7 +20,13 @@ interface BridgeEvents {
   ready: undefined;
   error: string;
   damage: CargoDamage;
-  result: { seconds: number; integrity: number; levelId: string };
+  result: {
+    seconds: number;
+    integrity: number;
+    levelId: string;
+    success?: boolean;
+    reason?: string;
+  };
 }
 export class GameBridge extends EventBus<BridgeEvents> {
   readonly input = new InputController();

@@ -3,6 +3,7 @@ import type { GameBridge, Telemetry } from '../../game/core/GameBridge';
 import { BUILD_VERSION } from '../../config/game';
 import { Icon } from '../components/Icon';
 import { TouchControls } from '../components/TouchControls';
+import { artUrl } from '../../assets/artkit';
 import styles from '../ui.module.css';
 
 const initial: Telemetry = {
@@ -32,10 +33,7 @@ export function GameHud({
       <div className={styles.hud}>
         <div className={styles.cargo}>
           <span className={styles.cup} aria-hidden="true">
-            <svg viewBox="0 0 40 48" width="32" height="36">
-              <path d="M8 12h24l-3 31H11Z" fill="#faf4e4" stroke="#252a2a" strokeWidth="2" />
-              <path d="M6 7h28v6H6ZM9 23h22v11H9Z" fill="#252a2a" />
-            </svg>
+            <img src={artUrl('coffee.png')} width="40" height="44" alt="" draggable={false} />
           </span>
           <div>
             <span className={styles.small}>Кофе в пути</span>
@@ -44,7 +42,15 @@ export function GameHud({
               <small>%</small>
             </strong>
           </div>
-          <meter min="0" max="100" value={stats.integrity} aria-label="Сохранность кофе" />
+          <meter
+            min={0}
+            max={100}
+            low={30}
+            high={60}
+            optimum={100}
+            value={stats.integrity}
+            aria-label="Сохранность кофе"
+          />
         </div>
         <div className={styles.route}>
           <span>

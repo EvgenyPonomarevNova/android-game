@@ -23,7 +23,7 @@ it('starts with defaults, saves settings and restores level results', async () =
   const { data } = await service.load();
   expect(data).toEqual(defaultSave());
   data.settings.sound = false;
-  data.results['test-yard'] = { seconds: 21, integrity: 84 };
+  data.results['test-yard'] = { seconds: 21, integrity: 84, stars: 2, score: 1030 };
   await service.save(data);
   expect((await new SaveService(storage).load()).data).toEqual(data);
 });

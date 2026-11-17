@@ -72,18 +72,18 @@ export class Scooter implements Vehicle {
     const rear = this.joints[0]!;
     const { motor } = this.config;
     const braking = input.brake && speed > 0.6;
-    rear.enableMotor(input.throttle || input.brake);
+    const atDriveLimit = !input.brake && input.throttle && speed >= this.config.maxSpeed;
+    const atReverseLimit = input.brake && speed <= -this.config.maxSpeed / 2;
+    // Brake takes priority over throttle, including above the propulsion limit.
+    // Set the final state once: enable/disable setters wake the whole joint island.
+    rear.enableMotor((input.throttle || input.brake) && !atDriveLimit && !atReverseLimit);
     rear.setMaxMotorTorque(braking ? motor.brakeTorque : motor.torque);
     // Y-up: clockwise wheel rotation drives right.
     rear.setMotorSpeed(braking ? 0 : input.brake ? motor.reverseSpeed : -motor.speed);
     if (
-      (speed > this.config.maxSpeed && input.throttle) ||
-      (speed < -this.config.maxSpeed / 2 && input.brake)
-    )
-      rear.enableMotor(false);
-    if (
-      Math.abs(this.chassis.getAngularVelocity()) < this.config.maxAngularSpeed ||
-      Math.sign(input.lean) !== Math.sign(this.chassis.getAngularVelocity())
+      input.lean !== 0 &&
+      (Math.abs(this.chassis.getAngularVelocity()) < this.config.maxAngularSpeed ||
+        Math.sign(input.lean) !== Math.sign(this.chassis.getAngularVelocity()))
     )
       this.chassis.applyTorque(input.lean * this.config.leanTorque, true);
   }

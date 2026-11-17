@@ -1,3 +1,14 @@
+export const SURFACES = {
+  asphalt: { friction: 1 },
+  gravel: { friction: 0.35 },
+} as const;
+export type SurfaceType = keyof typeof SURFACES;
+export interface SurfaceRange {
+  from: number;
+  to: number;
+  type: SurfaceType;
+}
+
 export interface LevelData {
   id: string;
   name: string;
@@ -6,6 +17,8 @@ export interface LevelData {
   ground: Array<readonly [number, number]>;
   obstacles: Array<{ x: number; y: number; width: number; height: number }>;
   cargo: 'coffee';
+  /** Sorted, non-overlapping X ranges [from, to), in metres. Gaps are asphalt. */
+  surfaces?: SurfaceRange[];
   difficulty: { targetSeconds: number; minimumIntegrity: number };
 }
 
@@ -30,6 +43,11 @@ export const testLevel: LevelData = {
   ],
   obstacles: [{ x: 52, y: 0.12, width: 0.8, height: 0.24 }],
   cargo: 'coffee',
+  surfaces: [
+    { from: -15, to: 20, type: 'asphalt' },
+    { from: 20, to: 26, type: 'gravel' },
+    { from: 26, to: 80, type: 'asphalt' },
+  ],
   difficulty: { targetSeconds: 40, minimumIntegrity: 30 },
 };
 
@@ -60,5 +78,23 @@ export function validateLevel(level: LevelData): LevelData {
     if (level.ground[i]![0] <= level.ground[i - 1]![0])
       throw new Error('Ground must progress along X');
   }
+  let previousEnd = level.ground[0]![0];
+  const groundEnd = level.ground[level.ground.length - 1]![0];
+  for (const surface of level.surfaces ?? []) {
+    if (
+      !Number.isFinite(surface.from) ||
+      !Number.isFinite(surface.to) ||
+      surface.from < previousEnd ||
+      surface.to <= surface.from ||
+      surface.to > groundEnd ||
+      !Object.hasOwn(SURFACES, surface.type)
+    )
+      throw new Error('Invalid surface range or type');
+    previousEnd = surface.to;
+  }
   return level;
+}
+
+export function surfaceAt(level: LevelData, x: number): SurfaceType {
+  return level.surfaces?.find((surface) => x >= surface.from && x < surface.to)?.type ?? 'asphalt';
 }

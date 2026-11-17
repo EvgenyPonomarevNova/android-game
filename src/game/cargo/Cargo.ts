@@ -1,4 +1,4 @@
-import { Box, Vec2, WeldJoint, type Body } from 'planck';
+import { Box, Vec2, WeldJoint, type Body, type Contact } from 'planck';
 import type { EventBus } from '../../shared/EventBus';
 import type { PhysicsWorld } from '../physics/PhysicsWorld';
 
@@ -38,6 +38,7 @@ export class Cargo {
   delivery: DeliveryState = 'in-transit';
   private criticalSent = false;
   private shock = 0;
+  private impactSpeeds = new WeakMap<Contact, number>();
   private previousVelocity = { x: 0, y: 0 };
 
   constructor(
@@ -61,14 +62,34 @@ export class Cargo {
         chassis.getWorldPoint(Vec2(-0.45, 0.22)),
       ),
     );
-    physics.world.on('post-solve', (contact, impulse) => {
+    physics.world.on('pre-solve', (contact) => {
       if (
         contact.getFixtureA().getBody() === this.body ||
         contact.getFixtureB().getBody() === this.body
-      )
+      ) {
+        const manifold = contact.getWorldManifold(null);
+        if (!manifold) return;
+        let closingSpeed = 0;
+        for (let i = 0; i < contact.getManifold().pointCount; i++) {
+          const point = manifold.points[i]!;
+          const a = contact.getFixtureA().getBody().getLinearVelocityFromWorldPoint(point);
+          const b = contact.getFixtureB().getBody().getLinearVelocityFromWorldPoint(point);
+          closingSpeed = Math.max(
+            closingSpeed,
+            -((b.x - a.x) * manifold.normal.x + (b.y - a.y) * manifold.normal.y),
+          );
+        }
+        this.impactSpeeds.set(contact, closingSpeed);
+      }
+    });
+    physics.world.on('post-solve', (contact, impulse) => {
+      const closingSpeed = this.impactSpeeds.get(contact) ?? 0;
+      // Solver impulses also include sustained support. Only incoming contact
+      // velocity can turn that impulse into damage, never the load at rest.
+      if (closingSpeed > config.impactThreshold)
         this.shock = Math.max(
           this.shock,
-          impulse.normalImpulses.reduce((a, b) => a + b, 0) / config.mass,
+          Math.min(closingSpeed, impulse.normalImpulses.reduce((a, b) => a + b, 0) / config.mass),
         );
     });
   }

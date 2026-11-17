@@ -7,9 +7,9 @@ export class BodyView {
   private pose = { x: 0, y: 0, angle: 0 };
   constructor(
     readonly body: Body,
-    readonly view: GameObjects.Container | GameObjects.Graphics,
+    readonly view: GameObjects.Container | GameObjects.Graphics | GameObjects.Sprite,
   ) {
-    // Temporary artwork is authored at 60 px/m; positions and sizes share the configured scale.
+    // Both vector and sprite views are calibrated at 60 px/m, then follow the world scale.
     const artworkScale = PHYSICS.pixelsPerMeter / 60;
     view.setScale(view.scaleX * artworkScale, view.scaleY * artworkScale);
   }

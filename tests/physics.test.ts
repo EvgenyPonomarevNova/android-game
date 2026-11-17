@@ -6,6 +6,7 @@ import { toPhysics, toScreen } from '../src/game/physics/coordinates';
 import { testLevel, validateLevel, type LevelData } from '../src/game/levels/testLevel';
 import type { ControlState } from '../src/game/input/InputController';
 import { InputController } from '../src/game/input/InputController';
+import { SCOOTER } from '../src/config/game';
 
 const idle: ControlState = { throttle: false, brake: false, lean: 0 };
 const gas: ControlState = { ...idle, throttle: true };
@@ -53,8 +54,38 @@ describe('fixed-step Planck simulation', () => {
     expect(sim.vehicle.chassis.getPosition().y).toBeGreaterThan(0.4);
     expect(Math.abs(sim.vehicle.chassis.getLinearVelocity().y)).toBeLessThan(0.05);
     expect(sim.cargo.integrity).toBe(100);
+    expect(sim.vehicle.chassis.isAwake()).toBe(false);
+    expect(sim.vehicle.wheels.every((wheel) => !wheel.isAwake())).toBe(true);
+    const parked = sim.vehicle.chassis.getPosition().clone();
+    run(sim, 2, 60);
+    expect(sim.vehicle.chassis.getPosition()).toEqual(parked);
+    run(sim, 1, 60, gas);
+    expect(sim.vehicle.chassis.isAwake()).toBe(true);
+    expect(sim.vehicle.chassis.getPosition().x).toBeGreaterThan(parked.x + 0.2);
     sim.dispose();
     expect(sim.physics.world.getBodyCount()).toBe(0);
+  });
+
+  it('keeps braking available above the drive limit with both pedals held', () => {
+    const sim = new Simulation(flat);
+    run(sim, 2, 60);
+    sim.vehicle.chassis.setLinearVelocity(Vec2(SCOOTER.maxSpeed + 1, 0));
+    sim.vehicle.drive({ throttle: true, brake: true, lean: 0 });
+    expect(sim.vehicle.joints[0]!.isMotorEnabled()).toBe(true);
+    expect(sim.vehicle.joints[0]!.getMotorSpeed()).toBe(0);
+    sim.dispose();
+  });
+
+  it('does not mistake the static load on an inverted cup for repeated impacts', () => {
+    const sim = new Simulation(flat);
+    const origin = sim.vehicle.chassis.getPosition().clone();
+    for (const body of [sim.vehicle.chassis, ...sim.vehicle.wheels, sim.cargo.body]) {
+      const p = body.getPosition();
+      body.setTransform(Vec2(3 - (p.x - origin.x), 0.85 - (p.y - origin.y)), Math.PI);
+    }
+    run(sim, 0.5, 60);
+    expect(sim.cargo.integrity).toBe(100);
+    sim.dispose();
   });
 
   it('accelerates, brakes and then reverses', () => {
@@ -68,6 +99,48 @@ describe('fixed-step Planck simulation', () => {
     run(sim, 3, 60, { ...idle, brake: true });
     expect(sim.vehicle.chassis.getLinearVelocity().x).toBeLessThan(-0.3);
     sim.dispose();
+  });
+
+  it('cuts propulsion at the forward and reverse limits without clamping external velocity', () => {
+    const sim = new Simulation(flat);
+    for (const [speed, input] of [
+      [SCOOTER.maxSpeed, gas],
+      [-SCOOTER.maxSpeed / 2, { ...idle, brake: true }],
+    ] as const) {
+      sim.vehicle.chassis.setLinearVelocity(Vec2(speed, 0));
+      sim.vehicle.drive(input);
+      expect(sim.vehicle.joints[0]!.isMotorEnabled()).toBe(false);
+      expect(sim.vehicle.chassis.getLinearVelocity().x).toBe(speed);
+    }
+    sim.vehicle.chassis.setLinearVelocity(Vec2(0, 0));
+    sim.vehicle.drive(gas);
+    expect(sim.vehicle.joints[0]!.isMotorEnabled()).toBe(true);
+    sim.dispose();
+  });
+
+  it('lets airborne lean rotate either way and counter-steer above the angular drive limit', () => {
+    for (const lean of [-1, 1]) {
+      const sim = new Simulation({ ...flat, start: { x: 3, y: 20 } });
+      run(sim, 0.5, 60, { ...idle, lean });
+      expect(sim.vehicle.chassis.getAngle() * lean).toBeGreaterThan(0.1);
+      expect(sim.cargo.integrity).toBe(100);
+      sim.dispose();
+      const speeds = [0, lean, -lean].map((direction) => {
+        const spinning = new Simulation({ ...flat, start: { x: 3, y: 20 } });
+        for (const body of [
+          spinning.vehicle.chassis,
+          ...spinning.vehicle.wheels,
+          spinning.cargo.body,
+        ])
+          body.setAngularVelocity(lean * (SCOOTER.maxAngularSpeed + 1));
+        spinning.advance(1 / 60, { ...idle, lean: direction });
+        const speed = spinning.vehicle.chassis.getAngularVelocity() * lean;
+        spinning.dispose();
+        return speed;
+      });
+      expect(speeds[1]).toBe(speeds[0]);
+      expect(speeds[2]!).toBeLessThan(speeds[0]! - 0.01);
+    }
   });
 
   it('limits catch-up, rejects invalid delta and resumes without simulating background time', () => {
@@ -129,6 +202,30 @@ describe('fixed-step Planck simulation', () => {
     expect(toScreen(2, 3)).toEqual({ x: 120, y: -180 });
     expect(toPhysics(120, -180)).toEqual({ x: 2, y: 3 });
     expect(() => toScreen(NaN, 0)).toThrow();
+    physics.dispose();
+  });
+
+  it('honours a pause requested within a catch-up step', () => {
+    const physics = new PhysicsWorld();
+    const body = physics.track(physics.world.createDynamicBody(Vec2(0, 10)));
+    body.createFixture(Box(0.5, 0.5), 1);
+    expect(
+      physics.advance(
+        1 / 30,
+        () => {},
+        () => physics.setPaused(true),
+      ),
+    ).toBe(1);
+    expect(physics.ticks).toBe(1);
+    expect(physics.alpha).toBe(1);
+    physics.setPaused(false);
+    expect(
+      physics.advance(
+        1 / 120,
+        () => {},
+        () => {},
+      ),
+    ).toBe(0);
     physics.dispose();
   });
 

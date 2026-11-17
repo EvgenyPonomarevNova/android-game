@@ -1,5 +1,7 @@
 import { Scene } from 'phaser';
-import { drawCity, drawScooter } from '../rendering/geometry';
+import { scooterArt, coffeeArt } from '../rendering/vehicleArt';
+import { YardBackdrop } from '../rendering/YardBackdrop';
+import { SCOOTER } from '../../config/game';
 
 export class MainMenu extends Scene {
   constructor() {
@@ -9,14 +11,27 @@ export class MainMenu extends Scene {
     const redraw = () => {
       this.children.removeAll(true);
       const { width, height } = this.scale;
-      drawCity(this, width, height);
-      const scooter = this.add.graphics();
-      drawScooter(scooter);
-      scooter.fillStyle(0x252a2a).fillCircle(-41, 27, 19).fillCircle(41, 27, 19);
-      scooter.lineStyle(4, 0xf3efdf).strokeCircle(-41, 27, 10).strokeCircle(41, 27, 10);
-      scooter.fillStyle(0xf9f4e6).fillRoundedRect(-44, -62, 23, 30, 3);
-      scooter.fillStyle(0x252a2a).fillRect(-47, -66, 29, 7);
-      scooter.setPosition(width * 0.75, height * 0.81).setScale(Math.max(1.4, height / 230));
+      new YardBackdrop(this, 0.85);
+      const roadY = height * 0.82;
+      this.add
+        .graphics()
+        .fillStyle(0x424c60)
+        .fillRect(0, roadY, width, height - roadY);
+      this.add.tileSprite(0, roadY, width, height - roadY, 'road').setOrigin(0);
+      const scooter = scooterArt(this);
+      const radius = SCOOTER.wheel.radius * 60;
+      for (const x of [-1, 1]) {
+        scooter.add(
+          this.add
+            .sprite(x * SCOOTER.wheel.spacing * 60, SCOOTER.wheel.drop * 60, 'wheel')
+            .setDisplaySize(radius * 2, radius * 2),
+        );
+      }
+      scooter.add(coffeeArt(this).setPosition(-27, -27));
+      const scale = Math.min(width / 380, height / 190);
+      scooter
+        .setPosition(width * 0.75, roadY - (SCOOTER.wheel.drop * 60 + radius) * scale)
+        .setScale(scale);
     };
     redraw();
     this.scale.on('resize', redraw);

@@ -1,4 +1,4 @@
-export const BUILD_VERSION = '0.1.0';
+export const BUILD_VERSION = '0.2.0';
 export const PHYSICS = {
   step: 1 / 60,
   maxFrame: 0.1,
@@ -7,6 +7,16 @@ export const PHYSICS = {
   gravity: -9.81,
   velocityIterations: 10,
   positionIterations: 6,
+} as const;
+
+export const RACE_RULES = {
+  minWorldY: -15,
+  overturn: {
+    minAngle: (2 * Math.PI) / 3,
+    holdSeconds: 1,
+    maxSpeed: 1,
+    maxAngularSpeed: 0.75,
+  },
 } as const;
 
 export const CAMERA = {

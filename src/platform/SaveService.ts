@@ -11,6 +11,8 @@ export interface Settings {
 export interface LevelResult {
   seconds: number;
   integrity: number;
+  stars?: number;
+  score?: number;
 }
 export interface SaveData {
   version: 1;
@@ -61,8 +63,18 @@ export function decodeSave(raw: string): SaveData {
       Number.isFinite(result.integrity) &&
       result.integrity >= 0 &&
       result.integrity <= 100
-    )
+    ) {
       next.results[id] = { seconds: result.seconds, integrity: result.integrity };
+      if (
+        typeof result.stars === 'number' &&
+        Number.isInteger(result.stars) &&
+        result.stars >= 0 &&
+        result.stars <= 3
+      )
+        next.results[id]!.stars = result.stars;
+      if (typeof result.score === 'number' && Number.isFinite(result.score) && result.score >= 0)
+        next.results[id]!.score = Math.round(result.score);
+    }
   }
   return next;
 }

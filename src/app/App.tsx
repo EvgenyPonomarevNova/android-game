@@ -7,6 +7,10 @@ import { GameHud } from '../ui/hud/GameHud';
 import { Menu } from '../ui/screens/Menu';
 import { Settings } from '../ui/screens/Settings';
 import { Icon } from '../ui/components/Icon';
+import { BUILD_VERSION } from '../config/game';
+import { OrderScreen } from './OrderScreen';
+import { ResultScreen } from './ResultScreen';
+import { COFFEE_ORDER, isBetterResult, rateDelivery, type RatedResult } from '../game/core/Orders';
 import styles from '../ui/ui.module.css';
 
 const platform = createPlatform();
@@ -34,7 +38,9 @@ export function App() {
   const [bridge] = useState(() => new GameBridge());
   const [audio] = useState(() => new AudioManager(defaultSave().settings));
   const [mode, setMode] = useState<GameMode>('menu');
-  const [screen, setScreen] = useState<'main' | 'settings' | 'garage'>('main');
+  const [screen, setScreen] = useState<'main' | 'settings' | 'garage' | 'orders'>('main');
+  const [result, setResult] = useState<RatedResult | null>(null);
+  const [saveStatus, setSaveStatus] = useState<'saving' | 'saved' | 'failed'>('saving');
   const [ready, setReady] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [save, setSave] = useState(defaultSave);
@@ -56,20 +62,37 @@ export function App() {
       }),
       bridge.on('error', setMessage),
       bridge.on('damage', () => audio.effect('damage')),
-      bridge.on('result', (result) => {
+      bridge.on('result', (rawResult) => {
+        const result = rateDelivery(rawResult);
+        setResult(result);
+        if (!result.success) return;
         audio.effect('finish');
+        const previous = saveRef.current.results[result.levelId];
         const next = {
           ...saveRef.current,
           results: {
             ...saveRef.current.results,
-            [result.levelId]: { seconds: result.seconds, integrity: result.integrity },
+            [result.levelId]:
+              !previous || isBetterResult(result, previous)
+                ? {
+                    seconds: result.seconds,
+                    integrity: result.integrity,
+                    stars: result.stars,
+                    score: result.score,
+                  }
+                : previous,
           },
         };
         saveRef.current = next;
         setSave(next);
+        setSaveStatus('saving');
         void saves
           .save(next)
-          .catch(() => setMessage('Результат не сохранён. Проверьте свободное место.'));
+          .then(() => setSaveStatus('saved'))
+          .catch(() => {
+            setSaveStatus('failed');
+            setMessage('Результат не сохранён. Проверьте свободное место.');
+          });
       }),
     ];
     const detachInput = bridge.input.attach(
@@ -138,6 +161,7 @@ export function App() {
       .catch(() => setMessage('Настройки не сохранены. Проверьте доступ к хранилищу.'));
   };
   const command = (action: 'start' | 'resume' | 'restart') => {
+    if (action !== 'resume') setResult(null);
     void audio.unlock();
     audio.effect('start');
     bridge.command(action);
@@ -148,12 +172,20 @@ export function App() {
       {mode === 'menu' ? (
         <>
           {screen === 'main' ? (
-            <Menu ready={ready && loaded} play={() => command('start')} navigate={navigate} />
+            <Menu ready={ready && loaded} play={() => navigate('orders')} navigate={navigate} />
           ) : null}
           {screen === 'settings' ? (
             <Settings
               settings={save.settings}
               update={updateSettings}
+              back={() => navigate('main')}
+            />
+          ) : null}
+          {screen === 'orders' ? (
+            <OrderScreen
+              best={save.results[COFFEE_ORDER.levelId]}
+              ready={ready && loaded}
+              start={() => command('start')}
               back={() => navigate('main')}
             />
           ) : null}
@@ -172,7 +204,7 @@ export function App() {
               <button
                 className={styles.primary}
                 disabled={!ready || !loaded}
-                onClick={() => command('start')}
+                onClick={() => navigate('orders')}
               >
                 <Icon name="play" />
                 На трассу
@@ -180,7 +212,7 @@ export function App() {
             </section>
           ) : null}
           <footer className={styles.footer}>
-            НЕ РАЗЛЕЙ!<span>Прототип · 0.1.0</span>
+            НЕ РАЗЛЕЙ!<span>Первый кофе · {BUILD_VERSION}</span>
           </footer>
         </>
       ) : (
@@ -191,7 +223,18 @@ export function App() {
           playing={mode === 'playing'}
         />
       )}
-      {['paused', 'finished', 'failed', 'error'].includes(mode) ? (
+      {(mode === 'finished' || mode === 'failed') && result ? (
+        <ResultScreen
+          result={result}
+          saved={saveStatus}
+          retry={() => command('restart')}
+          next={() => {
+            bridge.command('menu');
+            navigate('orders');
+          }}
+        />
+      ) : null}
+      {['paused', 'error'].includes(mode) ? (
         <div className={styles.scrim}>
           <section
             className={styles.dialog}

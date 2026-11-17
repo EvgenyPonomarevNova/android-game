@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="260" height="280" viewBox="0 0 260 280"><defs>
+<linearGradient id="yellow" x1="0" y1="0" x2="0.2" y2="1"><stop stop-color="#FFF570"/><stop offset="0.46" stop-color="#FFCF19"/><stop offset="1" stop-color="#FF9200"/></linearGradient>
+<linearGradient id="lime" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#A7F96B"/><stop offset="1" stop-color="#28AB42"/></linearGradient>
+<linearGradient id="danger" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#FF9D81"/><stop offset="1" stop-color="#E93842"/></linearGradient>
+<linearGradient id="cream" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#EFE0CC"/></linearGradient>
+<linearGradient id="navy" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#39485F"/><stop offset="1" stop-color="#141D2D"/></linearGradient>
+<linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#E4EDF5"/><stop offset="0.55" stop-color="#8797A8"/><stop offset="1" stop-color="#536478"/></linearGradient>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#1384DB"/><stop offset="0.6" stop-color="#72C6FF"/><stop offset="1" stop-color="#D4F2FF"/></linearGradient>
+<linearGradient id="sky_evening" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#243961"/><stop offset="0.55" stop-color="#9A75A5"/><stop offset="1" stop-color="#FFB275"/></linearGradient>
+<linearGradient id="sky_winter" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#78A7CB"/><stop offset="1" stop-color="#DDF1FF"/></linearGradient>
+</defs><g stroke-linejoin="round" stroke-linecap="round"><path d="M34 95 L120 53 L216 92 L220 227 L121 266 L32 230Z" fill="#DDA66C" stroke="#192437" stroke-width="10" opacity="1"/><path d="M33 96 L122 143 L217 91 M122 143 L122 260" fill="none" stroke="#8C5E38" stroke-width="8" opacity="1"/><path d="M91 70 L186 112 L185 165 L151 181 L151 127 L61 82Z" fill="#FFF3D7" stroke="#192437" stroke-width="5" opacity="1"/><rect x="148" y="193" width="46" height="31" rx="4" fill="#FFF7E8" stroke="none" stroke-width="0" opacity="1"/></g></svg>

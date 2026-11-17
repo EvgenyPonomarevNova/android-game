@@ -1,7 +1,7 @@
 :root {
   font-family: 'Onest Variable', sans-serif;
-  color: #252a2a;
-  background: #eee9da;
+  color: #192437;
+  background: #72c6ff;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -45,9 +45,9 @@ button {
   color: inherit;
 }
 ::selection {
-  background: #ffce32;
-  color: #252a2a;
+  background: #ffd12b;
+  color: #192437;
 }
 input {
-  accent-color: #252a2a;
+  accent-color: #192437;
 }

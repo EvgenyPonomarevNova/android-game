@@ -12,11 +12,11 @@ export function Menu({
 }) {
   return (
     <main className={styles.menu}>
-      <div className={styles.logo}>
+      <h1 className={styles.logo}>
         НЕ
         <br />
         <span>РАЗЛЕЙ!</span>
-      </div>
+      </h1>
       <p className={styles.tagline}>
         Город спешит.
         <br />А кофе лучше довезти целым.
@@ -37,7 +37,7 @@ export function Menu({
           </button>
         </div>
       </div>
-      <p className={styles.caption}>Первый кофе · Тестовая трасса</p>
+      <p className={styles.caption}>Первый кофе · Дворовый маршрут</p>
     </main>
   );
 }

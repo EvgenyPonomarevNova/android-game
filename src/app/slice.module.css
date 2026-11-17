@@ -1,0 +1,124 @@
+.panel,
+.result {
+  background: #fff7e8;
+  color: #192437;
+  border-radius: 24px;
+  padding: 24px;
+  width: min(460px, 90vw);
+  box-shadow: 0 12px 35px #19243722;
+  max-height: 90vh;
+  max-height: 90dvh;
+  overflow: auto;
+  touch-action: pan-y;
+}
+.panel {
+  position: absolute;
+  top: 5%;
+  left: max(5vw, max(env(safe-area-inset-left), var(--safe-area-inset-left, 0px)));
+}
+.panel h1,
+.result h1 {
+  font-size: clamp(24px, 3.5vw, 36px);
+  line-height: 1.1;
+  margin: 12px 0 16px;
+}
+.panel p,
+.result p {
+  line-height: 1.45;
+}
+.back,
+.primary,
+.secondary {
+  min-height: 48px;
+  border: 0;
+  border-radius: 12px;
+  font-weight: 750;
+  padding: 12px 18px;
+}
+.back {
+  background: transparent;
+  padding-left: 0;
+}
+.primary {
+  background: #ffd12b;
+  color: #192437;
+  width: 100%;
+}
+.primary:hover {
+  background: #ffdf64;
+}
+.secondary {
+  background: #192437;
+  color: #fff7e8;
+  width: 100%;
+  margin-top: 10px;
+}
+.details {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0;
+  font-size: 14px;
+}
+.details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid #19243720;
+  padding-bottom: 8px;
+}
+.details dd {
+  margin: 0;
+  font-weight: 750;
+  text-align: right;
+}
+.hint,
+.best {
+  font-size: 12px;
+  color: #51594f;
+}
+.scrim {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #19243799;
+  padding: max(12px, max(env(safe-area-inset-top), var(--safe-area-inset-top, 0px))) 18px;
+}
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.stars svg {
+  width: 46px;
+  height: 46px;
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .panel,
+  .result {
+    padding: 16px 22px;
+    width: min(600px, 88vw);
+    max-height: 94vh;
+    max-height: 94dvh;
+  }
+  .panel {
+    top: 3%;
+  }
+  .panel h1,
+  .result h1 {
+    margin: 4px 0 10px;
+    font-size: 26px;
+  }
+  .details {
+    margin: 10px 0;
+    gap: 6px;
+  }
+  .panel p,
+  .result p {
+    margin: 8px 0;
+  }
+  .stars svg {
+    width: 32px;
+    height: 32px;
+  }
+}

@@ -5,6 +5,9 @@
 *.yml text eol=lf
 # Imported skill hashes describe exact upstream bytes, including line endings.
 /.agents/** -text
+# Preserve provided artwork and upstream licence bytes, including whitespace.
+/assets/inbox/** -text whitespace=-blank-at-eol,-blank-at-eof
+/docs/skill-licenses/** -text whitespace=-blank-at-eol,-blank-at-eof
 *.png binary
 *.jpg binary
 *.webp binary

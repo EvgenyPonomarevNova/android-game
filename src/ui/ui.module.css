@@ -15,11 +15,15 @@
 .menu {
   position: absolute;
   left: max(6vw, max(env(safe-area-inset-left), var(--safe-area-inset-left, 0px)));
-  top: 12%;
-  width: min(440px, 41vw);
+  top: 9%;
+  width: min(450px, 45vw);
+  padding: 20px;
+  border: 22px solid transparent;
+  border-image: url('/assets/artkit/panel_cream.png') 48 fill / 22px;
 }
 .logo {
-  font-size: clamp(45px, 7.2vw, 106px);
+  margin: 0;
+  font-size: clamp(44px, 6.2vw, 82px);
   line-height: 0.87;
   font-weight: 900;
   letter-spacing: -0.035em;
@@ -28,7 +32,7 @@
   width: fit-content;
 }
 .logo span {
-  color: #252a2a;
+  color: #192437;
 }
 .logo i {
   position: absolute;
@@ -39,7 +43,7 @@
   transform: rotate(15deg);
 }
 .tagline {
-  margin: 28px 0 30px;
+  margin: 24px 0;
   font-weight: 500;
   font-size: clamp(14px, 1.6vw, 21px);
   line-height: 1.5;
@@ -53,7 +57,7 @@
 .secondary,
 .back,
 .iconButton {
-  border: 0;
+  border: 14px solid transparent;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -61,26 +65,28 @@
   font-weight: 700;
   min-height: 52px;
   border-radius: 14px;
-  padding: 14px 22px;
+  padding: 1px 10px;
 }
 .primary {
-  background: #ffce32;
+  background: transparent;
+  border-image: url('/assets/artkit/button-primary-normal.png') 42 46 fill / 14px;
   box-shadow:
-    0 4px 9px #252a2a14,
-    0 1px 2px #252a2a14;
+    0 4px 9px #19243714,
+    0 1px 2px #19243714;
   font-size: 20px;
 }
 .primary:hover {
-  background: #ffd950;
+  filter: brightness(1.04);
 }
 .secondary {
-  background: #faf7ee;
-  box-shadow: 0 1px 4px #252a2a13;
+  background: transparent;
+  border-image: url('/assets/artkit/button-secondary-normal.png') 42 46 fill / 14px;
+  box-shadow: none;
   font-size: 15px;
 }
 .secondary:hover,
 .iconButton:hover {
-  background: #e4dfce;
+  filter: brightness(0.96);
 }
 .secondaryActions {
   display: flex;
@@ -92,6 +98,7 @@
 }
 .back {
   background: transparent;
+  border: 0;
   padding-inline: 0;
   justify-content: flex-start;
   min-height: 48px;
@@ -118,14 +125,16 @@
   position: absolute;
   top: 7%;
   left: max(5vw, max(env(safe-area-inset-left), var(--safe-area-inset-left, 0px)));
-  background: #faf7ee;
+  background: transparent;
+  border: 24px solid transparent;
+  border-image: url('/assets/artkit/panel_cream.png') 48 fill / 24px;
   border-radius: 24px;
-  padding: 18px 32px 28px;
+  padding: 0 12px 12px;
   width: min(460px, 51vw);
   max-height: 85%;
   overflow: auto;
   touch-action: pan-y;
-  box-shadow: 0 8px 30px #252a2a15;
+  box-shadow: 0 8px 30px #19243715;
 }
 .panel h1,
 .dialog h1 {
@@ -173,8 +182,11 @@
   position: relative;
   gap: 12px;
   border-radius: 16px;
-  background: #ffce32;
-  padding: 12px 22px 18px;
+  border: 12px solid transparent;
+  border-image: url('/assets/artkit/game_hud_panel.png') 35 fill / 12px;
+  color: #fff7e8;
+  background: transparent;
+  padding: 0 6px 8px;
   min-width: 188px;
 }
 .small {
@@ -195,7 +207,7 @@
   left: 22px;
   right: 22px;
   width: calc(100% - 44px);
-  bottom: 6px;
+  bottom: 1px;
   height: 8px;
 }
 .cargo meter::-webkit-meter-bar {
@@ -203,11 +215,15 @@
   border: none;
 }
 .cargo meter::-webkit-meter-optimum-value {
-  background: #252a2a;
+  background: #192437;
 }
 .route {
   margin: 0 auto;
   width: min(28vw, 400px);
+  color: #fff7e8;
+  border: 10px solid transparent;
+  border-image: url('/assets/artkit/game_hud_panel.png') 35 fill / 10px;
+  padding: 0 8px;
   font-size: 13px;
   font-weight: 600;
 }
@@ -219,19 +235,24 @@
 .route progress {
   width: 100%;
   height: 6px;
-  accent-color: #252a2a;
+  accent-color: #192437;
 }
 .route progress::-webkit-progress-bar {
   background: #d3d2bf;
   border-radius: 4px;
 }
 .route progress::-webkit-progress-value {
-  background: #252a2a;
+  background: #192437;
   border-radius: 4px;
 }
 .time {
   display: grid;
-  text-align: right;
+  text-align: center;
+  color: #fff7e8;
+  border: 10px solid transparent;
+  border-image: url('/assets/artkit/hud_pill.png') 30 fill / 10px;
+  padding: 0 14px;
+  min-width: 108px;
   font-variant-numeric: tabular-nums;
 }
 .time strong {
@@ -241,9 +262,12 @@
   font-size: 12px;
 }
 .iconButton {
-  background: #faf7ee;
-  width: 56px;
-  padding: 16px;
+  background: transparent;
+  border-image: url('/assets/artkit/square-dark-normal.png') 40 fill / 14px;
+  color: #fff7e8;
+  width: 60px;
+  height: 60px;
+  padding: 0;
   pointer-events: auto;
 }
 .controls {
@@ -264,10 +288,11 @@
 .control {
   min-width: 98px;
   height: 92px;
-  border: 1px solid #faf7ee70;
+  border: 14px solid transparent;
+  border-image: url('/assets/artkit/square-dark-normal.png') 40 fill / 14px;
   border-radius: 21px;
-  background: #faf7eeef;
-  color: #252a2a;
+  background: transparent;
+  color: #fff7e8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -275,30 +300,31 @@
   gap: 9px;
   pointer-events: auto;
   box-shadow: 0 4px 12px #00000012;
-  padding: 10px;
+  padding: 0 3px;
 }
 .control span {
   font-size: 11px;
   font-weight: 700;
 }
-.control svg {
+.control img {
   width: 29px;
   height: 29px;
 }
 .control:active {
-  background: #cbd0b9;
+  border-image-source: url('/assets/artkit/square-dark-pressed.png');
   transform: translateY(2px);
 }
-.controlGroup:first-child .control:nth-child(2) svg {
+.controlGroup:first-child .control:nth-child(2) img {
   transform: scaleX(-1);
 }
 .gas {
-  background: #ffce32;
+  background: transparent;
+  color: #192437;
   min-width: 126px;
-  border-color: #ffce32;
+  border-image-source: url('/assets/artkit/square-yellow-normal.png');
 }
 .gas:active {
-  background: #ddb12b;
+  border-image-source: url('/assets/artkit/square-yellow-pressed.png');
 }
 .keyHint {
   text-align: center;
@@ -309,7 +335,7 @@
 .scrim {
   position: absolute;
   inset: 0;
-  background: #252a2a88;
+  background: #19243788;
   display: grid;
   place-items: center;
   padding: max(18px, max(env(safe-area-inset-top), var(--safe-area-inset-top, 0px))) 20px;
@@ -319,8 +345,10 @@
   max-height: 95%;
   overflow: auto;
   touch-action: pan-y;
-  padding: 30px;
-  background: #faf7ee;
+  padding: 12px;
+  background: transparent;
+  border: 24px solid transparent;
+  border-image: url('/assets/artkit/panel_cream.png') 48 fill / 24px;
   border-radius: 26px;
   display: flex;
   flex-direction: column;
@@ -345,7 +373,7 @@
   font-family: monospace;
   font-size: 11px;
   line-height: 1.5;
-  background: #faf7ee;
+  background: #fff7e8;
   padding: 8px 12px;
   border-radius: 8px;
 }
@@ -355,8 +383,8 @@
   left: 50%;
   transform: translateX(-50%);
   width: min(500px, 90vw);
-  background: #252a2a;
-  color: #faf7ee;
+  background: #192437;
+  color: #fff7e8;
   border-radius: 12px;
   padding: 14px;
   display: flex;
@@ -378,13 +406,16 @@
 }
 @media (max-height: 550px) and (orientation: landscape) {
   .menu {
-    top: 8%;
+    top: 5%;
+    padding: 8px 12px;
+    border-width: 16px;
+    border-image-width: 16px;
   }
   .logo {
-    font-size: clamp(40px, 9vw, 70px);
+    font-size: clamp(40px, 6vw, 54px);
   }
   .tagline {
-    margin: 18px 0;
+    margin: 16px 0;
     font-size: 14px;
   }
   .menuActions {
@@ -393,7 +424,7 @@
   .primary,
   .secondary {
     min-height: 48px;
-    padding: 10px 16px;
+    padding: 0 6px;
   }
   .caption {
     margin-block: 10px;
@@ -406,7 +437,7 @@
     gap: 14px;
   }
   .cargo {
-    padding: 8px 14px 14px;
+    padding: 0 4px 6px;
     min-width: 154px;
   }
   .cargo strong {
@@ -417,7 +448,9 @@
     height: 72px;
     border-radius: 17px;
     gap: 4px;
-    padding: 8px;
+    padding: 0;
+    border-width: 10px;
+    border-image-width: 10px;
   }
   .gas {
     min-width: 96px;
@@ -435,7 +468,7 @@
     display: none;
   }
   .dialog {
-    padding: 22px;
+    padding: 8px;
     gap: 8px;
   }
   .dialog h1 {
@@ -457,7 +490,7 @@
   .rotate {
     position: absolute;
     inset: 0;
-    background: #ffce32;
+    background: #ffd12b;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -467,7 +500,7 @@
     text-align: center;
     z-index: 8;
   }
-  .rotate svg {
+  .rotate img {
     width: 56px;
     height: 56px;
   }
@@ -479,4 +512,88 @@
   .control:active {
     transform: none;
   }
+}
+
+/* Art is decorative. Labels, values, focus and hit areas remain native HTML. */
+.primary img,
+.secondary img,
+.back img,
+.gas img {
+  filter: brightness(0) saturate(100%);
+}
+.primary:active {
+  border-image-source: url('/assets/artkit/button-primary-pressed.png');
+}
+.primary:disabled {
+  border-image-source: url('/assets/artkit/button-primary-disabled.png');
+}
+.secondary:active {
+  border-image-source: url('/assets/artkit/button-secondary-pressed.png');
+}
+.secondary:disabled {
+  border-image-source: url('/assets/artkit/button-secondary-disabled.png');
+}
+.iconButton:active {
+  border-image-source: url('/assets/artkit/square-dark-pressed.png');
+}
+.cup {
+  display: flex;
+  flex-shrink: 0;
+}
+.cup img {
+  object-fit: contain;
+}
+.footer {
+  text-shadow: 0 1px 3px #111a2a;
+}
+.control img,
+.iconButton img,
+.primary img,
+.secondary img {
+  flex-shrink: 0;
+  object-fit: contain;
+}
+.control {
+  touch-action: none;
+}
+@media (max-height: 550px) and (orientation: landscape) {
+  .cargo {
+    gap: 6px;
+    min-width: 150px;
+  }
+  .cargo strong {
+    font-size: 22px;
+  }
+  .cargo .small {
+    font-size: 10px;
+  }
+  .hud {
+    gap: 12px;
+  }
+  .route {
+    width: min(27vw, 360px);
+    font-size: 12px;
+  }
+  .time {
+    padding-inline: 8px;
+    min-width: 92px;
+  }
+  .time strong {
+    font-size: 23px;
+  }
+  .controls {
+    bottom: max(12px, max(env(safe-area-inset-bottom), var(--safe-area-inset-bottom, 0px)));
+  }
+}
+.cargo meter::-webkit-meter-optimum-value {
+  background: #59d354;
+}
+.cargo meter::-webkit-meter-suboptimum-value {
+  background: #ffd12b;
+}
+.cargo meter::-webkit-meter-even-less-good-value {
+  background: #ff5e57;
+}
+.cargo meter::-moz-meter-bar {
+  background: #59d354;
 }

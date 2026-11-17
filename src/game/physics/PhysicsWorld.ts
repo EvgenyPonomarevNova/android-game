@@ -57,20 +57,22 @@ export class PhysicsWorld {
     this.accumulator = Math.min(this.accumulator + delta, PHYSICS.maxFrame);
     let steps = 0;
     const start = performance.now();
-    while (this.accumulator + 1e-10 >= PHYSICS.step && steps < PHYSICS.maxSteps) {
+    while (!this.paused && this.accumulator + 1e-10 >= PHYSICS.step && steps < PHYSICS.maxSteps) {
       this.tracks.forEach((t) => Object.assign(t.previous, t.current));
       before(PHYSICS.step);
       this.world.step(PHYSICS.step, PHYSICS.velocityIterations, PHYSICS.positionIterations);
+      // Consume the tick before callbacks: a terminal outcome can pause and
+      // clear the accumulator from inside after(), including during catch-up.
+      this.accumulator -= PHYSICS.step;
       this.tracks.forEach((t) => Object.assign(t.current, this.read(t.body)));
       const pending = this.deferred;
       this.deferred = [];
       pending.forEach((operation) => operation());
       after(PHYSICS.step);
-      this.accumulator -= PHYSICS.step;
       this.ticks++;
       steps++;
     }
-    this.alpha = Math.max(0, Math.min(1, this.accumulator / PHYSICS.step));
+    this.alpha = this.paused ? 1 : Math.max(0, Math.min(1, this.accumulator / PHYSICS.step));
     this.stepMs = steps ? (performance.now() - start) / steps : this.stepMs;
     return steps;
   }
