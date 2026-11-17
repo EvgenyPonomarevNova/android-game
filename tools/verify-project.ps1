@@ -46,7 +46,7 @@ foreach ($relativePath in $trackedFiles) {
         $relativePath -match '(^|/)(local\.properties|credentials\.json|google-services\.json)$'
     if ($privateDirectory -or $privateFile) { $gameFailures.Add("Private or generated file tracked by Git: $relativePath") }
     $trackedPath = Join-Path $gameRoot $relativePath
-    if ((Test-Path -LiteralPath $trackedPath -PathType Leaf) -and (Get-Item -LiteralPath $trackedPath).Length -gt 10MB) {
+    if ((Test-Path -LiteralPath $trackedPath -PathType Leaf) -and (Get-Item -LiteralPath $trackedPath -Force).Length -gt 10MB) {
         # LFS may expand a small Git pointer into a large local working file.
         $indexedSize = & git -C $gameRoot cat-file -s ":$relativePath"
         if ($LASTEXITCODE -ne 0) { throw "Unable to inspect indexed file size: $relativePath" }
