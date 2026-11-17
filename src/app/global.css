@@ -1,0 +1,53 @@
+:root {
+  font-family: 'Onest Variable', sans-serif;
+  color: #252a2a;
+  background: #eee9da;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+body {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+}
+button,
+input {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+  touch-action: none;
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #a45120;
+  outline-offset: 4px;
+}
+button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+button {
+  color: inherit;
+}
+::selection {
+  background: #ffce32;
+  color: #252a2a;
+}
+input {
+  accent-color: #252a2a;
+}
