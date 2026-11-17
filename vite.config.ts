@@ -5,7 +5,9 @@ export default defineConfig({
   base: './',
   plugins: [react()],
   build: {
-    target: 'es2022',
+    // Match the oldest WebView used by the dedicated Android smoke device.
+    // Syntax lowering does not polyfill newer runtime APIs such as Object.hasOwn.
+    target: 'chrome91',
     rolldownOptions: {
       output: {
         codeSplitting: {

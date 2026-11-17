@@ -87,7 +87,7 @@ export function validateLevel(level: LevelData): LevelData {
       surface.from < previousEnd ||
       surface.to <= surface.from ||
       surface.to > groundEnd ||
-      !Object.hasOwn(SURFACES, surface.type)
+      !Object.prototype.hasOwnProperty.call(SURFACES, surface.type)
     )
       throw new Error('Invalid surface range or type');
     previousEnd = surface.to;

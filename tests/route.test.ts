@@ -137,6 +137,18 @@ describe('first coffee route and outcomes', () => {
 });
 
 describe('surface ranges', () => {
+  it('starts a route on WebView versions without Object.hasOwn', () => {
+    const descriptor = Object.getOwnPropertyDescriptor(Object, 'hasOwn')!;
+    Object.defineProperty(Object, 'hasOwn', { value: undefined, configurable: true });
+    try {
+      const sim = new Simulation();
+      expect(sim.outcome).toBeNull();
+      sim.dispose();
+    } finally {
+      Object.defineProperty(Object, 'hasOwn', descriptor);
+    }
+  });
+
   it('keeps legacy levels valid and rejects malformed, overlapping or unknown surfaces', () => {
     expect(validateLevel({ ...flat, surfaces: undefined })).toEqual(flat);
     for (const surfaces of [
