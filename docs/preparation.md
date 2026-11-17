@@ -1,13 +1,13 @@
 # Подготовка Android-игры
 
-Дата: 17 ноября 2026, Europe/Moscow. Источник практик: локальный проект `C:/Users/AORUS/Desktop/Fit mini app` (RepForge / fit-quest).
+Дата: 17 ноября 2026, Europe/Moscow. Источник практик: локальный проект Fit Mini App. Пути конкретной машины и отчёты диагностики сохраняются в игнорируемом `.local/`.
 
 ## Готовое окружение
 
 | Компонент | Фактический результат |
 | --- | --- |
-| Android SDK | Используется существующий `C:/Users/AORUS/AppData/Local/RepForgeAndroid` |
-| Java | Microsoft OpenJDK 21.0.13.0.2, существующий JDK внутри SDK |
+| Android SDK | Используется существующая установка, путь определяется через `ANDROID_HOME` |
+| Java | Microsoft OpenJDK 21.0.13.0.2, путь определяется через `JAVA_HOME` |
 | Platform Tools | 37.0.1; ADB запускается |
 | Command-line Tools | 23.0.0; доступен Android CLI |
 | Android Platform | Добавлен `platforms;android-36` из официального репозитория Google |
@@ -15,7 +15,7 @@
 | Эмулятор | 37.2.13, ускорение WHPX доступно |
 | Отдельный AVD | Создан `Game_API31`, Pixel 4, Android 12 / API 31, x86_64; используется уже установленный системный образ |
 | Git | 2.55.0, отдельный локальный репозиторий `main` |
-| GitHub CLI | Существующая авторизация работает; новый remote ещё не назначен |
+| GitHub CLI | Существующая авторизация; публичный remote `EvgenyPonomarevNova/android-game` |
 | Docker | Docker Desktop запущен; Engine 29.8.1 отвечает, Compose 5.5.1 доступен |
 | Node.js | 24.18.0; доступен при выборе JS-инструментов |
 
@@ -34,10 +34,10 @@ API 36 — установленный пакет инструментов, а AP
 ## Выполненная проверка
 
 - `tools/doctor.ps1 -Full -Devices`: SDK/JDK, Git, ADB, CLI, Platform, Build Tools, Docker/Compose и GitHub доступны.
-- `tools/verify-project.ps1`: разбор четырёх PowerShell-скриптов, проверка SHA-256 36 файлов в семи скиллах и наличия лицензий.
+- `tools/verify-project.ps1`: разбор PowerShell-скриптов, проверка SHA-256 36 файлов в семи скиллах, наличия лицензий и состава Git-индекса.
 - `tools/inspect-apk.ps1` проверен на существующем APK RepForge: `apksigner verify` подтвердил подпись v2, `aapt2` прочитал манифест, размер и SHA-256 получены. Повреждённый APK корректно отклонён. Это проверка нового инструмента на готовом файле, не сборка игры.
 - Собственный `Game_API31` запущен без окна на порту 5580: проверены имя AVD, `sys.boot_completed=1` и Android API 31. После проверки остановлен. Приложения не устанавливались; телефон и AVD RepForge не использовались.
-- Локальные отчёты и логи находятся в игнорируемом `.local/`. Workflow GitHub Actions подготовлен, но не выполнялся в облаке.
+- Локальные отчёты и логи находятся в игнорируемом `.local/`. Статус облачных проверок доступен в [GitHub Actions](https://github.com/EvgenyPonomarevNova/android-game/actions/workflows/tooling.yml).
 
 ## Команды на будущее
 

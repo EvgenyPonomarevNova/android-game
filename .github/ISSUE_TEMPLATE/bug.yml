@@ -1,0 +1,33 @@
+name: Ошибка
+description: Воспроизводимая проблема в инструментах или игре
+title: "bug: "
+labels: [bug]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Что произошло
+      description: Фактическое и ожидаемое поведение.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Как воспроизвести
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Окружение
+      description: Версия сборки или коммит, ОС, устройство и Android API, если применимо.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Логи или изображения
+      description: Только относящиеся к ошибке данные, без ключей, токенов и личной информации.
