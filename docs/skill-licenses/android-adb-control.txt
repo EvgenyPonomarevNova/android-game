@@ -1,0 +1,9 @@
+android-adb-control
+Source: https://github.com/robbin/android-adb-control
+Observed main revision: 82b41743fa62dcc664aa643ffcaa10b69aacc303
+Installed: 2026-10-23, project .agents/skills/android-adb-control
+Installer: OpenAI skill-installer, download of repository root (no nested Git checkout).
+License: MIT, preserved in installed LICENSE.
+Copyright holder: 范凯 and Agent (Friday).
+SKILL.md and references/adb-commands.md were read and used for the RepForge USB review.
+No helper APK, IME changes, network debugging, or device-wide configuration changes were installed by this skill setup.

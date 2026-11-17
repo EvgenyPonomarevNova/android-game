@@ -1,0 +1,37 @@
+# Machine configuration and private verification artifacts
+.local/
+.env
+.env.*
+!.env.example
+local.properties
+*.jks
+*.keystore
+*.p12
+*.pem
+credentials.json
+google-services.json
+
+# Dependencies, SDKs, engine caches and build outputs
+node_modules/
+.gradle/
+.idea/
+.expo/
+.godot/
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+build/
+dist/
+exports/
+artifacts/
+*.apk
+*.aab
+*.apks
+*.log
+*.zip
+*.7z
+*.tmp
+.DS_Store
+Thumbs.db

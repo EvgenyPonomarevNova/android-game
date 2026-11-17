@@ -1,0 +1,15 @@
+* text=auto eol=lf
+*.ps1 text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+# Imported skill hashes describe exact upstream bytes, including line endings.
+/.agents/** -text
+*.png binary
+*.jpg binary
+*.webp binary
+*.ogg binary
+*.wav binary
+*.glb binary
+*.blend binary
+*.psd binary

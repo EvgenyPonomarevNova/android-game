@@ -1,0 +1,213 @@
+{
+  "version": 1,
+  "copiedDate": "2026-11-17",
+  "skills": [
+    {
+      "name": "android-adb-control",
+      "path": ".agents/skills/android-adb-control",
+      "source": "robbin/android-adb-control",
+      "observedCommit": "82b41743fa62dcc664aa643ffcaa10b69aacc303",
+      "copiedFrom": "Fit mini app local snapshot",
+      "files": [
+        {
+          "path": ".gitignore",
+          "sha256": "250e1ed253c849ed4d07018b785982902d0d31e59fcd05f8aaf1c5279b402479"
+        },
+        {
+          "path": "docs/droidclaw-notes.md",
+          "sha256": "adfc7b1d569d320d0e5651706d77e9b467eb67aa3bbd5765a94d0f20bf0115cc"
+        },
+        {
+          "path": "docs/testing.md",
+          "sha256": "b258d10e6c11d6dae5e704552ccdd59ccb823adb0641a34d4e647ab7a1ff8286"
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "ef343654416d196e6f016bf075cb3a93906785b1d7852d6bdf2fbe2c1a400920"
+        },
+        {
+          "path": "README.md",
+          "sha256": "9f3e59b3a422cccb17943bb91990db4f5aeea9391ceb47dc84edc5f5111edadb"
+        },
+        {
+          "path": "references/adb-commands.md",
+          "sha256": "cd51bc3d7b0315a3c782481c4ccf0c12c67651b3a9fb07d7ada635862c4a332c"
+        },
+        {
+          "path": "references/troubleshooting.md",
+          "sha256": "0d13f5df6d84a3ec44cf9cbb1d15851cb8648e6bd0fe741962deac58b343d643"
+        },
+        {
+          "path": "scripts/check_docs.py",
+          "sha256": "34af77bde09cf0e72990ee45182c35c53ccf0fd4f3592768d30aa053406f417c"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "83654d64401cc21490cf25a1c8a0b27997dd48551e0efe2e34dd4fec68d16470"
+        }
+      ]
+    },
+    {
+      "name": "game-design",
+      "path": ".agents/skills/game-design",
+      "source": "sickn33/agentic-awesome-skills",
+      "observedCommit": "d5ee36be322269c7c1250ba315d1435bfe97be08",
+      "copiedFrom": "Fit mini app local snapshot",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "24049db42fca080ab9faf013c97a76646f213849e6076cd72babb589d5b518af"
+        }
+      ]
+    },
+    {
+      "name": "systematic-debugging",
+      "path": ".agents/skills/systematic-debugging",
+      "source": "obra/superpowers",
+      "observedCommit": "bb92a77741419a4ab5f06e711a283343f1ada0c3",
+      "copiedFrom": "Fit mini app local snapshot",
+      "files": [
+        {
+          "path": "condition-based-waiting-example.ts",
+          "sha256": "40ae5ebe497fdf310200e43fe986552546d0a22837c0d39e855db1cfd33eb88e"
+        },
+        {
+          "path": "condition-based-waiting.md",
+          "sha256": "e89fec8400d6cd50f43407cec9fab50976ba4d55d0ec2eb51c0bd68036b54c26"
+        },
+        {
+          "path": "CREATION-LOG.md",
+          "sha256": "c24733a5b1821bd6bed1fc950261f0b9f4e90097e0bbb96459d8179713730789"
+        },
+        {
+          "path": "defense-in-depth.md",
+          "sha256": "1e175fb86fc357e58c6aebf5441e481e1b7868b4380c0456b63a17eefbd18ba7"
+        },
+        {
+          "path": "find-polluter.sh",
+          "sha256": "dd7b8f13c4cc2a24b33ff87b18da9248f3e1c80a085c3316224f69ff0fa5c43c"
+        },
+        {
+          "path": "root-cause-tracing.md",
+          "sha256": "75b933b6a8c40bdb2031b10f21654395b56ec6ab6bc7b018c18d3fe57aeb7fb8"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "51c6435d98c83c42c96ba7c35725a0b2c376cd487fb1a4e6bd0ddbe7e33ef202"
+        },
+        {
+          "path": "test-academic.md",
+          "sha256": "fe2ba480d78ac0d686dc025f41c2a32a43d642bf533f91b0c6053a04d35d6486"
+        },
+        {
+          "path": "test-pressure-1.md",
+          "sha256": "0b6a915db0054577819834c79be9eb614e97bddba10d73768e1fbe91cfed048a"
+        },
+        {
+          "path": "test-pressure-2.md",
+          "sha256": "b2030aeffba07050e8ad573ddf87486457c4a016a786bb326235bebd856f2016"
+        },
+        {
+          "path": "test-pressure-3.md",
+          "sha256": "96b50a52e2c7989c9cf20fb752c47c1e9a3a70dc362f8f7989f8f5b64dac7708"
+        }
+      ]
+    },
+    {
+      "name": "verification-before-completion",
+      "path": ".agents/skills/verification-before-completion",
+      "source": "obra/superpowers",
+      "observedCommit": "bb92a77741419a4ab5f06e711a283343f1ada0c3",
+      "copiedFrom": "Fit mini app local snapshot",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3"
+        }
+      ]
+    },
+    {
+      "name": "expo-overview",
+      "path": ".agents/optional-skills/expo-overview",
+      "source": "expo/skills",
+      "observedCommit": "d4f484024fec15196bfd3c272e953e3f983972cf",
+      "copiedFrom": "Fit mini app local snapshot",
+      "files": [
+        {
+          "path": "agents/openai.yaml",
+          "sha256": "0a43927292898ef94b78132cb300ee96bed27fd0d07f9a2a77305db0e4cc0ee2"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "8a860f5c5f0dd72b4ada9d69d0422d44ca807d5da18dc86f34b8959784515a34"
+        }
+      ]
+    },
+    {
+      "name": "expo-animation",
+      "path": ".agents/optional-skills/expo-animation",
+      "source": "expo/skills",
+      "observedCommit": "d4f484024fec15196bfd3c272e953e3f983972cf",
+      "copiedFrom": "Fit mini app local snapshot",
+      "files": [
+        {
+          "path": "agents/openai.yaml",
+          "sha256": "32105877fed5e87c6661fee73f52cfe0819131a7b3211cccd3b1ea2b6f7aeb13"
+        },
+        {
+          "path": "LICENSE",
+          "sha256": "d24da413cccbc3d844929a1cc08e5ba79385139c0c47c9d5bd0dd2df24ffe15c"
+        },
+        {
+          "path": "RECIPES.md",
+          "sha256": "187a163e030fc1159efb3ccafcdd105657a3ccb5898f807772c74a0ab9d41502"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "1667a8c0c7275d1e662fecdb9533552cc56a92b9e450f7723f9caedb57f5f922"
+        }
+      ]
+    },
+    {
+      "name": "eas-app-stores",
+      "path": ".agents/optional-skills/eas-app-stores",
+      "source": "expo/skills",
+      "observedCommit": "d4f484024fec15196bfd3c272e953e3f983972cf",
+      "copiedFrom": "Fit mini app local snapshot",
+      "files": [
+        {
+          "path": "agents/openai.yaml",
+          "sha256": "2f026573f78b181090a60599933d2c0260d67fc26721e39f0efc115df31ca4b1"
+        },
+        {
+          "path": "references/app-store-metadata.md",
+          "sha256": "70fc1321830171ca30eb252a708454c77a73c80c1301b266f997143480c6ce76"
+        },
+        {
+          "path": "references/ios-app-store.md",
+          "sha256": "94bb9a4d1309a4e321138f2a1105666b3a9a658b0821b6f48cc98c39d4b584e2"
+        },
+        {
+          "path": "references/native-ios.md",
+          "sha256": "1f61df60802a1c7e99ae09e0a055b31a1412a68d1c431f0fabc16ddbb69ac213"
+        },
+        {
+          "path": "references/play-store.md",
+          "sha256": "c518f82e948b7606341e852a4b4f86f9f0351c6da3e88b4b9004b57aa9e76083"
+        },
+        {
+          "path": "references/testflight.md",
+          "sha256": "5204003519c79905aa8debb35f907e766c61815850e77e7902fc7794eef5d703"
+        },
+        {
+          "path": "references/workflows.md",
+          "sha256": "18bdf360d63127524857a50017e5400eb924d0d8c287da3b6c9eeba1796bb237"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "a357877694148df27717159e6c864fcd9feab8d9cdbc8d4a06f4b4703bdadeae"
+        }
+      ]
+    }
+  ]
+}
