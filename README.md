@@ -1,36 +1,74 @@
-# Android game
+# Android Game
 
-Подготовка проекта завершает только настройку инструментов. Идея, название и арты ожидаются от владельца; игровой движок пока не выбран.
+[![Repository checks](https://github.com/EvgenyPonomarevNova/android-game/actions/workflows/tooling.yml/badge.svg?branch=main)](https://github.com/EvgenyPonomarevNova/android-game/actions/workflows/tooling.yml)
+[![Platform: Android](https://img.shields.io/badge/platform-Android-3DDC84?logo=android&logoColor=white)](https://developer.android.com/games)
+[![Stage: preparation](https://img.shields.io/badge/stage-preparation-64748b)](#состояние-проекта)
+
+Основа для самостоятельной Android-игры: инструменты разработки, воспроизводимые проверки и понятный процесс доставки изменений.
+
+**Рабочее название — Android Game.** Концепция и арты готовятся. Движок, механики и визуальное направление будут выбраны под игру.
+
+[Начать работу](#быстрый-старт) · [Правила разработки](CONTRIBUTING.md) · [Окружение](docs/preparation.md) · [Задачи](https://github.com/EvgenyPonomarevNova/android-game/issues)
+
+## Состояние проекта
+
+| Этап | Статус |
+| --- | --- |
+| Android SDK, Java и инструменты проверки APK | Подготовлены и проверены локально |
+| Отдельный эмулятор Android 12 | Создан; первый запуск проверен |
+| GitHub, CI и правила внесения изменений | Настроены |
+| Концепция, арты и выбор движка | Следующий этап |
+| Играбельный прототип и первый APK | После выбора концепции |
 
 ## Быстрый старт
 
-Из PowerShell в корне проекта:
+Для разработки Android сейчас используется Windows и PowerShell 7. Проверки самого репозитория также работают на Linux в GitHub Actions.
 
 ```powershell
-. ./tools/android-env.ps1
-pwsh -NoProfile -File ./tools/doctor.ps1 -Full
+git clone https://github.com/EvgenyPonomarevNova/android-game.git
+cd android-game
 pwsh -NoProfile -File ./tools/verify-project.ps1
 ```
 
-`doctor.ps1` проверяет SDK, Java, инструменты Android и Git. `-Full` дополнительно проверяет Docker Engine и авторизацию GitHub; `-Devices` показывает только количество подключённых устройств. Отчёт сохраняется в игнорируемом `.local/environment.json`.
-
-Если Docker остановлен: `docker desktop start --detach`. Проекту пока не нужны собственные контейнеры и сервер; Dockerfile/Compose добавим под реальные зависимости игры.
-
-После появления APK:
+Для локальной Android-разработки нужны JDK, Android SDK с Platform Tools, Command-line Tools, платформой `android-36` и Build Tools `36.0.0`:
 
 ```powershell
-pwsh -NoProfile -File ./tools/inspect-apk.ps1 -ApkPath C:/path/to/game.apk
+. ./tools/android-env.ps1
+pwsh -NoProfile -File ./tools/doctor.ps1
 ```
 
-Команда проверяет подпись официальным `apksigner`, читает манифест и выводит размер/SHA-256. APK хранится вне Git.
+`ANDROID_HOME` и `JAVA_HOME` задают расположение инструментов. Локальные переопределения можно сохранить в игнорируемом `.local/android.json`. Скрипт меняет окружение только текущего процесса.
 
-## Что подготовлено
+## Инструменты
 
-- Отдельный локальный Git-репозиторий `main`, правила игнорирования секретов и сборок.
-- Повторное использование установленного Android SDK и JDK из окружения Fit mini app.
-- Скиллы игрового дизайна, ADB, отладки и проверки результата с лицензиями и контрольными суммами.
-- Условный запас скиллов Expo/EAS на случай выбора этого стека.
-- GitHub Actions для проверки скриптов и целостности скиллов при будущем подключении remote.
-- [Папка для исходных артов](assets/inbox/README.md), [отчёт о подготовке](docs/preparation.md).
+| Команда | Назначение |
+| --- | --- |
+| `pwsh -File ./tools/verify-project.ps1` | Синтаксис скриптов, целостность скиллов, лицензии и состав файлов в Git |
+| `pwsh -File ./tools/doctor.ps1 -Full` | SDK/JDK, Git, Android Tools, Docker и авторизация GitHub |
+| `pwsh -File ./tools/doctor.ps1 -Devices` | Дополнительно проверить наличие ADB-устройств |
+| `pwsh -File ./tools/inspect-apk.ps1 -ApkPath C:/builds/game.apk` | Проверить подпись APK, прочитать манифест, размер и SHA-256 |
+| `emulator -avd Game_API31` | Запустить подготовленный локальный эмулятор |
 
-После идеи и артов: определяем игровой цикл и движок, создаём небольшой играбельный прототип, затем собираем первый Android APK. У игры будут свои package ID, репозиторий GitHub и подпись.
+Эмулятор `Game_API31` создаётся отдельно на машине разработчика; клонирование репозитория не устанавливает SDK и AVD. Подробности — в [описании окружения](docs/preparation.md).
+
+## Структура
+
+```text
+.agents/          Скиллы разработки и необязательные материалы Expo/EAS
+.github/          CI, шаблоны задач и pull request, Dependabot, CODEOWNERS
+assets/inbox/     Исходные арты и референсы
+docs/             Окружение и лицензии сторонних материалов
+tools/            Диагностика, проверки репозитория и инспекция APK
+```
+
+## Разработка
+
+Изменения проходят через небольшие pull request. Заголовки следуют [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/), например `feat(gameplay): add touch movement`. Перед слиянием обязательны проверки; squash сохраняет одно завершённое изменение в истории `main`.
+
+CI выполняет проверку репозитория и соглашений о коммитах. Сборка и тесты игры будут добавлены после выбора движка. Docker используется при необходимости; серверных зависимостей у проекта пока нет.
+
+## Материалы и права
+
+Исходные арты помещаются в [assets/inbox](assets/inbox/README.md), игровые экспорты будут храниться отдельно. APK, SDK, кеши и ключи подписи исключены из Git.
+
+Права на собственный код и оригинальные материалы сохраняются за автором: [LICENSE](LICENSE). Сторонние скиллы распространяются по своим лицензиям: [NOTICE.md](NOTICE.md). Сообщения об уязвимостях — через [приватный канал GitHub](SECURITY.md).

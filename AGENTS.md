@@ -16,6 +16,8 @@ Respond in Russian. The current milestone is tooling preparation, not game imple
 - Run `. ./tools/android-env.ps1` in PowerShell to resolve the existing SDK/JDK for this process. Never duplicate the SDK or alter global environment settings as routine setup.
 - Run `pwsh -NoProfile -File ./tools/doctor.ps1 -Full` for toolchain checks. Add `-Devices` only when device discovery is relevant.
 - Run `pwsh -NoProfile -File ./tools/verify-project.ps1` after changing preparation tooling or imported skills.
+- Follow CONTRIBUTING.md: small focused PRs, English Conventional Commit subjects up to 72 characters, explicit validation evidence, squash merges to main. Never rewrite published main history.
+- Use `tools/check-commit-message.ps1` to check commit/PR subjects. Use meaningful scopes and imperative summaries; describe why in the body when needed.
 - Tools are shared with Fit mini app. Do not update/remove shared packages, terminate unrelated containers, alter its emulator or change its repository as part of this game.
 
 ## Project skills
@@ -30,6 +32,7 @@ Respond in Russian. The current milestone is tooling preparation, not game imple
 ## Delivery
 
 - This is an independent Git repository on main. GitHub credentials are shared at the user-account level. Do not reuse the fitness repository's remote, app identity, EAS project, update endpoint or signing key.
+- Public remote: https://github.com/EvgenyPonomarevNova/android-game. Main requires a passing Verify repository check and a PR; do not push directly or bypass the rules.
 - Keep secrets, keystores, APKs, SDKs, device captures and generated caches outside Git. A future game release needs its own durable signing key stored outside this repository.
 - Build the game with the chosen engine's supported build/export pipeline. The current CI checks preparation scripts and skill integrity only; it does not build an APK.
 - Debug and release builds are different deliverables. For an APK handoff report package, version, SHA-256, size, signature verification and actual device-test status.

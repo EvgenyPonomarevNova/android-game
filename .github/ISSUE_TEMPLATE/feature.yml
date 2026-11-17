@@ -1,0 +1,26 @@
+name: Предложение
+description: Идея механики, улучшения или инструмента
+title: "proposal: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Задача или потребность
+      description: Что должно стать удобнее или интереснее и для кого?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Предложение
+      description: Опишите поведение и важные ограничения.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Критерии готовности
+      description: По каким наблюдаемым результатам можно принять изменение?
+    validations:
+      required: true
