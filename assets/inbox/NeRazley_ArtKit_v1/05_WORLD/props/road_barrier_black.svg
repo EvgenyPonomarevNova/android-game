@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="320" height="280" viewBox="0 0 320 280"><defs>
+<linearGradient id="yellow" x1="0" y1="0" x2="0.2" y2="1"><stop stop-color="#FFF570"/><stop offset="0.46" stop-color="#FFCF19"/><stop offset="1" stop-color="#FF9200"/></linearGradient>
+<linearGradient id="lime" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#A7F96B"/><stop offset="1" stop-color="#28AB42"/></linearGradient>
+<linearGradient id="danger" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#FF9D81"/><stop offset="1" stop-color="#E93842"/></linearGradient>
+<linearGradient id="cream" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#EFE0CC"/></linearGradient>
+<linearGradient id="navy" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#39485F"/><stop offset="1" stop-color="#141D2D"/></linearGradient>
+<linearGradient id="metal" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#E4EDF5"/><stop offset="0.55" stop-color="#8797A8"/><stop offset="1" stop-color="#536478"/></linearGradient>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#1384DB"/><stop offset="0.6" stop-color="#72C6FF"/><stop offset="1" stop-color="#D4F2FF"/></linearGradient>
+<linearGradient id="sky_evening" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#243961"/><stop offset="0.55" stop-color="#9A75A5"/><stop offset="1" stop-color="#FFB275"/></linearGradient>
+<linearGradient id="sky_winter" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#78A7CB"/><stop offset="1" stop-color="#DDF1FF"/></linearGradient>
+</defs><g stroke-linejoin="round" stroke-linecap="round"><rect x="22" y="100" width="275" height="106" rx="18" fill="#505C68" stroke="#192437" stroke-width="10" opacity="1"/><polygon points="40,113 65,113 112,194 85,194" fill="#FFD12B" stroke="none" stroke-width="0"/><polygon points="106,113 131,113 178,194 151,194" fill="#FFD12B" stroke="none" stroke-width="0"/><polygon points="172,113 197,113 244,194 217,194" fill="#FFD12B" stroke="none" stroke-width="0"/><polygon points="238,113 263,113 310,194 283,194" fill="#FFD12B" stroke="none" stroke-width="0"/><rect x="22" y="100" width="275" height="106" rx="18" fill="none" stroke="#192437" stroke-width="8" opacity="1"/></g></svg>

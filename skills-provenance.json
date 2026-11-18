@@ -45,7 +45,10 @@
           "path": "SKILL.md",
           "sha256": "83654d64401cc21490cf25a1c8a0b27997dd48551e0efe2e34dd4fec68d16470"
         }
-      ]
+      ],
+      "license": "MIT",
+      "licensePath": ".agents/skills/android-adb-control/LICENSE",
+      "licenseSha256": "ef343654416d196e6f016bf075cb3a93906785b1d7852d6bdf2fbe2c1a400920"
     },
     {
       "name": "game-design",
@@ -58,7 +61,10 @@
           "path": "SKILL.md",
           "sha256": "24049db42fca080ab9faf013c97a76646f213849e6076cd72babb589d5b518af"
         }
-      ]
+      ],
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/game-design.txt",
+      "licenseSha256": "af98370a7edc0f00ec46979d049517833c9a7fa2ba74e3cf8cc42f7db557299d"
     },
     {
       "name": "systematic-debugging",
@@ -111,7 +117,10 @@
           "path": "test-pressure-3.md",
           "sha256": "96b50a52e2c7989c9cf20fb752c47c1e9a3a70dc362f8f7989f8f5b64dac7708"
         }
-      ]
+      ],
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/superpowers.txt",
+      "licenseSha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
     },
     {
       "name": "verification-before-completion",
@@ -124,7 +133,10 @@
           "path": "SKILL.md",
           "sha256": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3"
         }
-      ]
+      ],
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/superpowers.txt",
+      "licenseSha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
     },
     {
       "name": "expo-overview",
@@ -141,7 +153,10 @@
           "path": "SKILL.md",
           "sha256": "8a860f5c5f0dd72b4ada9d69d0422d44ca807d5da18dc86f34b8959784515a34"
         }
-      ]
+      ],
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/expo.txt",
+      "licenseSha256": "49c5f9c7097c9a940ff663a54c27a4c60e379df6cc2b3052df0d37a09a85df93"
     },
     {
       "name": "expo-animation",
@@ -166,7 +181,10 @@
           "path": "SKILL.md",
           "sha256": "1667a8c0c7275d1e662fecdb9533552cc56a92b9e450f7723f9caedb57f5f922"
         }
-      ]
+      ],
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/expo.txt",
+      "licenseSha256": "49c5f9c7097c9a940ff663a54c27a4c60e379df6cc2b3052df0d37a09a85df93"
     },
     {
       "name": "eas-app-stores",
@@ -206,6 +224,451 @@
         {
           "path": "SKILL.md",
           "sha256": "a357877694148df27717159e6c864fcd9feab8d9cdbc8d4a06f4b4703bdadeae"
+        }
+      ],
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/expo.txt",
+      "licenseSha256": "49c5f9c7097c9a940ff663a54c27a4c60e379df6cc2b3052df0d37a09a85df93"
+    },
+    {
+      "name": "animations",
+      "path": ".agents/skills/animations",
+      "source": "phaserjs/phaser",
+      "observedCommit": "02d8931b626d9764c133cbb3fbf99966c03c757c",
+      "sourcePath": "skills/animations",
+      "copiedFrom": "https://github.com/phaserjs/phaser/tree/02d8931b626d9764c133cbb3fbf99966c03c757c/skills/animations",
+      "importedDate": "2026-11-17",
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/phaser.txt",
+      "licenseSha256": "c3a9ba7e38d4ef33dccf5fdd1046655c63df06714f84776118fe406f43db5cf2",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "42efb9b5d85eeed7249fc122f3a5ea81a8c53e8efee8976ffecd0a2a8fee0ab3"
+        }
+      ]
+    },
+    {
+      "name": "cameras",
+      "path": ".agents/skills/cameras",
+      "source": "phaserjs/phaser",
+      "observedCommit": "02d8931b626d9764c133cbb3fbf99966c03c757c",
+      "sourcePath": "skills/cameras",
+      "copiedFrom": "https://github.com/phaserjs/phaser/tree/02d8931b626d9764c133cbb3fbf99966c03c757c/skills/cameras",
+      "importedDate": "2026-11-17",
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/phaser.txt",
+      "licenseSha256": "c3a9ba7e38d4ef33dccf5fdd1046655c63df06714f84776118fe406f43db5cf2",
+      "files": [
+        {
+          "path": "references/REFERENCE.md",
+          "sha256": "43edd9c1a4670aa9c2cd1cf6543fda102e0dddb6678edd8e85e1ab10a566e905"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "80e4085ca549ec1c67462d284210d7fc9a020e04e9c3338cd1e52e0e4db63e9a"
+        }
+      ]
+    },
+    {
+      "name": "input-keyboard-mouse-touch",
+      "path": ".agents/skills/input-keyboard-mouse-touch",
+      "source": "phaserjs/phaser",
+      "observedCommit": "02d8931b626d9764c133cbb3fbf99966c03c757c",
+      "sourcePath": "skills/input-keyboard-mouse-touch",
+      "copiedFrom": "https://github.com/phaserjs/phaser/tree/02d8931b626d9764c133cbb3fbf99966c03c757c/skills/input-keyboard-mouse-touch",
+      "importedDate": "2026-11-17",
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/phaser.txt",
+      "licenseSha256": "c3a9ba7e38d4ef33dccf5fdd1046655c63df06714f84776118fe406f43db5cf2",
+      "files": [
+        {
+          "path": "references/REFERENCE.md",
+          "sha256": "0142a82b5a0730ac6f2475df945cdd5d82ab477f68e6d17f72016c49bbe9ba1f"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "989eb1d4d103258caad4cc6806a47b337fd92f525fd7e30dc2214dbed08e172a"
+        }
+      ]
+    },
+    {
+      "name": "loading-assets",
+      "path": ".agents/skills/loading-assets",
+      "source": "phaserjs/phaser",
+      "observedCommit": "02d8931b626d9764c133cbb3fbf99966c03c757c",
+      "sourcePath": "skills/loading-assets",
+      "copiedFrom": "https://github.com/phaserjs/phaser/tree/02d8931b626d9764c133cbb3fbf99966c03c757c/skills/loading-assets",
+      "importedDate": "2026-11-17",
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/phaser.txt",
+      "licenseSha256": "c3a9ba7e38d4ef33dccf5fdd1046655c63df06714f84776118fe406f43db5cf2",
+      "files": [
+        {
+          "path": "references/REFERENCE.md",
+          "sha256": "612d354cb8878cdbccbdaa99ea7dbd8a7a6e6af9f02a513c47d95f5c0f367973"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "d796b330331538fae7d93907cd9de21b60bf5832fd0128f3a1e2c396e07e1445"
+        }
+      ]
+    },
+    {
+      "name": "scale-and-responsive",
+      "path": ".agents/skills/scale-and-responsive",
+      "source": "phaserjs/phaser",
+      "observedCommit": "02d8931b626d9764c133cbb3fbf99966c03c757c",
+      "sourcePath": "skills/scale-and-responsive",
+      "copiedFrom": "https://github.com/phaserjs/phaser/tree/02d8931b626d9764c133cbb3fbf99966c03c757c/skills/scale-and-responsive",
+      "importedDate": "2026-11-17",
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/phaser.txt",
+      "licenseSha256": "c3a9ba7e38d4ef33dccf5fdd1046655c63df06714f84776118fe406f43db5cf2",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "9f2578debba9a1f31f019f15df295d424e740ec325e13d7629bf6c373cb5e34f"
+        }
+      ]
+    },
+    {
+      "name": "scenes",
+      "path": ".agents/skills/scenes",
+      "source": "phaserjs/phaser",
+      "observedCommit": "02d8931b626d9764c133cbb3fbf99966c03c757c",
+      "sourcePath": "skills/scenes",
+      "copiedFrom": "https://github.com/phaserjs/phaser/tree/02d8931b626d9764c133cbb3fbf99966c03c757c/skills/scenes",
+      "importedDate": "2026-11-17",
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/phaser.txt",
+      "licenseSha256": "c3a9ba7e38d4ef33dccf5fdd1046655c63df06714f84776118fe406f43db5cf2",
+      "files": [
+        {
+          "path": "references/REFERENCE.md",
+          "sha256": "c8d220bbfcbe4bfcf3b2d7c897a4f3de369163531e1437ca6cf6cb0358d52f19"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "1d6946387e321bc3446b9b2383b68da57749a3954c91f9c4a96e411c1d1eb36e"
+        }
+      ]
+    },
+    {
+      "name": "v4-new-features",
+      "path": ".agents/skills/v4-new-features",
+      "source": "phaserjs/phaser",
+      "observedCommit": "02d8931b626d9764c133cbb3fbf99966c03c757c",
+      "sourcePath": "skills/v4-new-features",
+      "copiedFrom": "https://github.com/phaserjs/phaser/tree/02d8931b626d9764c133cbb3fbf99966c03c757c/skills/v4-new-features",
+      "importedDate": "2026-11-17",
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/phaser.txt",
+      "licenseSha256": "c3a9ba7e38d4ef33dccf5fdd1046655c63df06714f84776118fe406f43db5cf2",
+      "files": [
+        {
+          "path": "references/REFERENCE.md",
+          "sha256": "bfc233d581d25e9c4a7df21da1309793cfc1e31c58bce216f21f604ac23e6b1f"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "f254246385786aa15a91a3c359dee0118111adfb678b220f8ea5714551a3d1e1"
+        }
+      ]
+    },
+    {
+      "name": "create-game-assets",
+      "path": ".agents/skills/create-game-assets",
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "observedCommit": "c6ca6c41c839b68319ffc08430b99ab768debc32",
+      "sourcePath": "skills/disciplines/create-game-assets",
+      "copiedFrom": "https://github.com/gamedev-skills/awesome-gamedev-agent-skills/tree/c6ca6c41c839b68319ffc08430b99ab768debc32/skills/disciplines/create-game-assets",
+      "importedDate": "2026-11-17",
+      "license": "Apache-2.0",
+      "licensePath": "docs/skill-licenses/gamedev.txt",
+      "licenseSha256": "6f82dcfeb95a1c0a0452180a3b16f21bf82111780018fed59d95a052b5b75f6c",
+      "files": [
+        {
+          "path": "agents/openai.yaml",
+          "sha256": "b5ff9e75ab8a845324d28745aa97af0a3cd4fccc56067a6494947e12e40f1990"
+        },
+        {
+          "path": "assets/art-direction-brief.md",
+          "sha256": "6d5dc4f9f5fcb24300bab9ce7dbd56d5c948ba41da3cca2d3b3d235fee5fb72c"
+        },
+        {
+          "path": "assets/asset-manifest.json",
+          "sha256": "6cce05638c11b80eb5c8f776cf187f479a2579f1a1729b0970b1cc8e5fab4c8e"
+        },
+        {
+          "path": "references/art-direction.md",
+          "sha256": "19b2ccb827eae0c6c4cd3648ab7febb82e44706bef8515f2e8912de23dec0a5c"
+        },
+        {
+          "path": "references/provenance.md",
+          "sha256": "098d3cf915cd66e8ff0ad3a639964167edf2280f9e23efbae3ea6242d5bea3db"
+        },
+        {
+          "path": "references/raster-pipeline.md",
+          "sha256": "d7a5714628fd8f4b66d03e060488e353b163b811112b164af218beb2b6450a02"
+        },
+        {
+          "path": "references/three-d-pipeline.md",
+          "sha256": "ee6ed7c373e15ffeb8e6b275618482f028279a8146f01b6cfe6a8411cb8a3db4"
+        },
+        {
+          "path": "scripts/asset_report.py",
+          "sha256": "99f4b38f9c4fe036f97ab1d4effd7f6931b62d24a90330a5a2f5ae71e7d1a77c"
+        },
+        {
+          "path": "scripts/build_preview_sheet.py",
+          "sha256": "002a550a7b5fac6d8815078a72afc249dd828c40d975b2323223fc770118c64b"
+        },
+        {
+          "path": "scripts/requirements.txt",
+          "sha256": "bbced595a25debee9232fbb784d35ee4f04967d3dbc528e8c3073d3e9adbe2ca"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "6e023c9f98b1cb292972c05803b624bc8820ca17919176384b2b707c48e53194"
+        }
+      ],
+      "noticePath": "docs/skill-licenses/gamedev-NOTICE.txt",
+      "noticeSha256": "2dcb65b1c5be24e5ba11e937f3996100f4e980d8cf8ac5b30ba1d70dae6c40f8"
+    },
+    {
+      "name": "game-feel",
+      "path": ".agents/skills/game-feel",
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "observedCommit": "c6ca6c41c839b68319ffc08430b99ab768debc32",
+      "sourcePath": "skills/disciplines/game-feel",
+      "copiedFrom": "https://github.com/gamedev-skills/awesome-gamedev-agent-skills/tree/c6ca6c41c839b68319ffc08430b99ab768debc32/skills/disciplines/game-feel",
+      "importedDate": "2026-11-17",
+      "license": "Apache-2.0",
+      "licensePath": "docs/skill-licenses/gamedev.txt",
+      "licenseSha256": "6f82dcfeb95a1c0a0452180a3b16f21bf82111780018fed59d95a052b5b75f6c",
+      "files": [
+        {
+          "path": "references/feedback-recipes.md",
+          "sha256": "dd084164150a75f84ce7d8459956ef35b1d3e5270aa7421612ab2671a9da0740"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "a3591662e732f1540887570f584bd18778f4f728708afa013a33e20bcc949a06"
+        }
+      ],
+      "noticePath": "docs/skill-licenses/gamedev-NOTICE.txt",
+      "noticeSha256": "2dcb65b1c5be24e5ba11e937f3996100f4e980d8cf8ac5b30ba1d70dae6c40f8"
+    },
+    {
+      "name": "game-ui-ux",
+      "path": ".agents/skills/game-ui-ux",
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "observedCommit": "c6ca6c41c839b68319ffc08430b99ab768debc32",
+      "sourcePath": "skills/disciplines/game-ui-ux",
+      "copiedFrom": "https://github.com/gamedev-skills/awesome-gamedev-agent-skills/tree/c6ca6c41c839b68319ffc08430b99ab768debc32/skills/disciplines/game-ui-ux",
+      "importedDate": "2026-11-17",
+      "license": "Apache-2.0",
+      "licensePath": "docs/skill-licenses/gamedev.txt",
+      "licenseSha256": "6f82dcfeb95a1c0a0452180a3b16f21bf82111780018fed59d95a052b5b75f6c",
+      "files": [
+        {
+          "path": "references/layout-and-flow.md",
+          "sha256": "2adc76f28f305e44afd90667e25e65b129b21433966e9b0fbedc48dd7ab1af4f"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "69140650cd9a28dc208bd1540358f47829aabb3f0834311c3d39b7a451e8b163"
+        }
+      ],
+      "noticePath": "docs/skill-licenses/gamedev-NOTICE.txt",
+      "noticeSha256": "2dcb65b1c5be24e5ba11e937f3996100f4e980d8cf8ac5b30ba1d70dae6c40f8"
+    },
+    {
+      "name": "physics-tuning",
+      "path": ".agents/skills/physics-tuning",
+      "source": "gamedev-skills/awesome-gamedev-agent-skills",
+      "observedCommit": "c6ca6c41c839b68319ffc08430b99ab768debc32",
+      "sourcePath": "skills/disciplines/physics-tuning",
+      "copiedFrom": "https://github.com/gamedev-skills/awesome-gamedev-agent-skills/tree/c6ca6c41c839b68319ffc08430b99ab768debc32/skills/disciplines/physics-tuning",
+      "importedDate": "2026-11-17",
+      "license": "Apache-2.0",
+      "licensePath": "docs/skill-licenses/gamedev.txt",
+      "licenseSha256": "6f82dcfeb95a1c0a0452180a3b16f21bf82111780018fed59d95a052b5b75f6c",
+      "files": [
+        {
+          "path": "references/timestep-and-ccd.md",
+          "sha256": "4e253fb1255bd11ddced12b3dc6aff3cca9e35cb417dd5350895c37c33d90fd7"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "0a1731f5752670547e10e0fa894cf6d383a07c2a691d4ee62e7155092b35ab27"
+        }
+      ],
+      "noticePath": "docs/skill-licenses/gamedev-NOTICE.txt",
+      "noticeSha256": "2dcb65b1c5be24e5ba11e937f3996100f4e980d8cf8ac5b30ba1d70dae6c40f8"
+    },
+    {
+      "name": "capacitor-app-development",
+      "path": ".agents/skills/capacitor-app-development",
+      "source": "capawesome-team/skills",
+      "observedCommit": "dddc2f5ec14d4ef8b06ffaf649311cc5be0ac3c0",
+      "sourcePath": "skills/capacitor-app-development",
+      "copiedFrom": "https://github.com/capawesome-team/skills/tree/dddc2f5ec14d4ef8b06ffaf649311cc5be0ac3c0/skills/capacitor-app-development",
+      "importedDate": "2026-11-17",
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/capawesome.txt",
+      "licenseSha256": "d53f20f303f3e4d954160095e33155b5f18a28141c3d9fb7dece35f832c0de82",
+      "files": [
+        {
+          "path": "references/app-configuration.md",
+          "sha256": "e5d6de0232453fc87016b2b2db45b2275c5712d651cec6f9da39c341d0ab8f5a"
+        },
+        {
+          "path": "references/ci-cd.md",
+          "sha256": "d8838c359400ff468337d7f18661bfc112baf753a83da321aadbe10c01a896e2"
+        },
+        {
+          "path": "references/cli.md",
+          "sha256": "0a01ad4b3b0a81d7b61f6310e240431e25706c5b4f972b5e696debd993c5af5a"
+        },
+        {
+          "path": "references/core-concepts.md",
+          "sha256": "2b63ad0d1f02fb90be7e57c4b2d25a631b37e5282dc0f71883457d62ea891f78"
+        },
+        {
+          "path": "references/cross-platform-best-practices.md",
+          "sha256": "bdc709b28b500a754e87f237f80f321321ced7a9a1fc9ee3b24eefef28ad573e"
+        },
+        {
+          "path": "references/deep-links.md",
+          "sha256": "f0bf8d9ccb6b145959bab5e9d98a88e2b2f7e7db3ef2a84650f02c7569032a14"
+        },
+        {
+          "path": "references/edge-to-edge.md",
+          "sha256": "bf9c524e42e240b95463c1f01a61012481a2e07002488c91306d6ac8d1bf2a08"
+        },
+        {
+          "path": "references/file-handling.md",
+          "sha256": "a026c46a94b33228847f3cb97968d0d101ae180a3760f1a5c4e8749381c6cee3"
+        },
+        {
+          "path": "references/ios-package-managers.md",
+          "sha256": "755ffd0698de7998501026f31e977f6a49664ccb62ef78b7673ed0f07fa22d85"
+        },
+        {
+          "path": "references/live-reload.md",
+          "sha256": "537ba94c528bd9d8d3d942fadb6eea2eca30e67a56720b5cd59d70e0b25ddb8c"
+        },
+        {
+          "path": "references/platforms.md",
+          "sha256": "7d198b645c495c2445df314fefc65a4394e4e27e5dedad9800746d64d9b5ba46"
+        },
+        {
+          "path": "references/safe-area.md",
+          "sha256": "4e9fcac5c675feba38f2acfa2e24d62658830e4a2a3559de3d8dfbc41896c035"
+        },
+        {
+          "path": "references/security.md",
+          "sha256": "6937318e46ab797601f8b7050154dac964f46d89fde166683d7ece0c6bdd1b72"
+        },
+        {
+          "path": "references/splash-screens-and-icons.md",
+          "sha256": "918e1bc3cbe00062767edb72cc17f49f2d744d0ef933e9650db4fbd13ae6a220"
+        },
+        {
+          "path": "references/storage.md",
+          "sha256": "95ef16504ae9439a991fee41fe7be730f2dd67576f87e628213b9c44c438edd3"
+        },
+        {
+          "path": "references/testing.md",
+          "sha256": "7af0a9782d4d8e7745340dba6bb1669c033cf10c12badd2db98a0a08d2aa782c"
+        },
+        {
+          "path": "references/troubleshooting-android.md",
+          "sha256": "609e8b30d287b9df2bcea3bce746328a5d969008065fa58e7fedf73f418e93c9"
+        },
+        {
+          "path": "references/troubleshooting-ios.md",
+          "sha256": "c957412d618fda3ab8129794ee273fe500cd779d5a7dce93c77a51c722cb7382"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "48e1f33681ee6608b6c07903721385b11a6db7660c706ce661acef0775debb4c"
+        }
+      ]
+    },
+    {
+      "name": "parallel-feature-development",
+      "path": ".agents/skills/parallel-feature-development",
+      "source": "wshobson/agents",
+      "observedCommit": "9c61ab243def98f72da12abd41cfcf5bcd91af9d",
+      "sourcePath": "plugins/agent-teams/skills/parallel-feature-development",
+      "copiedFrom": "https://github.com/wshobson/agents/tree/9c61ab243def98f72da12abd41cfcf5bcd91af9d/plugins/agent-teams/skills/parallel-feature-development",
+      "importedDate": "2026-11-17",
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/agent-teams.txt",
+      "licenseSha256": "f89abb55d9f073f38f1703e4518f0613c788c6174be7f13b8dfe48a1c076c746",
+      "files": [
+        {
+          "path": "references/file-ownership.md",
+          "sha256": "cf4fb139ad4284c6432527a5ec51b38037d06ca84c5cfba3ab7b88a47301fd24"
+        },
+        {
+          "path": "references/merge-strategies.md",
+          "sha256": "39129b4947d1f50d85698000dfa464bd5cc42d73a214333fd36888b9a38d78b8"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "9d39b7d0f3011a8e0f468d000987758f6ac493edc6e6fe73227fa3e75e209458"
+        }
+      ]
+    },
+    {
+      "name": "task-coordination-strategies",
+      "path": ".agents/skills/task-coordination-strategies",
+      "source": "wshobson/agents",
+      "observedCommit": "9c61ab243def98f72da12abd41cfcf5bcd91af9d",
+      "sourcePath": "plugins/agent-teams/skills/task-coordination-strategies",
+      "copiedFrom": "https://github.com/wshobson/agents/tree/9c61ab243def98f72da12abd41cfcf5bcd91af9d/plugins/agent-teams/skills/task-coordination-strategies",
+      "importedDate": "2026-11-17",
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/agent-teams.txt",
+      "licenseSha256": "f89abb55d9f073f38f1703e4518f0613c788c6174be7f13b8dfe48a1c076c746",
+      "files": [
+        {
+          "path": "references/dependency-graphs.md",
+          "sha256": "0631ea5ef35a6d348b3f8959b039682cdf817a404bda16a319afe0168fe4319f"
+        },
+        {
+          "path": "references/task-decomposition.md",
+          "sha256": "c8b382e0b0a1eda3277ecdc39a7fa7f1394fecc3f16271f1b23c2199c597ba9d"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "e6e0c3f64b01f50d549a04d89c9a94128c5f0d24969c6e412952ff8cd9de36d7"
+        }
+      ]
+    },
+    {
+      "name": "team-communication-protocols",
+      "path": ".agents/skills/team-communication-protocols",
+      "source": "wshobson/agents",
+      "observedCommit": "9c61ab243def98f72da12abd41cfcf5bcd91af9d",
+      "sourcePath": "plugins/agent-teams/skills/team-communication-protocols",
+      "copiedFrom": "https://github.com/wshobson/agents/tree/9c61ab243def98f72da12abd41cfcf5bcd91af9d/plugins/agent-teams/skills/team-communication-protocols",
+      "importedDate": "2026-11-17",
+      "license": "MIT",
+      "licensePath": "docs/skill-licenses/agent-teams.txt",
+      "licenseSha256": "f89abb55d9f073f38f1703e4518f0613c788c6174be7f13b8dfe48a1c076c746",
+      "files": [
+        {
+          "path": "references/messaging-patterns.md",
+          "sha256": "0f02b4962a06ad596e55a08492d26887bae24f3e9378c9502c97bb9c2bef9fe6"
+        },
+        {
+          "path": "SKILL.md",
+          "sha256": "5a356d8814f2b38312b83b6e3b4e5bf06e26423338a8ea568b9ff2ed3266ff1d"
         }
       ]
     }

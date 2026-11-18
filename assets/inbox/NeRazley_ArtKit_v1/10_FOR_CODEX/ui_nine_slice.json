@@ -1,0 +1,26 @@
+{
+  "button_*": {
+    "left": 46,
+    "top": 42,
+    "right": 46,
+    "bottom": 42
+  },
+  "panel_dark": {
+    "left": 48,
+    "top": 48,
+    "right": 48,
+    "bottom": 48
+  },
+  "panel_cream": {
+    "left": 48,
+    "top": 48,
+    "right": 48,
+    "bottom": 48
+  },
+  "game_hud_panel": {
+    "left": 35,
+    "top": 35,
+    "right": 35,
+    "bottom": 35
+  }
+}

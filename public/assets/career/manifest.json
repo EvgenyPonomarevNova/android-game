@@ -1,0 +1,50 @@
+[
+  {
+    "file": "evening-sky.webp",
+    "source": "05_WORLD\\backgrounds\\evening\\sky.png",
+    "transform": "resize1536x768 losslessWebP",
+    "source_sha256": "009c4ef3ac0f2d86511e11545d9c9b75b8b694a6a8dd719a22955ef20c596695",
+    "runtime_sha256": "87a1bb08f100a7b28352888758b66cba01bd96d9dd76d9b64989fe27658535a3"
+  },
+  {
+    "file": "evening-far.webp",
+    "source": "05_WORLD\\backgrounds\\evening\\far.png",
+    "transform": "resize1536x768 losslessWebP",
+    "source_sha256": "fe8457efa3130548d710af1bfff1dbea0489f62c3ebb146228afac10eb905640",
+    "runtime_sha256": "f03cc5c2b45ed81ea37487d3ccf59b88b134f39dc1e87e81da31a7f555244e93"
+  },
+  {
+    "file": "evening-mid.webp",
+    "source": "05_WORLD\\backgrounds\\evening\\mid.png",
+    "transform": "resize1536x768 losslessWebP",
+    "source_sha256": "da5c347886a3d62d051c391ae9d1e3e853516604f2db51273927130facd61f8c",
+    "runtime_sha256": "7fa9ebb5afca9858b1139d1e842f75ceea12c9c1a348b09ecfacd5445b48bc1b"
+  },
+  {
+    "file": "evening-near.webp",
+    "source": "05_WORLD\\backgrounds\\evening\\near.png",
+    "transform": "resize1536x768 losslessWebP",
+    "source_sha256": "270adb405b78d27c6ec86aad08b502d67b8e0b51fddb84199f3c779c4473ebfa",
+    "runtime_sha256": "4239b9cce5802be8c41a9ee472857805f820aa8bc0cb82a7191be4aed4364a99"
+  },
+  {
+    "file": "career\\wet-asphalt.png",
+    "source": "05_WORLD/tiles/wet_asphalt_512x160.png",
+    "transform": "alpha crop (0, 20, 512, 160)",
+    "source_sha256": "e7928050b24931a75d03b5a32e813a0513037074ba0206646492459e3054d70b",
+    "runtime_sha256": "b40a2f9e53a8f140c0e35bca8270c99f87f59ae63d9f7dc3dfd5d1616adbc767"
+  },
+  {
+    "file": "cargo\\noodles.png",
+    "source": "04_CARGO/noodles.png",
+    "transform": "alpha crop (43, 45, 234, 250)",
+    "source_sha256": "78af59992d8a34964e3fab76189e365f4b1284e46c5144ac17ff7cb436fd59de",
+    "runtime_sha256": "e31c85f5d1836730000ef9401051378ddb74dece7476806a5b9893a4312ce659"
+  },
+  {
+    "file": "cargo/soup.svg",
+    "source": "Native SVG authored for hot-meal contract; ArtKit palette and bowl silhouette reference, no concept art crop",
+    "transform": "authored vector",
+    "runtime_sha256": "8affbc0e9cb859ecb9cb7e86a2981b6d8b2b130af652802e5af95ff614a06a19"
+  }
+]

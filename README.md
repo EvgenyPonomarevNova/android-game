@@ -1,74 +1,68 @@
-# Android Game
+# Не Разлей!
 
-[![Repository checks](https://github.com/EvgenyPonomarevNova/android-game/actions/workflows/tooling.yml/badge.svg?branch=main)](https://github.com/EvgenyPonomarevNova/android-game/actions/workflows/tooling.yml)
-[![Platform: Android](https://img.shields.io/badge/platform-Android-3DDC84?logo=android&logoColor=white)](https://developer.android.com/games)
-[![Stage: preparation](https://img.shields.io/badge/stage-preparation-64748b)](#состояние-проекта)
+Офлайн 2D-аркада о доставке хрупких грузов на скутере. Текущая разработка — Sprint03 /0.5.0: карьера курьера, XP/репутация/монеты, гараж с физическим тюнингом и два контракта. «Сюрприз на пятом» — торт и напитки, развилка, дедлайн и медали. «Пока горячее!» — мокрый вечер, лапша/суп и температура, которая требует выбирать между скоростью и осторожностью. Курьер и район используют ArtKit; физика — Planck с фиксированным шагом. Старые рекорды сохраняются.
 
-Основа для самостоятельной Android-игры: инструменты разработки, воспроизводимые проверки и понятный процесс доставки изменений.
+0.5.0 готова к игровому плейтесту владельца. Оба контракта и карьерная цепочка проверены в production-браузере и на Game_API31 / WebView 91; старые сохранения перенесены, холодный офлайн-запуск и цифровой звук подтверждены. Финальная debug APK: `.local/apk/nerazley-0.5.0-debug.apk` (0.5.0, code 5). Человеческая оценка сложности, физический телефон, аппаратный мультитач и производительность пока не проверены. Фактический статус и ограничения — в [интеграции](docs/stage-1/integration.md), [QA](docs/stage-1/android.md) и [статусе продукта](GAME_PRODUCT_STATUS.md).
 
-**Рабочее название — Android Game.** Концепция и арты готовятся. Движок, механики и визуальное направление будут выбраны под игру.
+AudioKit подключён: локальная музыка меню/гаража/заказов/заезда, три слоя двигателя, UI, удары, потеря кофе и результаты. Прежние настройки сохранены; для новых данных музыка и эффекты включены, общая громкость 65%. Переключатели и проверка звука доступны в «Настройках». Оригиналы набора лежат в `assets/inbox/NeRazley_AudioKit_RUNTIME`, runtime — в `public/assets/audio`. Все звуки поставляются вместе с веб-сборкой, внешние аудиосервисы не используются.
 
-[Начать работу](#быстрый-старт) · [Правила разработки](CONTRIBUTING.md) · [Окружение](docs/preparation.md) · [Задачи](https://github.com/EvgenyPonomarevNova/android-game/issues)
+## Запуск
 
-## Состояние проекта
-
-| Этап | Статус |
-| --- | --- |
-| Android SDK, Java и инструменты проверки APK | Подготовлены и проверены локально |
-| Отдельный эмулятор Android 12 | Создан; первый запуск проверен |
-| GitHub, CI и правила внесения изменений | Настроены |
-| Концепция, арты и выбор движка | Следующий этап |
-| Играбельный прототип и первый APK | После выбора концепции |
-
-## Быстрый старт
-
-Для разработки Android сейчас используется Windows и PowerShell 7. Проверки самого репозитория также работают на Linux в GitHub Actions.
+Node.js 22.12+ (локально 24.18), npm и PowerShell 7 для Android-скриптов.
 
 ```powershell
-git clone https://github.com/EvgenyPonomarevNova/android-game.git
-cd android-game
-pwsh -NoProfile -File ./tools/verify-project.ps1
+npm ci
+npm run dev
 ```
 
-Для локальной Android-разработки нужны JDK, Android SDK с Platform Tools, Command-line Tools, платформой `android-36` и Build Tools `36.0.0`:
+Клавиатура: W/↑ — газ, S/↓ — тормоз, затем задний ход; A/← и D/→ — наклон; Esc — пауза; R — заново. На телефоне экранные кнопки поддерживают одновременное удержание. Основная ориентация landscape.
+
+Мастерская уровней: добавьте `?editor=1` к адресу игры. Выберите seed/шаблон/число секций и развилку, сгенерируйте черновик, отредактируйте JSON и проедьте его. Импорт и последний черновик работают локально. Кнопка «Копировать JSON» позволяет перенести данные, если браузер блокирует скачивание; нативное скачивание в автоматизированном браузере0.4.1 не подтвердилось. Тестовые заезды не меняют рекорды и карьеру. Через терминал:
 
 ```powershell
-. ./tools/android-env.ps1
-pwsh -NoProfile -File ./tools/doctor.ps1
+npm run level:new -- --id yard_draft --title "Новый двор" --seed 42 --preset trial --sections 4 --fork true
+npm run level:check -- .local/levels/yard_draft.json
 ```
 
-`ANDROID_HOME` и `JAVA_HOME` задают расположение инструментов. Локальные переопределения можно сохранить в игнорируемом `.local/android.json`. Скрипт меняет окружение только текущего процесса.
+Генератор создаёт JSON и SVG без перезаписи существующих файлов. После проверки обеих тактик, ошибок и рестарта можно установить `status: "published"` и добавить JSON в `src/content/levels`: реестр и выбор контракта подхватят его без редактирования сцены. В игре две встроенные миссии; дополнительные JSON проходят ту же валидацию. Для включения авторского маршрута в карьеру добавьте запись с тем же levelId в `src/content/contracts.json`: описание, номер, rewardCoins/rewardXp и unlockAfter. Отдельный React-экран не нужен. Без такой записи маршрут доступен как авторский, с нулевой наградой. Валидация геометрии не гарантирует проходимость; финальные пороги медалей определяются заездами.
 
-## Инструменты
+Баланс находится в `src/config/career.ts`, физические детали — `src/game/vehicle/Tuning.ts`. Мастерская принимает `wet-asphalt`, theme `rain-evening` и cargo `hot-meal` с temperature `{initial,ambient,coolingPerSecond,minimum,silver,gold}`. Сначала сохраните черновик с новым уникальным ID; не меняйте ID уже опубликованного контракта ради выдачи повторной награды. Условия доступа формируют последовательность через unlockAfter; избегайте циклов.
 
-| Команда | Назначение |
+| Команда | Результат |
 | --- | --- |
-| `pwsh -File ./tools/verify-project.ps1` | Синтаксис скриптов, целостность скиллов, лицензии и состав файлов в Git |
-| `pwsh -File ./tools/doctor.ps1 -Full` | SDK/JDK, Git, Android Tools, Docker и авторизация GitHub |
-| `pwsh -File ./tools/doctor.ps1 -Devices` | Дополнительно проверить наличие ADB-устройств |
-| `pwsh -File ./tools/inspect-apk.ps1 -ApkPath C:/builds/game.apk` | Проверить подпись APK, прочитать манифест, размер и SHA-256 |
-| `emulator -avd Game_API31` | Запустить подготовленный локальный эмулятор |
+| `npm run build` | TypeScript и production web в `dist/` |
+| `npm run preview` | Статический просмотр `dist/` без backend |
+| `npm run typecheck` | Строгая проверка TypeScript |
+| `npm run lint` | ESLint |
+| `npm run test` | Тесты физики, управления, трассы и сохранений |
+| `npm run format:check` | Проверка Prettier приложения и конфигов |
+| `npm run android:sync` | Web build → Capacitor sync |
+| `npm run android:debug` | Web build → sync → Gradle → проверка APK |
+| `pwsh -File tools/doctor.ps1 -Full` | SDK/JDK и инструменты |
+| `pwsh -File tools/verify-project.ps1` | Скрипты, навыки, лицензии и Git-индекс |
 
-Эмулятор `Game_API31` создаётся отдельно на машине разработчика; клонирование репозитория не устанавливает SDK и AVD. Подробности — в [описании окружения](docs/preparation.md).
+Android APK: `android/app/build/outputs/apk/debug/app-debug.apk`. Нужны существующий SDK и JDK 21; `. ./tools/android-env.ps1` разрешает их для текущего процесса. SDK не дублируется. Первый Gradle build скачивает официальные зависимости. Установленное приложение сервер и интернет не использует.
 
-## Структура
+## Стек и структура
 
-```text
-.agents/          Скиллы разработки и необязательные материалы Expo/EAS
-.github/          CI, шаблоны задач и pull request, Dependabot, CODEOWNERS
-assets/inbox/     Исходные арты и референсы
-docs/             Окружение и лицензии сторонних материалов
-tools/            Диагностика, проверки репозитория и инспекция APK
-```
+Phaser **4.2.1**, React **19.3.1**, TypeScript **5.9.3**, Planck **1.5.1** (`planck`), Vite **8.3.8**, Capacitor **8.6.2**, Preferences **8.0.1**, App **8.1.2**, Vitest **5.1.0**, CSS Modules. Версии закреплены в `package-lock.json`.
 
-## Разработка
+- `src/app` — React root; `src/ui` — меню, настройки, гараж, HUD и управление.
+- `src/game` — сцены, мост, симуляция, физика, скутер, груз, уровни и рендеринг.
+- `src/platform` — Web/Android, сохранения и звук; `src/config` — параметры.
+- `assets/inbox` — оригинальные арты; `src/assets` — правила runtime-экспорта.
+- `android` — Capacitor-проект; `tools` и `.github` — сохранённая инфраструктура.
 
-Изменения проходят через небольшие pull request. Заголовки следуют [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/), например `feat(gameplay): add touch movement`. Перед слиянием обязательны проверки; squash сохраняет одно завершённое изменение в истории `main`.
+## Документы
 
-CI выполняет проверку репозитория и соглашений о коммитах. Сборка и тесты игры будут добавлены после выбора движка. Docker используется при необходимости; серверных зависимостей у проекта пока нет.
+[Архитектура](docs/ARCHITECTURE.md) · [Android и APK](docs/ANDROID.md) · [Следующий этап](docs/NEXT_STEPS.md) · [Окружение](docs/preparation.md) · [Git](CONTRIBUTING.md) · [Профильные чаты](docs/TEAM.md)
 
-## Материалы и права
+[Состояние продукта](GAME_PRODUCT_STATUS.md) · [Доска текущего этапа](docs/STAGE_1.md) · [Интеграция](docs/chat-coordination.md)
 
-Исходные арты помещаются в [assets/inbox](assets/inbox/README.md), игровые экспорты будут храниться отдельно. APK, SDK, кеши и ключи подписи исключены из Git.
+Основа адаптирована из [официального template-react-ts](https://github.com/phaserjs/template-react-ts), ревизия `c7265972c856906cacf1f2892d8565d64a358d34`. Демо-ресурсы и отправка статистики шаблона не перенесены. MIT сохранена в `docs/third-party`. Docker и серверные сервисы не запускаются.
 
-Права на собственный код и оригинальные материалы сохраняются за автором: [LICENSE](LICENSE). Сторонние скиллы распространяются по своим лицензиям: [NOTICE.md](NOTICE.md). Сообщения об уязвимостях — через [приватный канал GitHub](SECURITY.md).
+## Доставка и права
+
+Изменения — через PR и обязательный Verify repository; main не переписывается. CI проверяет исходники и web build; Android APK собирается локально.
+
+`com.nerazley.game` — временный applicationId; утвердить до публикации. Debug APK не является release. Release-ключ не создан. Ключи, APK, SDK и снимки устройств вне Git. Собственный код: [LICENSE](LICENSE); сторонние материалы: [NOTICE.md](NOTICE.md), [DEPENDENCIES.md](docs/DEPENDENCIES.md).

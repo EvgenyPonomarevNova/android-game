@@ -1,0 +1,36 @@
+[
+  {
+    "file": "cake.png",
+    "source": "assets/inbox/NeRazley_ArtKit_v1/04_CARGO/cake.png",
+    "size": [
+      214,
+      176
+    ],
+    "source_sha256": "967530b4d11d68ea9aa6f2691015c8b90d42992c80f371c23a660c49746c6adf",
+    "runtime_sha256": "4973453a51ecde341da5aca578eba498ac335d274fdbb0ec7a0e124718383fb4",
+    "alpha_bbox_crop": [
+      19,
+      86,
+      233,
+      262
+    ],
+    "rights": "User-supplied ArtKit v1; source LICENSE_NOTES.md; no independent licence assertion"
+  },
+  {
+    "file": "drinks.png",
+    "source": "assets/inbox/NeRazley_ArtKit_v1/04_CARGO/coffee_tray.png",
+    "size": [
+      210,
+      261
+    ],
+    "source_sha256": "47f976397522bd4ea105aac12974249f409d6cd4807b5b5ae9cec360e56ccdda",
+    "runtime_sha256": "6d2d83ab3c11d1d6cdb36154b59754f487f4cbe4e2435711429ff1bafc64d4dc",
+    "alpha_bbox_crop": [
+      0,
+      4,
+      210,
+      265
+    ],
+    "rights": "User-supplied ArtKit v1; source LICENSE_NOTES.md; no independent licence assertion"
+  }
+]

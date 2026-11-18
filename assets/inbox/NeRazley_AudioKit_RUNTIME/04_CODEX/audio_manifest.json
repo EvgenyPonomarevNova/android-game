@@ -1,0 +1,595 @@
+{
+  "pack": "NeRazley AudioKit v1",
+  "generator": "procedural original sound design; no third-party sample recordings",
+  "sample_rate_hz": 44100,
+  "count": 72,
+  "bus_volumes": {
+    "master": 1,
+    "music": 0.28,
+    "engine": 0.38,
+    "ambience": 0.12,
+    "ui": 0.62,
+    "gameplay": 0.65,
+    "cargo": 0.66,
+    "vehicle": 0.6,
+    "reward": 0.72
+  },
+  "assets": [
+    {
+      "key": "music_menu_sunny_loop",
+      "path": "01_MUSIC/ogg/music_menu_sunny_loop.ogg",
+      "category": "music",
+      "loop": true,
+      "duration_sec": 34.2857,
+      "volume_recommendation": 0.28
+    },
+    {
+      "key": "music_ride_day_loop",
+      "path": "01_MUSIC/ogg/music_ride_day_loop.ogg",
+      "category": "music",
+      "loop": true,
+      "duration_sec": 41.1429,
+      "volume_recommendation": 0.28
+    },
+    {
+      "key": "music_garage_funk_loop",
+      "path": "01_MUSIC/ogg/music_garage_funk_loop.ogg",
+      "category": "music",
+      "loop": true,
+      "duration_sec": 38.4,
+      "volume_recommendation": 0.28
+    },
+    {
+      "key": "music_map_choices_loop",
+      "path": "01_MUSIC/ogg/music_map_choices_loop.ogg",
+      "category": "music",
+      "loop": true,
+      "duration_sec": 33.1034,
+      "volume_recommendation": 0.28
+    },
+    {
+      "key": "music_ride_night_loop",
+      "path": "01_MUSIC/ogg/music_ride_night_loop.ogg",
+      "category": "music",
+      "loop": true,
+      "duration_sec": 29.0909,
+      "volume_recommendation": 0.28
+    },
+    {
+      "key": "ui_click_01",
+      "path": "03_SFX/ui/ui_click_01.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.15,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "ui_click_02",
+      "path": "03_SFX/ui/ui_click_02.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.17,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "ui_back",
+      "path": "03_SFX/ui/ui_back.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.26,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "ui_confirm",
+      "path": "03_SFX/ui/ui_confirm.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.69,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "ui_error",
+      "path": "03_SFX/ui/ui_error.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.8,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "ui_toggle_on",
+      "path": "03_SFX/ui/ui_toggle_on.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.59,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "ui_toggle_off",
+      "path": "03_SFX/ui/ui_toggle_off.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.58,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "ui_panel_open",
+      "path": "03_SFX/ui/ui_panel_open.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.37,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "ui_panel_close",
+      "path": "03_SFX/ui/ui_panel_close.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.35,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "ui_navigation",
+      "path": "03_SFX/ui/ui_navigation.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.16,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "ui_tab_change",
+      "path": "03_SFX/ui/ui_tab_change.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.22,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "ui_locked",
+      "path": "03_SFX/ui/ui_locked.wav",
+      "category": "ui",
+      "loop": false,
+      "duration_sec": 0.75,
+      "volume_recommendation": 0.62
+    },
+    {
+      "key": "countdown_tick",
+      "path": "03_SFX/gameplay/countdown_tick.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 0.56,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "countdown_go",
+      "path": "03_SFX/gameplay/countdown_go.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 0.88,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "level_start",
+      "path": "03_SFX/gameplay/level_start.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 0.92,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "level_finish",
+      "path": "03_SFX/gameplay/level_finish.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 1.12,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "pause_in",
+      "path": "03_SFX/gameplay/pause_in.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 0.3,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "pause_out",
+      "path": "03_SFX/gameplay/pause_out.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 0.3,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "checkpoint",
+      "path": "03_SFX/gameplay/checkpoint.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 0.91,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "timer_warning",
+      "path": "03_SFX/gameplay/timer_warning.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 0.7,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "near_miss",
+      "path": "03_SFX/gameplay/near_miss.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 0.41,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "whoosh_jump",
+      "path": "03_SFX/gameplay/whoosh_jump.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 0.63,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "land_safe",
+      "path": "03_SFX/gameplay/land_safe.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 0.49,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "land_hard",
+      "path": "03_SFX/gameplay/land_hard.wav",
+      "category": "gameplay",
+      "loop": false,
+      "duration_sec": 0.74,
+      "volume_recommendation": 0.65
+    },
+    {
+      "key": "engine_idle_loop",
+      "path": "02_ENGINE/ogg/engine_idle_loop.ogg",
+      "category": "engine",
+      "loop": true,
+      "duration_sec": 2.0,
+      "volume_recommendation": 0.38
+    },
+    {
+      "key": "engine_cruise_loop",
+      "path": "02_ENGINE/ogg/engine_cruise_loop.ogg",
+      "category": "engine",
+      "loop": true,
+      "duration_sec": 2.0,
+      "volume_recommendation": 0.38
+    },
+    {
+      "key": "engine_fast_loop",
+      "path": "02_ENGINE/ogg/engine_fast_loop.ogg",
+      "category": "engine",
+      "loop": true,
+      "duration_sec": 2.0,
+      "volume_recommendation": 0.38
+    },
+    {
+      "key": "engine_start",
+      "path": "03_SFX/vehicle/engine_start.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 1.14,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "engine_stop",
+      "path": "03_SFX/vehicle/engine_stop.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 0.85,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "engine_rev",
+      "path": "03_SFX/vehicle/engine_rev.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 1.13,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "engine_accelerate",
+      "path": "03_SFX/vehicle/engine_accelerate.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 0.83,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "brake_short",
+      "path": "03_SFX/vehicle/brake_short.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 0.43,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "tire_skid_short",
+      "path": "03_SFX/vehicle/tire_skid_short.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 0.83,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "tire_skid_long",
+      "path": "03_SFX/vehicle/tire_skid_long.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 1.37,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "suspension_compress",
+      "path": "03_SFX/vehicle/suspension_compress.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 0.41,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "metal_scrape",
+      "path": "03_SFX/vehicle/metal_scrape.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 0.89,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "collision_small",
+      "path": "03_SFX/vehicle/collision_small.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 0.44,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "collision_medium",
+      "path": "03_SFX/vehicle/collision_medium.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 0.67,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "collision_heavy",
+      "path": "03_SFX/vehicle/collision_heavy.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 1.1,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "small_horn",
+      "path": "03_SFX/vehicle/small_horn.wav",
+      "category": "vehicle",
+      "loop": false,
+      "duration_sec": 0.44,
+      "volume_recommendation": 0.6
+    },
+    {
+      "key": "coffee_slosh_small",
+      "path": "03_SFX/cargo/coffee_slosh_small.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 0.74,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "coffee_slosh_big",
+      "path": "03_SFX/cargo/coffee_slosh_big.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 1.08,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "coffee_spill",
+      "path": "03_SFX/cargo/coffee_spill.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 1.34,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "coffee_splash_light",
+      "path": "03_SFX/cargo/coffee_splash_light.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 0.65,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "cargo_danger",
+      "path": "03_SFX/cargo/cargo_danger.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 1.0,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "cargo_destroyed",
+      "path": "03_SFX/cargo/cargo_destroyed.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 1.35,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "cup_rattle",
+      "path": "03_SFX/cargo/cup_rattle.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 0.51,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "glass_clink",
+      "path": "03_SFX/cargo/glass_clink.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 0.75,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "pizza_box_rattle",
+      "path": "03_SFX/cargo/pizza_box_rattle.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 0.63,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "cake_wobble",
+      "path": "03_SFX/cargo/cake_wobble.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 0.68,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "bag_zip",
+      "path": "03_SFX/cargo/bag_zip.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 0.84,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "delivery_bag_open",
+      "path": "03_SFX/cargo/delivery_bag_open.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 0.55,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "parcel_bounce",
+      "path": "03_SFX/cargo/parcel_bounce.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 0.54,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "fragile_crack",
+      "path": "03_SFX/cargo/fragile_crack.wav",
+      "category": "cargo",
+      "loop": false,
+      "duration_sec": 0.95,
+      "volume_recommendation": 0.66
+    },
+    {
+      "key": "coin_pickup",
+      "path": "03_SFX/reward/coin_pickup.wav",
+      "category": "reward",
+      "loop": false,
+      "duration_sec": 0.63,
+      "volume_recommendation": 0.72
+    },
+    {
+      "key": "star_one",
+      "path": "03_SFX/reward/star_one.wav",
+      "category": "reward",
+      "loop": false,
+      "duration_sec": 0.82,
+      "volume_recommendation": 0.72
+    },
+    {
+      "key": "star_two",
+      "path": "03_SFX/reward/star_two.wav",
+      "category": "reward",
+      "loop": false,
+      "duration_sec": 0.93,
+      "volume_recommendation": 0.72
+    },
+    {
+      "key": "star_three",
+      "path": "03_SFX/reward/star_three.wav",
+      "category": "reward",
+      "loop": false,
+      "duration_sec": 1.145,
+      "volume_recommendation": 0.72
+    },
+    {
+      "key": "new_record",
+      "path": "03_SFX/reward/new_record.wav",
+      "category": "reward",
+      "loop": false,
+      "duration_sec": 1.32,
+      "volume_recommendation": 0.72
+    },
+    {
+      "key": "level_unlocked",
+      "path": "03_SFX/reward/level_unlocked.wav",
+      "category": "reward",
+      "loop": false,
+      "duration_sec": 1.23,
+      "volume_recommendation": 0.72
+    },
+    {
+      "key": "reward_claim",
+      "path": "03_SFX/reward/reward_claim.wav",
+      "category": "reward",
+      "loop": false,
+      "duration_sec": 1.01,
+      "volume_recommendation": 0.72
+    },
+    {
+      "key": "delivery_success",
+      "path": "03_SFX/reward/delivery_success.wav",
+      "category": "reward",
+      "loop": false,
+      "duration_sec": 2.0,
+      "volume_recommendation": 0.72
+    },
+    {
+      "key": "delivery_failed",
+      "path": "03_SFX/reward/delivery_failed.wav",
+      "category": "reward",
+      "loop": false,
+      "duration_sec": 1.66,
+      "volume_recommendation": 0.72
+    },
+    {
+      "key": "achievement_popup",
+      "path": "03_SFX/reward/achievement_popup.wav",
+      "category": "reward",
+      "loop": false,
+      "duration_sec": 1.28,
+      "volume_recommendation": 0.72
+    },
+    {
+      "key": "currency_count",
+      "path": "03_SFX/reward/currency_count.wav",
+      "category": "reward",
+      "loop": false,
+      "duration_sec": 0.74,
+      "volume_recommendation": 0.72
+    },
+    {
+      "key": "ambient_city_day_loop",
+      "path": "03_SFX/ambience/ambient_city_day_loop.ogg",
+      "category": "ambience",
+      "loop": true,
+      "duration_sec": 12.0,
+      "volume_recommendation": 0.12
+    },
+    {
+      "key": "ambient_wind_loop",
+      "path": "03_SFX/ambience/ambient_wind_loop.ogg",
+      "category": "ambience",
+      "loop": true,
+      "duration_sec": 8.0,
+      "volume_recommendation": 0.12
+    }
+  ]
+}

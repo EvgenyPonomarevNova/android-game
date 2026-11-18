@@ -1,0 +1,401 @@
+.hub {
+  position: absolute;
+  inset: max(16px, calc(env(safe-area-inset-top, 0px) + 8px))
+    max(20px, calc(env(safe-area-inset-right, 0px) + 12px))
+    max(36px, calc(env(safe-area-inset-bottom, 0px) + 30px))
+    max(20px, calc(env(safe-area-inset-left, 0px) + 12px));
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 20px;
+  color: #fff7e8;
+}
+.header {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  padding: 16px 180px 16px 24px;
+  background: #111e30ee;
+  border: 1px solid #fff7e824;
+  border-radius: 20px;
+}
+.brand {
+  display: grid;
+  gap: 5px;
+}
+.brand strong {
+  color: #ffd12b;
+  font-size: clamp(23px, 2.5vw, 38px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.brand span {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: #c4d0df;
+}
+.header h1 {
+  font-size: 16px;
+  font-weight: 750;
+  margin: 0;
+  white-space: nowrap;
+}
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.9fr);
+  gap: 24px;
+  min-height: 0;
+}
+.scene {
+  position: relative;
+  min-width: 0;
+}
+.preview {
+  position: absolute;
+  inset: 0 0 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.preview svg {
+  width: 100%;
+  height: 100%;
+  max-height: 360px;
+}
+.vehicle {
+  max-width: calc(100% - 40px);
+}
+.vehicle span {
+  line-height: 1.5;
+}
+.vehicle button {
+  min-height: 36px;
+  padding: 5px 10px;
+  border: 1px solid #ffd12b;
+  color: #ffd12b;
+  background: #253a50;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.vehicle {
+  position: absolute;
+  bottom: 8px;
+  left: 20px;
+  display: grid;
+  gap: 5px;
+  background: #132237eb;
+  border: 1px solid #fff7e830;
+  border-radius: 14px;
+  padding: 14px 20px;
+}
+.vehicle strong {
+  font-size: 19px;
+}
+.vehicle span {
+  color: #b8c8da;
+  font-size: 12px;
+}
+.contract {
+  align-self: center;
+  min-height: 0;
+  max-height: 100%;
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: #132237f5;
+  border: 1px solid #fff7e824;
+  border-radius: 24px;
+  box-shadow: 0 16px 44px #111a2a30;
+}
+.contractBody {
+  overflow: auto;
+  min-height: 0;
+  touch-action: pan-y;
+  scrollbar-width: thin;
+  scrollbar-color: #63758c transparent;
+}
+.orderLabel {
+  font-size: 10px;
+  color: #ffd12b;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  margin: 0 0 14px;
+}
+.contract h2 {
+  font-size: clamp(27px, 3vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin: 0 0 18px;
+}
+.cargoLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: #c3cfdd;
+  font-size: 16px;
+}
+.cargoLine strong {
+  color: #fff7e8;
+  font-size: 26px;
+  font-variant-numeric: tabular-nums;
+}
+.cargoLine strong > small {
+  display: block;
+  font-size: 9px;
+  text-align: right;
+  color: #b9c9dc;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.story {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 20px 0 12px;
+}
+.conditions {
+  color: #b9c9dc;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.best {
+  display: grid;
+  gap: 5px;
+  border-top: 1px solid #fff7e820;
+  padding-top: 14px;
+  margin: 16px 0 0;
+}
+.best strong {
+  color: #ffd12b;
+  font-size: 14px;
+}
+.best span,
+.firstRun {
+  color: #b9c9dc;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.contract > button {
+  flex-shrink: 0;
+  width: 100%;
+  min-height: 56px;
+}
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  background: #111e30f0;
+  border: 1px solid #fff7e824;
+  border-radius: 17px;
+  padding: 8px;
+}
+.nav button {
+  min-height: 44px;
+  width: min(260px, 35%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #fff7e8;
+  background: #20344a;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+.nav svg {
+  width: 20px;
+  height: 20px;
+}
+@media (hover: hover) {
+  .nav button:hover {
+    background: #2e4863;
+  }
+}
+@media (max-height: 600px) and (orientation: landscape) {
+  .hub {
+    gap: 12px;
+    inset: 12px 16px 31px;
+  }
+  .header {
+    border-radius: 14px;
+    padding: 10px 170px 10px 18px;
+    gap: 28px;
+  }
+  .brand strong {
+    font-size: 25px;
+  }
+  .brand span {
+    font-size: 9px;
+  }
+  .header h1 {
+    font-size: 13px;
+  }
+  .body {
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, 1fr);
+    gap: 16px;
+  }
+  .contract {
+    padding: 18px;
+    gap: 12px;
+    border-radius: 20px;
+  }
+  .contract h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .orderLabel {
+    font-size: 9px;
+    margin-bottom: 10px;
+  }
+  .cargoLine {
+    font-size: 13px;
+  }
+  .cargoLine strong {
+    font-size: 21px;
+  }
+  .story {
+    font-size: 13px;
+    margin: 12px 0 8px;
+  }
+  .conditions {
+    font-size: 11px;
+  }
+  .firstRun {
+    margin: 10px 0 0;
+  }
+  .contract > button {
+    min-height: 48px;
+  }
+  .vehicle {
+    left: 8px;
+    bottom: 0;
+    padding: 10px 14px;
+  }
+  .vehicle strong {
+    font-size: 15px;
+  }
+  .vehicle span {
+    font-size: 10px;
+  }
+  .nav {
+    padding: 5px;
+    border-radius: 13px;
+  }
+  .nav button {
+    min-height: 40px;
+    font-size: 12px;
+  }
+}
+@media (max-height: 410px) and (orientation: landscape) {
+  .hub {
+    gap: 8px;
+  }
+  .header {
+    padding-block: 8px;
+  }
+  .brand strong {
+    font-size: 21px;
+  }
+  .header h1 {
+    font-size: 11px;
+  }
+  .contract {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+  .contract h2 {
+    font-size: 24px;
+  }
+  .story {
+    margin: 10px 0;
+  }
+  .vehicle {
+    padding: 7px 11px;
+  }
+  .nav button {
+    min-height: 36px;
+  }
+}
+@media (max-height: 520px) and (orientation: landscape) {
+  .preview {
+    inset: 0 0 47px;
+  }
+  .vehicle {
+    padding: 7px 10px;
+    left: 0;
+    max-width: 100%;
+  }
+  .vehicle span {
+    font-size: 9px;
+    max-width: 275px;
+  }
+  .vehicle button {
+    min-height: 30px;
+    font-size: 10px;
+  }
+  .nav {
+    gap: 5px;
+  }
+  .nav button {
+    font-size: 11px;
+    gap: 5px;
+    width: 25%;
+  }
+  .nav svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+@media (max-height: 410px) and (orientation: landscape) {
+  .header {
+    padding: 8px 155px 8px 16px;
+  }
+  .brand span {
+    display: none;
+  }
+  .hub > div:nth-child(2) {
+    padding: 7px 12px;
+  }
+  .hub > div:nth-child(2) > div {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    column-gap: 8px;
+  }
+  .hub > div:nth-child(2) > div > small:last-child {
+    display: none;
+  }
+  .hub > div:nth-child(2) progress {
+    grid-column: 1 / -1;
+  }
+  .hub > div:nth-child(2) strong {
+    font-size: 17px;
+  }
+  .contract h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .orderLabel {
+    margin-bottom: 5px;
+  }
+}
+
+.cargoLine > span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.cargoLine svg {
+  width: 23px;
+  height: 30px;
+  flex-shrink: 0;
+}
+@media (max-height: 410px) and (orientation: landscape) {
+  .cargoLine svg {
+    width: 18px;
+    height: 24px;
+  }
+}

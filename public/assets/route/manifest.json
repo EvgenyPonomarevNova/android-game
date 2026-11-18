@@ -1,0 +1,78 @@
+[
+  {
+    "file": "bench.png",
+    "source": "assets/inbox/NeRazley_ArtKit_v1/05_WORLD/props/bench.png",
+    "source_sha256": "9bdec9e790de0844d0f6895c7d0654e5f88289fc2fd33c89f6924a4c22feb6d0",
+    "runtime_sha256": "1cd93f6222644252e6e2a8ae42218484583d45afbd438a8f30850ecceefa1656",
+    "size": [
+      248,
+      216
+    ],
+    "transform": {
+      "alpha_bbox_crop": [
+        36,
+        46,
+        284,
+        262
+      ]
+    },
+    "rights": "User-supplied NeRazley ArtKit v1; source LICENSE_NOTES.md; no new licence assertion"
+  },
+  {
+    "file": "street-lamp.png",
+    "source": "assets/inbox/NeRazley_ArtKit_v1/05_WORLD/props/street_lamp.png",
+    "source_sha256": "9aeaab5d70d6a65913d0953644ec4435cce88c68b8945403b50f3c92e764ac83",
+    "runtime_sha256": "24108c3f3fc2cfbc51c114ed7e92b2d19142e23724446e2a0fcc5fd7ec26a0d7",
+    "size": [
+      113,
+      245
+    ],
+    "transform": {
+      "alpha_bbox_crop": [
+        151,
+        31,
+        264,
+        276
+      ]
+    },
+    "rights": "User-supplied NeRazley ArtKit v1; source LICENSE_NOTES.md; no new licence assertion"
+  },
+  {
+    "file": "yard-fence.png",
+    "source": "assets/inbox/NeRazley_ArtKit_v1/05_WORLD/props/construction_fence.png",
+    "source_sha256": "71eb6ff4bc63fccc26d0aa7689f99ad907494ca346ae34147f081d1d936e8182",
+    "runtime_sha256": "dc28680bba5a008cc34cd44134b4258205a40b9aa9b5e8c526f3fbfbcc6dff8b",
+    "size": [
+      282,
+      194
+    ],
+    "transform": {
+      "alpha_bbox_crop": [
+        20,
+        84,
+        302,
+        278
+      ]
+    },
+    "rights": "User-supplied NeRazley ArtKit v1; source LICENSE_NOTES.md; no new licence assertion"
+  },
+  {
+    "file": "arrow-sign.png",
+    "source": "assets/inbox/NeRazley_ArtKit_v1/05_WORLD/props/arrow_sign.png",
+    "source_sha256": "075d29696b0d2c43df4fe7760795c0a85a7b1b28892fb56b7bd3980578719b34",
+    "runtime_sha256": "6373c6ddf04d511165f887f4a41a56f7df48959c77e2a01a9762a9d21ff4f81b",
+    "size": [
+      243,
+      245
+    ],
+    "transform": {
+      "alpha_bbox_crop": [
+        29,
+        21,
+        272,
+        266
+      ]
+    },
+    "rights": "User-supplied NeRazley ArtKit v1; source LICENSE_NOTES.md; no new licence assertion"
+  }
+]

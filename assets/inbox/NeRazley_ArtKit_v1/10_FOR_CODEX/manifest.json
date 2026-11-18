@@ -1,0 +1,2323 @@
+{
+  "title": "Не Разлей! — visual asset kit v1",
+  "version": "1.0.0",
+  "build_date": "2026-11-17",
+  "assets": [
+    {
+      "path": "01_BRAND/logo_full.png",
+      "vector": "01_BRAND/logo_full.svg",
+      "size": [
+        980,
+        460
+      ],
+      "category": "01_BRAND",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Editable logo and raster fallback; display text baked into PNG."
+    },
+    {
+      "path": "01_BRAND/app_icon_master.png",
+      "vector": "01_BRAND/app_icon_master.svg",
+      "size": [
+        512,
+        512
+      ],
+      "category": "01_BRAND",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Icon without title, suitable starting point for adaptive icon foreground. Do not use entire background as Android foreground."
+    },
+    {
+      "path": "03_VEHICLES/parts/scooter_body_no_wheels.png",
+      "vector": "03_VEHICLES/parts/scooter_body_no_wheels.svg",
+      "size": [
+        700,
+        370
+      ],
+      "category": "03_VEHICLES/parts",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Wheels intentionally separate. Wheel center points on 700x370 art: left (170,286), right (535,286); tune against physics configuration.",
+      "wheel_centers_px": [
+        [
+          170,
+          286
+        ],
+        [
+          535,
+          286
+        ]
+      ],
+      "art_pivot_px": [
+        350,
+        185
+      ]
+    },
+    {
+      "path": "03_VEHICLES/parts/wheel_side.png",
+      "vector": "03_VEHICLES/parts/wheel_side.svg",
+      "size": [
+        200,
+        200
+      ],
+      "category": "03_VEHICLES/parts",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Center (100,100); meant to rotate according to Planck wheel angle.",
+      "pivot_px": [
+        100,
+        100
+      ]
+    },
+    {
+      "path": "03_VEHICLES/parts/wheel_spare.png",
+      "vector": "03_VEHICLES/parts/wheel_spare.svg",
+      "size": [
+        200,
+        200
+      ],
+      "category": "03_VEHICLES/parts",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "",
+      "pivot_px": [
+        100,
+        100
+      ]
+    },
+    {
+      "path": "03_VEHICLES/parts/delivery_backpack.png",
+      "vector": "03_VEHICLES/parts/delivery_backpack.svg",
+      "size": [
+        320,
+        320
+      ],
+      "category": "03_VEHICLES/parts",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "",
+      "pivot_px": [
+        160,
+        160
+      ]
+    },
+    {
+      "path": "03_VEHICLES/parts/front_headlight.png",
+      "vector": "03_VEHICLES/parts/front_headlight.svg",
+      "size": [
+        160,
+        120
+      ],
+      "category": "03_VEHICLES/parts",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "03_VEHICLES/parts/scooter_seat.png",
+      "vector": "03_VEHICLES/parts/scooter_seat.svg",
+      "size": [
+        300,
+        110
+      ],
+      "category": "03_VEHICLES/parts",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "03_VEHICLES/parts/helmet_yellow.png",
+      "vector": "03_VEHICLES/parts/helmet_yellow.svg",
+      "size": [
+        210,
+        190
+      ],
+      "category": "03_VEHICLES/parts",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "04_CARGO/coffee.png",
+      "vector": "04_CARGO/coffee.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/coffee_tray.png",
+      "vector": "04_CARGO/coffee_tray.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/pizza_box.png",
+      "vector": "04_CARGO/pizza_box.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/pizza_slice.png",
+      "vector": "04_CARGO/pizza_slice.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/cake.png",
+      "vector": "04_CARGO/cake.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/eggs.png",
+      "vector": "04_CARGO/eggs.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/sushi.png",
+      "vector": "04_CARGO/sushi.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/parcel.png",
+      "vector": "04_CARGO/parcel.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/grocery_bag.png",
+      "vector": "04_CARGO/grocery_bag.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/watermelon.png",
+      "vector": "04_CARGO/watermelon.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/bottle.png",
+      "vector": "04_CARGO/bottle.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/fragile_crate.png",
+      "vector": "04_CARGO/fragile_crate.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/flowers.png",
+      "vector": "04_CARGO/flowers.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/icecream.png",
+      "vector": "04_CARGO/icecream.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "04_CARGO/noodles.png",
+      "vector": "04_CARGO/noodles.svg",
+      "size": [
+        260,
+        280
+      ],
+      "category": "04_CARGO",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual sprite; cargo durability is computed by gameplay physics, not by artwork."
+    },
+    {
+      "path": "05_WORLD/props/traffic_cone.png",
+      "vector": "05_WORLD/props/traffic_cone.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/barrier.png",
+      "vector": "05_WORLD/props/barrier.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/road_barrier_black.png",
+      "vector": "05_WORLD/props/road_barrier_black.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/wood_ramp.png",
+      "vector": "05_WORLD/props/wood_ramp.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/wood_plank.png",
+      "vector": "05_WORLD/props/wood_plank.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/crate.png",
+      "vector": "05_WORLD/props/crate.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/barrel.png",
+      "vector": "05_WORLD/props/barrel.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/tire_stack.png",
+      "vector": "05_WORLD/props/tire_stack.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/speed_bump.png",
+      "vector": "05_WORLD/props/speed_bump.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/pothole.png",
+      "vector": "05_WORLD/props/pothole.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/manhole.png",
+      "vector": "05_WORLD/props/manhole.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/brick_stack.png",
+      "vector": "05_WORLD/props/brick_stack.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/concrete_block.png",
+      "vector": "05_WORLD/props/concrete_block.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/trash_bin.png",
+      "vector": "05_WORLD/props/trash_bin.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/bench.png",
+      "vector": "05_WORLD/props/bench.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/bollard.png",
+      "vector": "05_WORLD/props/bollard.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/road_sign.png",
+      "vector": "05_WORLD/props/road_sign.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/arrow_sign.png",
+      "vector": "05_WORLD/props/arrow_sign.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/street_lamp.png",
+      "vector": "05_WORLD/props/street_lamp.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/bush.png",
+      "vector": "05_WORLD/props/bush.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/tree.png",
+      "vector": "05_WORLD/props/tree.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/hydrant.png",
+      "vector": "05_WORLD/props/hydrant.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/construction_fence.png",
+      "vector": "05_WORLD/props/construction_fence.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/ladder.png",
+      "vector": "05_WORLD/props/ladder.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/wood_pallet.png",
+      "vector": "05_WORLD/props/wood_pallet.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/construction_sack.png",
+      "vector": "05_WORLD/props/construction_sack.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/props/stair_section.png",
+      "vector": "05_WORLD/props/stair_section.svg",
+      "size": [
+        320,
+        280
+      ],
+      "category": "05_WORLD/props",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/tiles/asphalt_512x160.png",
+      "vector": "05_WORLD/tiles/asphalt_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/asphalt_cracked_512x160.png",
+      "vector": "05_WORLD/tiles/asphalt_cracked_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/wet_asphalt_512x160.png",
+      "vector": "05_WORLD/tiles/wet_asphalt_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/concrete_512x160.png",
+      "vector": "05_WORLD/tiles/concrete_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/sidewalk_512x160.png",
+      "vector": "05_WORLD/tiles/sidewalk_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/dirt_512x160.png",
+      "vector": "05_WORLD/tiles/dirt_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/grass_512x160.png",
+      "vector": "05_WORLD/tiles/grass_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/bricks_512x160.png",
+      "vector": "05_WORLD/tiles/bricks_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/wood_512x160.png",
+      "vector": "05_WORLD/tiles/wood_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/metal_512x160.png",
+      "vector": "05_WORLD/tiles/metal_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/snow_512x160.png",
+      "vector": "05_WORLD/tiles/snow_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/ice_512x160.png",
+      "vector": "05_WORLD/tiles/ice_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/hazard_512x160.png",
+      "vector": "05_WORLD/tiles/hazard_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "05_WORLD/tiles/gravel_512x160.png",
+      "vector": "05_WORLD/tiles/gravel_512x160.svg",
+      "size": [
+        512,
+        160
+      ],
+      "category": "05_WORLD/tiles",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Visual tile. Collision geometry MUST be authored separately; repeats horizontally, test seams."
+    },
+    {
+      "path": "06_UI/icons/play.png",
+      "vector": "06_UI/icons/play.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/pause.png",
+      "vector": "06_UI/icons/pause.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/home.png",
+      "vector": "06_UI/icons/home.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/back.png",
+      "vector": "06_UI/icons/back.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/forward.png",
+      "vector": "06_UI/icons/forward.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/replay.png",
+      "vector": "06_UI/icons/replay.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/gear.png",
+      "vector": "06_UI/icons/gear.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/garage.png",
+      "vector": "06_UI/icons/garage.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/orders.png",
+      "vector": "06_UI/icons/orders.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/coin.png",
+      "vector": "06_UI/icons/coin.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/star.png",
+      "vector": "06_UI/icons/star.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/check.png",
+      "vector": "06_UI/icons/check.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/close.png",
+      "vector": "06_UI/icons/close.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/plus.png",
+      "vector": "06_UI/icons/plus.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/minus.png",
+      "vector": "06_UI/icons/minus.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/clock.png",
+      "vector": "06_UI/icons/clock.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/shield.png",
+      "vector": "06_UI/icons/shield.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/heart.png",
+      "vector": "06_UI/icons/heart.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/lock.png",
+      "vector": "06_UI/icons/lock.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/unlock.png",
+      "vector": "06_UI/icons/unlock.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/box.png",
+      "vector": "06_UI/icons/box.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/warning.png",
+      "vector": "06_UI/icons/warning.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/forward_fast.png",
+      "vector": "06_UI/icons/forward_fast.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/bike.png",
+      "vector": "06_UI/icons/bike.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/wrench.png",
+      "vector": "06_UI/icons/wrench.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/bolt.png",
+      "vector": "06_UI/icons/bolt.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/music.png",
+      "vector": "06_UI/icons/music.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/sound.png",
+      "vector": "06_UI/icons/sound.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/mute.png",
+      "vector": "06_UI/icons/mute.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/flag.png",
+      "vector": "06_UI/icons/flag.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/pin.png",
+      "vector": "06_UI/icons/pin.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/gift.png",
+      "vector": "06_UI/icons/gift.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/trophy.png",
+      "vector": "06_UI/icons/trophy.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/helmet.png",
+      "vector": "06_UI/icons/helmet.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/bag.png",
+      "vector": "06_UI/icons/bag.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/cart.png",
+      "vector": "06_UI/icons/cart.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/chevron_up.png",
+      "vector": "06_UI/icons/chevron_up.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/chevron_down.png",
+      "vector": "06_UI/icons/chevron_down.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/info.png",
+      "vector": "06_UI/icons/info.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/crown.png",
+      "vector": "06_UI/icons/crown.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/hand.png",
+      "vector": "06_UI/icons/hand.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/speed.png",
+      "vector": "06_UI/icons/speed.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/brake.png",
+      "vector": "06_UI/icons/brake.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/lean.png",
+      "vector": "06_UI/icons/lean.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/icons/camera.png",
+      "vector": "06_UI/icons/camera.svg",
+      "size": [
+        64,
+        64
+      ],
+      "category": "06_UI/icons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Line icon. Tint in runtime or use as supplied cream-colored PNG."
+    },
+    {
+      "path": "06_UI/buttons/button_primary_normal.png",
+      "vector": "06_UI/buttons/button_primary_normal.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_primary_pressed.png",
+      "vector": "06_UI/buttons/button_primary_pressed.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_primary_disabled.png",
+      "vector": "06_UI/buttons/button_primary_disabled.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_secondary_normal.png",
+      "vector": "06_UI/buttons/button_secondary_normal.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_secondary_pressed.png",
+      "vector": "06_UI/buttons/button_secondary_pressed.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_secondary_disabled.png",
+      "vector": "06_UI/buttons/button_secondary_disabled.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_dark_normal.png",
+      "vector": "06_UI/buttons/button_dark_normal.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_dark_pressed.png",
+      "vector": "06_UI/buttons/button_dark_pressed.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_dark_disabled.png",
+      "vector": "06_UI/buttons/button_dark_disabled.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_success_normal.png",
+      "vector": "06_UI/buttons/button_success_normal.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_success_pressed.png",
+      "vector": "06_UI/buttons/button_success_pressed.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_success_disabled.png",
+      "vector": "06_UI/buttons/button_success_disabled.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_danger_normal.png",
+      "vector": "06_UI/buttons/button_danger_normal.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_danger_pressed.png",
+      "vector": "06_UI/buttons/button_danger_pressed.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/button_danger_disabled.png",
+      "vector": "06_UI/buttons/button_danger_disabled.svg",
+      "size": [
+        500,
+        175
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty graphic skin; place labels/icons with Phaser or React. Nine-slice: left/right 46px, top/bottom 42px.",
+      "nine_slice": [
+        46,
+        42,
+        46,
+        42
+      ]
+    },
+    {
+      "path": "06_UI/buttons/square_yellow_normal.png",
+      "vector": "06_UI/buttons/square_yellow_normal.svg",
+      "size": [
+        132,
+        140
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty square icon-button skin; icons should be separate."
+    },
+    {
+      "path": "06_UI/buttons/square_yellow_pressed.png",
+      "vector": "06_UI/buttons/square_yellow_pressed.svg",
+      "size": [
+        132,
+        140
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty square icon-button skin; icons should be separate."
+    },
+    {
+      "path": "06_UI/buttons/square_cream_normal.png",
+      "vector": "06_UI/buttons/square_cream_normal.svg",
+      "size": [
+        132,
+        140
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty square icon-button skin; icons should be separate."
+    },
+    {
+      "path": "06_UI/buttons/square_cream_pressed.png",
+      "vector": "06_UI/buttons/square_cream_pressed.svg",
+      "size": [
+        132,
+        140
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty square icon-button skin; icons should be separate."
+    },
+    {
+      "path": "06_UI/buttons/square_dark_normal.png",
+      "vector": "06_UI/buttons/square_dark_normal.svg",
+      "size": [
+        132,
+        140
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty square icon-button skin; icons should be separate."
+    },
+    {
+      "path": "06_UI/buttons/square_dark_pressed.png",
+      "vector": "06_UI/buttons/square_dark_pressed.svg",
+      "size": [
+        132,
+        140
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty square icon-button skin; icons should be separate."
+    },
+    {
+      "path": "06_UI/buttons/square_red_normal.png",
+      "vector": "06_UI/buttons/square_red_normal.svg",
+      "size": [
+        132,
+        140
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty square icon-button skin; icons should be separate."
+    },
+    {
+      "path": "06_UI/buttons/square_red_pressed.png",
+      "vector": "06_UI/buttons/square_red_pressed.svg",
+      "size": [
+        132,
+        140
+      ],
+      "category": "06_UI/buttons",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Empty square icon-button skin; icons should be separate."
+    },
+    {
+      "path": "06_UI/panels/panel_dark.png",
+      "vector": "06_UI/panels/panel_dark.svg",
+      "size": [
+        540,
+        350
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/panel_cream.png",
+      "vector": "06_UI/panels/panel_cream.svg",
+      "size": [
+        540,
+        350
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/panel_header.png",
+      "vector": "06_UI/panels/panel_header.svg",
+      "size": [
+        700,
+        130
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/hud_pill.png",
+      "vector": "06_UI/panels/hud_pill.svg",
+      "size": [
+        440,
+        120
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/ribbon_yellow.png",
+      "vector": "06_UI/panels/ribbon_yellow.svg",
+      "size": [
+        600,
+        160
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/ribbon_purple.png",
+      "vector": "06_UI/panels/ribbon_purple.svg",
+      "size": [
+        600,
+        160
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/progress_track.png",
+      "vector": "06_UI/panels/progress_track.svg",
+      "size": [
+        500,
+        90
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/progress_fill_green.png",
+      "vector": "06_UI/panels/progress_fill_green.svg",
+      "size": [
+        500,
+        90
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/progress_fill_yellow.png",
+      "vector": "06_UI/panels/progress_fill_yellow.svg",
+      "size": [
+        500,
+        90
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/progress_fill_red.png",
+      "vector": "06_UI/panels/progress_fill_red.svg",
+      "size": [
+        500,
+        90
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/game_hud_panel.png",
+      "vector": "06_UI/panels/game_hud_panel.svg",
+      "size": [
+        850,
+        115
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/menu_tab_active.png",
+      "vector": "06_UI/panels/menu_tab_active.svg",
+      "size": [
+        360,
+        110
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/menu_tab_inactive.png",
+      "vector": "06_UI/panels/menu_tab_inactive.svg",
+      "size": [
+        360,
+        110
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "06_UI/panels/star_holder.png",
+      "vector": "06_UI/panels/star_holder.svg",
+      "size": [
+        400,
+        110
+      ],
+      "category": "06_UI/panels",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Unlabeled scalable UI element. Use nine-slicing for corners when resizing."
+    },
+    {
+      "path": "07_FX/splash.png",
+      "vector": "07_FX/splash.svg",
+      "size": [
+        320,
+        320
+      ],
+      "category": "07_FX",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "07_FX/dust.png",
+      "vector": "07_FX/dust.svg",
+      "size": [
+        320,
+        320
+      ],
+      "category": "07_FX",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "07_FX/impact.png",
+      "vector": "07_FX/impact.svg",
+      "size": [
+        320,
+        320
+      ],
+      "category": "07_FX",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "07_FX/speedlines.png",
+      "vector": "07_FX/speedlines.svg",
+      "size": [
+        320,
+        320
+      ],
+      "category": "07_FX",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "07_FX/confetti.png",
+      "vector": "07_FX/confetti.svg",
+      "size": [
+        320,
+        320
+      ],
+      "category": "07_FX",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "07_FX/glint.png",
+      "vector": "07_FX/glint.svg",
+      "size": [
+        320,
+        320
+      ],
+      "category": "07_FX",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "07_FX/warning.png",
+      "vector": "07_FX/warning.svg",
+      "size": [
+        320,
+        320
+      ],
+      "category": "07_FX",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "07_FX/spark.png",
+      "vector": "07_FX/spark.svg",
+      "size": [
+        320,
+        320
+      ],
+      "category": "07_FX",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "07_FX/leaf.png",
+      "vector": "07_FX/leaf.svg",
+      "size": [
+        320,
+        320
+      ],
+      "category": "07_FX",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": ""
+    },
+    {
+      "path": "05_WORLD/backgrounds/courtyard/sky.png",
+      "vector": "05_WORLD/backgrounds/courtyard/sky.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/courtyard",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0,
+      "scene": "courtyard",
+      "layer": "sky"
+    },
+    {
+      "path": "05_WORLD/backgrounds/courtyard/far.png",
+      "vector": "05_WORLD/backgrounds/courtyard/far.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/courtyard",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.15,
+      "scene": "courtyard",
+      "layer": "far"
+    },
+    {
+      "path": "05_WORLD/backgrounds/courtyard/mid.png",
+      "vector": "05_WORLD/backgrounds/courtyard/mid.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/courtyard",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.35,
+      "scene": "courtyard",
+      "layer": "mid"
+    },
+    {
+      "path": "05_WORLD/backgrounds/courtyard/near.png",
+      "vector": "05_WORLD/backgrounds/courtyard/near.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/courtyard",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.6,
+      "scene": "courtyard",
+      "layer": "near"
+    },
+    {
+      "path": "05_WORLD/backgrounds/construction/sky.png",
+      "vector": "05_WORLD/backgrounds/construction/sky.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/construction",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0,
+      "scene": "construction",
+      "layer": "sky"
+    },
+    {
+      "path": "05_WORLD/backgrounds/construction/far.png",
+      "vector": "05_WORLD/backgrounds/construction/far.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/construction",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.15,
+      "scene": "construction",
+      "layer": "far"
+    },
+    {
+      "path": "05_WORLD/backgrounds/construction/mid.png",
+      "vector": "05_WORLD/backgrounds/construction/mid.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/construction",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.35,
+      "scene": "construction",
+      "layer": "mid"
+    },
+    {
+      "path": "05_WORLD/backgrounds/construction/near.png",
+      "vector": "05_WORLD/backgrounds/construction/near.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/construction",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.6,
+      "scene": "construction",
+      "layer": "near"
+    },
+    {
+      "path": "05_WORLD/backgrounds/winter/sky.png",
+      "vector": "05_WORLD/backgrounds/winter/sky.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/winter",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0,
+      "scene": "winter",
+      "layer": "sky"
+    },
+    {
+      "path": "05_WORLD/backgrounds/winter/far.png",
+      "vector": "05_WORLD/backgrounds/winter/far.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/winter",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.15,
+      "scene": "winter",
+      "layer": "far"
+    },
+    {
+      "path": "05_WORLD/backgrounds/winter/mid.png",
+      "vector": "05_WORLD/backgrounds/winter/mid.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/winter",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.35,
+      "scene": "winter",
+      "layer": "mid"
+    },
+    {
+      "path": "05_WORLD/backgrounds/winter/near.png",
+      "vector": "05_WORLD/backgrounds/winter/near.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/winter",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.6,
+      "scene": "winter",
+      "layer": "near"
+    },
+    {
+      "path": "05_WORLD/backgrounds/evening/sky.png",
+      "vector": "05_WORLD/backgrounds/evening/sky.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/evening",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0,
+      "scene": "evening",
+      "layer": "sky"
+    },
+    {
+      "path": "05_WORLD/backgrounds/evening/far.png",
+      "vector": "05_WORLD/backgrounds/evening/far.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/evening",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.15,
+      "scene": "evening",
+      "layer": "far"
+    },
+    {
+      "path": "05_WORLD/backgrounds/evening/mid.png",
+      "vector": "05_WORLD/backgrounds/evening/mid.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/evening",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.35,
+      "scene": "evening",
+      "layer": "mid"
+    },
+    {
+      "path": "05_WORLD/backgrounds/evening/near.png",
+      "vector": "05_WORLD/backgrounds/evening/near.svg",
+      "size": [
+        2048,
+        1024
+      ],
+      "category": "05_WORLD/backgrounds/evening",
+      "source": "original editable SVG",
+      "runtime_usable": true,
+      "notes": "Parallax layer. Do not use collisions from artwork. Background layers are for visual depth only.",
+      "parallax_factor": 0.6,
+      "scene": "evening",
+      "layer": "near"
+    },
+    {
+      "path": "02_CHARACTERS_AI_PNG/scooter_full_ai_reference.png",
+      "size": [
+        359,
+        291
+      ],
+      "category": "02_CHARACTERS_AI_PNG",
+      "source": "AI-generated illustration, manual crop",
+      "runtime_usable": true,
+      "notes": "Transparent 2D concept sprite. Poses are NOT frame-consistent animation frames or rigged parts. For final production, redraw/rig as needed."
+    },
+    {
+      "path": "02_CHARACTERS_AI_PNG/rider_on_scooter_ai_reference.png",
+      "size": [
+        357,
+        346
+      ],
+      "category": "02_CHARACTERS_AI_PNG",
+      "source": "AI-generated illustration, manual crop",
+      "runtime_usable": true,
+      "notes": "Transparent 2D concept sprite. Poses are NOT frame-consistent animation frames or rigged parts. For final production, redraw/rig as needed."
+    },
+    {
+      "path": "02_CHARACTERS_AI_PNG/rider_seated_ai_reference.png",
+      "size": [
+        314,
+        361
+      ],
+      "category": "02_CHARACTERS_AI_PNG",
+      "source": "AI-generated illustration, manual crop",
+      "runtime_usable": true,
+      "notes": "Transparent 2D concept sprite. Poses are NOT frame-consistent animation frames or rigged parts. For final production, redraw/rig as needed."
+    },
+    {
+      "path": "02_CHARACTERS_AI_PNG/rider_surprised_ai_reference.png",
+      "size": [
+        312,
+        340
+      ],
+      "category": "02_CHARACTERS_AI_PNG",
+      "source": "AI-generated illustration, manual crop",
+      "runtime_usable": true,
+      "notes": "Transparent 2D concept sprite. Poses are NOT frame-consistent animation frames or rigged parts. For final production, redraw/rig as needed."
+    },
+    {
+      "path": "02_CHARACTERS_AI_PNG/rider_crouch_ai_reference.png",
+      "size": [
+        306,
+        359
+      ],
+      "category": "02_CHARACTERS_AI_PNG",
+      "source": "AI-generated illustration, manual crop",
+      "runtime_usable": true,
+      "notes": "Transparent 2D concept sprite. Poses are NOT frame-consistent animation frames or rigged parts. For final production, redraw/rig as needed."
+    },
+    {
+      "path": "02_CHARACTERS_AI_PNG/rider_standing_ai_reference.png",
+      "size": [
+        197,
+        465
+      ],
+      "category": "02_CHARACTERS_AI_PNG",
+      "source": "AI-generated illustration, manual crop",
+      "runtime_usable": true,
+      "notes": "Transparent 2D concept sprite. Poses are NOT frame-consistent animation frames or rigged parts. For final production, redraw/rig as needed."
+    },
+    {
+      "path": "02_CHARACTERS_AI_PNG/backpack_ai_reference.png",
+      "size": [
+        308,
+        305
+      ],
+      "category": "02_CHARACTERS_AI_PNG",
+      "source": "AI-generated illustration, manual crop",
+      "runtime_usable": true,
+      "notes": "Transparent 2D concept sprite. Poses are NOT frame-consistent animation frames or rigged parts. For final production, redraw/rig as needed."
+    },
+    {
+      "path": "02_CHARACTERS_AI_PNG/wheel_ai_reference.png",
+      "size": [
+        304,
+        317
+      ],
+      "category": "02_CHARACTERS_AI_PNG",
+      "source": "AI-generated illustration, manual crop",
+      "runtime_usable": true,
+      "notes": "Transparent 2D concept sprite. Poses are NOT frame-consistent animation frames or rigged parts. For final production, redraw/rig as needed."
+    }
+  ]
+}

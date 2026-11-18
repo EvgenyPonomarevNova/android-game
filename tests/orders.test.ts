@@ -1,0 +1,60 @@
+import { expect, it } from 'vitest';
+import {
+  COFFEE_ORDER,
+  deliveryRecordKey,
+  isBetterResult,
+  rateDelivery,
+} from '../src/game/core/Orders';
+import { integrityPercent } from '../src/shared/GameFeedback';
+const run = { seconds: COFFEE_ORDER.targetSeconds - 2, integrity: 95, levelId: 'test-yard' };
+it('grades hot meals by measured temperature as well as speed and integrity', () => {
+  const rules = {
+    ...COFFEE_ORDER,
+    targetSeconds: 100,
+    silverSeconds: 125,
+    minimumTemperature: 50,
+    silverTemperature: 60,
+    goldTemperature: 68,
+  };
+  const hot = { ...run, seconds: 90, temperature: 68 };
+  expect(rateDelivery(hot, rules).medal).toBe('gold');
+  expect(rateDelivery({ ...hot, temperature: 67.99 }, rules).medal).toBe('silver');
+  expect(rateDelivery({ ...hot, temperature: 59.9 }, rules).medal).toBe('bronze');
+  for (const temperature of [49.9, NaN, undefined])
+    expect(rateDelivery({ ...hot, temperature }, rules).success).toBe(false);
+  expect(rateDelivery({ ...hot, checkpointUsed: true }, rules).medal).toBe('bronze');
+});
+it('rates delivery using raw integrity, medal deadlines and checkpoint cap', () => {
+  expect(rateDelivery(run).stars).toBe(3);
+  expect(rateDelivery({ ...run, seconds: COFFEE_ORDER.targetSeconds + 1 }).stars).toBe(2);
+  expect(rateDelivery({ ...run, integrity: 69 }).stars).toBe(1);
+  expect(rateDelivery({ ...run, integrity: 29 }).stars).toBe(0);
+  expect(rateDelivery({ ...run, success: false }).score).toBe(0);
+  expect(rateDelivery({ ...run, checkpointUsed: true })).toMatchObject({
+    stars: 1,
+    medal: 'bronze',
+  });
+  expect(rateDelivery({ ...run, seconds: COFFEE_ORDER.deadlineSeconds + 1 })).toMatchObject({
+    success: false,
+    stars: 0,
+    medal: null,
+  });
+  expect(rateDelivery({ ...run, seconds: COFFEE_ORDER.silverSeconds + 1 }).stars).toBe(1);
+  expect(rateDelivery({ ...run, integrity: 90, seconds: COFFEE_ORDER.targetSeconds }).medal).toBe(
+    'gold',
+  );
+});
+it('keeps the best delivery when a later run is worse', () => {
+  const best = rateDelivery(run);
+  expect(isBetterResult(rateDelivery({ ...run, integrity: 70 }), best)).toBe(false);
+  expect(isBetterResult({ ...best, seconds: best.seconds - 1 }, best)).toBe(true);
+  expect(isBetterResult(best, best)).toBe(false);
+});
+it('keeps presentation rounding separate from grading and old route records', () => {
+  expect(integrityPercent(59.6)).toBe(60);
+  expect(integrityPercent(59.2)).toBe(59);
+  expect(integrityPercent(NaN)).toBe(0);
+  expect(rateDelivery({ ...run, integrity: 89.8 }).stars).toBe(2);
+  expect(deliveryRecordKey('test-yard')).not.toBe('test-yard');
+  expect(deliveryRecordKey('test-yard')).not.toBe('test-yard:mission-04');
+});

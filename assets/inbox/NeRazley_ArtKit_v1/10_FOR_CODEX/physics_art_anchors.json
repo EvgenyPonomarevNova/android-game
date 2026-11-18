@@ -1,0 +1,39 @@
+{
+  "scooter_body_no_wheels": {
+    "asset": "03_VEHICLES/parts/scooter_body_no_wheels.png",
+    "size": [
+      700,
+      370
+    ],
+    "wheel_centers_px": [
+      [
+        170,
+        286
+      ],
+      [
+        535,
+        286
+      ]
+    ],
+    "body_center_px": [
+      350,
+      185
+    ],
+    "notes": "Visual reference anchors only. Planck physics fixture dimensions and transforms must be calibrated in-game."
+  },
+  "wheel_side": {
+    "asset": "03_VEHICLES/parts/wheel_side.png",
+    "size": [
+      200,
+      200
+    ],
+    "center_px": [
+      100,
+      100
+    ]
+  },
+  "recommended_world_settings": {
+    "pixels_per_meter": 60,
+    "simulation_step_seconds": 0.0166666666667
+  }
+}
