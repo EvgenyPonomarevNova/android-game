@@ -17,6 +17,7 @@ export class Scooter implements Vehicle {
   readonly chassis: Body;
   readonly wheels: Body[] = [];
   readonly joints: WheelJoint[] = [];
+  supportedWheelCount = 0;
   readonly motion: VehicleMotion = {
     grounded: false,
     accelerationX: 0,
@@ -124,7 +125,9 @@ export class Scooter implements Vehicle {
   afterStep(dt: number): void {
     const velocity = this.chassis.getLinearVelocity();
     let grounded = false;
+    this.supportedWheelCount = 0;
     for (const wheel of this.wheels) {
+      let supported = false;
       for (let edge = wheel.getContactList(); edge; edge = edge.next) {
         const { contact, other } = edge;
         if (!other || other.getType() !== 'static' || !contact.isTouching() || !contact.isEnabled())
@@ -135,8 +138,12 @@ export class Scooter implements Vehicle {
         const manifold = contact.getWorldManifold(null);
         if (!manifold || contact.getManifold().pointCount === 0) continue;
         const up = a.getBody() === wheel ? -manifold.normal.y : manifold.normal.y;
-        if (up > 0.3) grounded = true;
+        if (up > 0.3) {
+          grounded = true;
+          supported = true;
+        }
       }
+      if (supported) this.supportedWheelCount++;
     }
     if (grounded) {
       if (this.airborneSeconds >= this.config.landingAirSeconds) {

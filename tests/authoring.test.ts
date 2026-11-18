@@ -36,9 +36,9 @@ it('requires explicit publication and keeps a malformed import from breaking the
   expect(draft.level.platforms?.length).toBeGreaterThan(0);
   expect(draft.level.checkpoint).toBeDefined();
   expect(parseLevelDocument(serializeLevel(draft)).level.fork).toEqual(draft.level.fork);
-  expect(buildLevelCatalog({ 'draft.json': serializeLevel(draft) }).levels).toHaveLength(1);
+  expect(buildLevelCatalog({ 'draft.json': serializeLevel(draft) }).levels).toHaveLength(2);
   draft.status = 'published';
   const catalog = buildLevelCatalog({ 'new.json': serializeLevel(draft), 'bad.json': '{}' });
-  expect(catalog.levels).toHaveLength(2);
+  expect(catalog.levels).toHaveLength(3);
   expect(catalog.errors).toHaveLength(1);
 });

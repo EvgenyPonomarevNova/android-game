@@ -1,7 +1,15 @@
 import { AABB, Box, Chain, Vec2, type Body, type Contact, type Fixture } from 'planck';
-import { RACE_RULES, SCOOTER } from '../../config/game';
+import { RACE_RULES } from '../../config/game';
 import { EventBus } from '../../shared/EventBus';
-import { Cargo, COFFEE, SURPRISE, type CargoComponent, type CargoEvents } from '../cargo/Cargo';
+import {
+  Cargo,
+  COFFEE,
+  SURPRISE,
+  HOT_MEAL,
+  type CargoComponent,
+  type CargoEvents,
+} from '../cargo/Cargo';
+import { defaultVehicleSetup, type VehicleSetup } from '../../shared/Progression';
 import type { ControlState } from '../input/InputController';
 import {
   SURFACES,
@@ -13,12 +21,14 @@ import {
 } from '../levels/testLevel';
 import { PhysicsWorld } from '../physics/PhysicsWorld';
 import { Scooter } from '../vehicle/Vehicle';
+import { resolveVehicleSetup, type ResolvedVehicleSetup } from '../vehicle/Tuning';
 
 export type RaceOutcome =
   | { success: true; reason: 'delivered' }
   | {
       success: false;
-      reason: 'cargo-destroyed' | 'cargo-rejected' | 'overturned' | 'out-of-bounds' | 'deadline';
+      reason:
+        'cargo-destroyed' | 'cargo-rejected' | 'overturned' | 'out-of-bounds' | 'deadline' | 'cold';
     };
 
 export class Simulation {
@@ -41,12 +51,50 @@ export class Simulation {
   checkpointUsed = false;
   falls = 0;
   routeChoice: 'safe' | 'risky' | null = null;
+  cleanLandings = 0;
+  balancedSections = 0;
+  private tuning: ResolvedVehicleSetup;
+  get setup(): VehicleSetup {
+    return {
+      ...this.tuning.setup,
+      parts: { ...this.tuning.setup.parts },
+      skills: [...this.tuning.setup.skills],
+    };
+  }
+  get temperature(): number | undefined {
+    const t = this.level.temperature;
+    return t
+      ? Math.max(
+          t.ambient,
+          t.initial - (this.elapsed * t.coolingPerSecond) / this.tuning.cargoMount.insulation,
+        )
+      : undefined;
+  }
+  private lastLandingId = 0;
+  private ignoreSpawnLanding = true;
+  private pendingLanding: { at: number; before: number; speed: number; proper: boolean } | null =
+    null;
+  private countedSections = new Set<number>();
+  private sectionStats: {
+    index: number;
+    at: number;
+    x: number;
+    before: number;
+    low: number;
+    high: number;
+    leanTicks: number;
+    bad: boolean;
+  } | null = null;
   private checkpointReached = false;
   private overturnedSeconds = 0;
   private previousBottom = new Map<Body, number>();
 
-  constructor(readonly level: LevelData = testLevel) {
+  constructor(
+    readonly level: LevelData = testLevel,
+    setup: VehicleSetup = defaultVehicleSetup(),
+  ) {
     validateLevel(level);
+    this.tuning = resolveVehicleSetup(setup);
     this.populate(level.start);
   }
 
@@ -56,6 +104,10 @@ export class Simulation {
     landingId = 0,
   ): void {
     this.previousBottom.clear();
+    this.lastLandingId = landingId;
+    this.ignoreSpawnLanding = true;
+    this.pendingLanding = null;
+    this.sectionStats = null;
     const ground = this.physics.world.createBody();
     const road = ground.createFixture(
       Chain(
@@ -98,22 +150,37 @@ export class Simulation {
         }
         supports.add(contact);
       }
-      const material = platform
-        ? SURFACES[platform.surface]
-        : SURFACES[surfaceAt(this.level, manifold.points[0]!.x)];
-      contact.setFriction(Math.sqrt(material.friction * other.getFriction()));
+      const surface = platform?.surface ?? surfaceAt(this.level, manifold.points[0]!.x);
+      const material = SURFACES[surface];
+      const coefficient = Math.sqrt(material.friction * other.getFriction());
+      const grip = this.vehicle.wheels.includes(other.getBody())
+        ? this.tuning.tireGrip[surface]
+        : 1;
+      contact.setFriction(grip === 1 ? coefficient : coefficient * grip);
     });
     for (const o of this.level.obstacles) {
       const body = this.physics.world.createBody({ position: Vec2(o.x, o.y) });
       body.createFixture(Box(o.width / 2, o.height / 2), { friction: 0.8 });
     }
-    this.activeVehicle = new Scooter(this.physics, start.x, start.y, SCOOTER);
+    this.activeVehicle = new Scooter(this.physics, start.x, start.y, this.tuning.vehicle);
     this.vehicle.motion.landingId = landingId;
+    const baseCargo =
+      this.level.cargo === 'hot-meal'
+        ? HOT_MEAL
+        : this.level.cargo === 'surprise'
+          ? SURPRISE
+          : COFFEE;
+    const mount = this.tuning.cargoMount;
     this.activeCargo = new Cargo(
       this.physics,
       this.vehicle.chassis,
-      this.level.cargo === 'surprise' ? SURPRISE : COFFEE,
+      mount.addedMass ? { ...baseCargo, mass: baseCargo.mass + mount.addedMass } : baseCargo,
       this.events,
+      {
+        frequencyHz: mount.frequencyHz,
+        dampingRatio: mount.dampingRatio,
+        softLanding: this.tuning.setup.skills.includes('soft_landing'),
+      },
     );
     if (components) this.cargo.restoreComponents(components);
   }
@@ -141,7 +208,15 @@ export class Simulation {
       (dt) => {
         this.elapsed += dt;
         this.vehicle.afterStep(dt);
-        this.cargo.afterStep(dt, this.vehicle.motion);
+        this.observeLanding();
+        const proper =
+          this.pendingLanding !== null &&
+          this.elapsed - this.pendingLanding.at <= 0.2 &&
+          this.isAlignedLanding();
+        if (proper && this.pendingLanding) this.pendingLanding.proper = true;
+        this.cargo.afterStep(dt, this.vehicle.motion, proper);
+        this.finishLandingMeasurement();
+        this.observeBalance(input);
         const p = this.vehicle.chassis.getPosition();
         const atFinish =
           p.x >= this.level.finish.x &&
@@ -156,6 +231,10 @@ export class Simulation {
             this.end({ success: false, reason: 'deadline' });
             return;
           }
+        }
+        if (this.level.temperature && this.temperature! < this.level.temperature.minimum) {
+          this.end({ success: false, reason: 'cold' });
+          return;
         }
         if (p.y < RACE_RULES.minWorldY) {
           this.end({ success: false, reason: 'out-of-bounds' });
@@ -190,6 +269,99 @@ export class Simulation {
         if (atFinish) this.end({ success: true, reason: 'delivered' });
       },
     );
+  }
+
+  private observeLanding(): void {
+    const motion = this.vehicle.motion;
+    if (motion.landingId === this.lastLandingId) return;
+    this.lastLandingId = motion.landingId;
+    if (this.ignoreSpawnLanding) {
+      this.ignoreSpawnLanding = false;
+      return;
+    }
+    this.pendingLanding = {
+      at: this.elapsed,
+      before: this.cargo.integrity,
+      speed: motion.landingImpact,
+      proper: false,
+    };
+  }
+
+  private isAlignedLanding(): boolean {
+    if (
+      this.vehicle.supportedWheelCount !== 2 ||
+      Math.abs(this.vehicle.chassis.getAngularVelocity()) > 1.2
+    )
+      return false;
+    let nx = 0,
+      ny = 0;
+    for (const wheel of this.vehicle.wheels)
+      for (let edge = wheel.getContactList(); edge; edge = edge.next) {
+        const c = edge.contact;
+        if (!edge.other || edge.other.getType() !== 'static' || !c.isEnabled() || !c.isTouching())
+          continue;
+        const m = c.getWorldManifold(null);
+        if (!m || c.getManifold().pointCount === 0) continue;
+        const sign = c.getFixtureA().getBody() === wheel ? -1 : 1;
+        if (m.normal.y * sign <= 0.3) continue;
+        nx += m.normal.x * sign;
+        ny += m.normal.y * sign;
+      }
+    const difference = this.vehicle.chassis.getAngle() - Math.atan2(-nx, ny);
+    return ny > 0 && Math.abs(Math.atan2(Math.sin(difference), Math.cos(difference))) <= 0.3;
+  }
+
+  private finishLandingMeasurement(): void {
+    const landing = this.pendingLanding;
+    if (!landing || this.elapsed - landing.at < 0.25) return;
+    if (
+      landing.speed >= 1.5 &&
+      landing.speed <= 6 &&
+      landing.proper &&
+      this.cargo.integrity >= landing.before - 0.01
+    )
+      this.cleanLandings++;
+    this.pendingLanding = null;
+  }
+
+  private observeBalance(input: ControlState): void {
+    const sections = this.level.sections ?? [];
+    const p = this.vehicle.chassis.getPosition();
+    let index = -1;
+    for (let i = 0; i < sections.length; i++) if (p.x >= sections[i]!.x) index = i;
+    if (index < 0) return;
+    const previous = this.sectionStats;
+    if (!previous || index > previous.index) {
+      if (
+        previous &&
+        !this.countedSections.has(previous.index) &&
+        !previous.bad &&
+        this.elapsed - previous.at >= 1 &&
+        p.x - previous.x >= 8 &&
+        previous.high - previous.low >= 0.7 &&
+        previous.leanTicks >= 12 &&
+        this.cargo.integrity >= previous.before - 2
+      ) {
+        this.balancedSections++;
+        this.countedSections.add(previous.index);
+      }
+      this.sectionStats = {
+        index,
+        at: this.elapsed,
+        x: p.x,
+        before: this.cargo.integrity,
+        low: p.y,
+        high: p.y,
+        leanTicks: 0,
+        bad: false,
+      };
+    }
+    const s = this.sectionStats!;
+    s.low = Math.min(s.low, p.y);
+    s.high = Math.max(s.high, p.y);
+    if (input.lean) s.leanTicks++;
+    if (this.vehicle.motion.grounded && Math.cos(this.vehicle.chassis.getAngle()) < Math.cos(1.2))
+      s.bad = true;
   }
 
   get checkpointAvailable(): boolean {

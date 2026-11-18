@@ -1,4 +1,5 @@
 import { testLevel } from '../levels/testLevel';
+import { hotMealLevel } from '../levels/hotMealLevel';
 import { parseLevelDocument, type LevelDocument } from '../authoring/LevelAuthoring';
 
 /** JSON files are discoverable without editing scenes. Drafts never enter the public catalogue. */
@@ -11,7 +12,11 @@ export function buildLevelCatalog(sources: Record<string, unknown>): {
   levels: LevelDocument[];
   errors: string[];
 } {
-  const levels: LevelDocument[] = [{ schemaVersion: 1, status: 'published', level: testLevel }];
+  const levels: LevelDocument[] = [testLevel, hotMealLevel].map((level) => ({
+    schemaVersion: 1,
+    status: 'published',
+    level,
+  }));
   const errors: string[] = [];
   for (const [path, raw] of Object.entries(sources)) {
     try {

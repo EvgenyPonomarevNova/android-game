@@ -1,0 +1,30 @@
+[
+  {
+    "levelId": "contract_001_surprise_fifth",
+    "number": "001",
+    "title": "Сюрприз на пятом",
+    "customer": "Солнечная, 5-й подъезд",
+    "cargoLabel": "Мини-торт + два напитка",
+    "description": "До праздника три минуты. Проезд перекрыли. Довези торт и напитки: через ремонт быстрее, в объезд — спокойнее.",
+    "dispatcher": "Праздник через три минуты. Двор перекрыт. Успеешь объехать?",
+    "difficultyLabel": "Техничный маршрут",
+    "rewardCoins": 150,
+    "rewardXp": 80,
+    "unlockAfter": null,
+    "theme": "day"
+  },
+  {
+    "levelId": "contract_002_while_hot",
+    "number": "002",
+    "title": "Пока горячее!",
+    "customer": "Вечерняя, дом 12",
+    "cargoLabel": "Две порции лапши + суп",
+    "description": "После дождя двор скользит. На пути ремонт, мокрые плиты и крутой спуск. Еда остывает: найди свой темп между осторожностью и скоростью.",
+    "dispatcher": "Только приготовили. Не остуди и не расплескай!",
+    "difficultyLabel": "Мокрый вечер · температура",
+    "rewardCoins": 200,
+    "rewardXp": 100,
+    "unlockAfter": "contract_001_surprise_fifth",
+    "theme": "rain-evening"
+  }
+]

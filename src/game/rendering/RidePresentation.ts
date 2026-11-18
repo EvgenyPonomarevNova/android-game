@@ -60,7 +60,7 @@ export class RidePresentation {
     this.ink.clear();
   }
 
-  private burst(x: number, y: number, count: number, coffee: boolean): void {
+  private burst(x: number, y: number, count: number, coffee: boolean, wet = false): void {
     for (let i = 0; i < count; i++) {
       const dot = this.specks.find((p) => p.life <= 0);
       if (!dot) break;
@@ -72,7 +72,7 @@ export class RidePresentation {
         vy: -(24 + (i % 3) * 12) * this.scale,
         life: 0.32,
         duration: 0.32,
-        color: coffee ? 0xb76f36 : 0xb4ad97,
+        color: coffee ? 0xb76f36 : wet ? 0xa1cfdf : 0xb4ad97,
         radius: (coffee ? 1.9 : 2.5) * this.scale,
       });
     }
@@ -86,6 +86,7 @@ export class RidePresentation {
     crashed: boolean,
     dt: number,
     reduced: boolean,
+    wet = false,
   ): void {
     const pose = this.feedback.step(motion, stress, crashed, dt, reduced);
     this.rider.setRotation(pose.riderLean).setY(-4 + pose.riderY);
@@ -107,15 +108,15 @@ export class RidePresentation {
     }
     this.impacts.length = 0;
     const wheelY = this.rearWheel.y + this.rearWheel.displayHeight / 2;
-    if (pose.landed) this.burst(this.rearWheel.x, wheelY, 4, false);
+    if (pose.landed) this.burst(this.rearWheel.x, wheelY, 4, false, wet);
     this.dustAt = Math.max(0, this.dustAt - dt);
     if (
       motion.grounded &&
       Math.abs(speed) > 2.5 &&
-      (gravel || motion.accelerationX < -3) &&
+      (wet || gravel || motion.accelerationX < -3) &&
       this.dustAt === 0
     ) {
-      this.burst(this.rearWheel.x, wheelY, 2, false);
+      this.burst(this.rearWheel.x, wheelY, 2, false, wet);
       this.dustAt = 0.16;
     }
     this.ink.clear();

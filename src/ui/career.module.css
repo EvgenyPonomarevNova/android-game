@@ -1,0 +1,482 @@
+.screen {
+  position: absolute;
+  inset: max(12px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px))
+    max(20px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 14px;
+  color: #fff7e8;
+  background: #101d30f5;
+  border: 1px solid #fff7e824;
+  border-radius: 22px;
+  padding: 20px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.header h1 {
+  margin: 0;
+  font-size: clamp(22px, 3vw, 32px);
+  letter-spacing: -0.025em;
+}
+.header p,
+.eyebrow {
+  margin: 0 0 5px;
+  color: #ffd12b;
+  letter-spacing: 0.09em;
+  font-size: 10px;
+  font-weight: 800;
+}
+.header > span {
+  margin-left: auto;
+  color: #afbed0;
+  font-size: 12px;
+}
+.header button,
+.secondary {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid #6c7d92;
+  border-radius: 12px;
+  color: #fff7e8;
+  background: #263c54;
+  font-weight: 700;
+}
+.summary {
+  display: grid;
+  grid-template-columns: 1.5fr 0.65fr 1fr;
+  gap: 24px;
+  background: #1b2d44;
+  border-radius: 13px;
+  padding: 12px 18px;
+}
+.summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.summary strong {
+  font-size: 22px;
+  line-height: 1.1;
+}
+.summary small {
+  color: #bbcadc;
+  font-size: 11px;
+}
+.summary progress {
+  width: 100%;
+  height: 5px;
+  accent-color: #ffd12b;
+}
+.gold {
+  color: #ffd12b;
+}
+.garageGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 20px;
+  min-height: 0;
+}
+.showcase {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  background: radial-gradient(ellipse at 40% 35%, #46607855, transparent 65%), #17283d;
+  padding: 16px;
+  overflow: auto;
+}
+.modelTabs,
+.slotTabs {
+  display: flex;
+  gap: 6px;
+}
+.modelTabs button,
+.slotTabs button {
+  flex: 1;
+  min-height: 44px;
+  border-radius: 10px;
+  border: 1px solid #526a84;
+  background: #20364e;
+  color: #c3cfdd;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px;
+}
+.modelTabs button[aria-pressed='true'],
+.slotTabs button[aria-pressed='true'],
+.parts button[aria-pressed='true'] {
+  color: #fff7e8;
+  border-color: #ffd12b;
+  background: #40505a;
+}
+.vehicleArt {
+  flex: 1;
+  min-height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vehicleArt svg {
+  width: 100%;
+  height: 100%;
+  max-height: 290px;
+}
+.modelInfo h2 {
+  margin: 4px 0;
+  font-size: 24px;
+}
+.modelInfo p {
+  line-height: 1.45;
+  font-size: 13px;
+  margin: 8px 0;
+}
+.workbench {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: #15263b;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.scroll,
+.profilePane {
+  min-height: 0;
+  overflow: auto;
+  touch-action: pan-y;
+  scrollbar-width: thin;
+  scrollbar-color: #647a92 transparent;
+  padding: 16px;
+}
+.scroll {
+  flex: 1;
+}
+.parts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+.parts button {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  text-align: left;
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid #4c6079;
+  color: #fff7e8;
+  background: #20354d;
+  border-radius: 12px;
+}
+.parts strong {
+  font-size: 12px;
+  line-height: 1.35;
+}
+.parts span {
+  color: #d9c46f;
+  font-size: 11px;
+}
+.partDescription h2,
+.profilePane h2,
+.gift h2 {
+  margin: 6px 0 10px;
+  font-size: 20px;
+}
+.partDescription p,
+.gift p {
+  margin: 6px 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.benefit {
+  color: #a6e6bf;
+}
+.muted {
+  color: #b6c7d9;
+  line-height: 1.5;
+  font-size: 12px;
+}
+.comparison {
+  margin-top: 16px;
+}
+.comparison > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid #fff7e812;
+  font-size: 12px;
+}
+.comparison > div > strong {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.comparison [data-changed='true'] > strong {
+  color: #ffd12b;
+}
+.statHeader {
+  color: #aec1d5;
+  font-size: 10px !important;
+}
+.actions {
+  flex-shrink: 0;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #fff7e820;
+  padding: 12px 16px;
+  background: #1c3047;
+}
+.actions > span {
+  color: #bfcfdf;
+  font-size: 11px;
+}
+.primary {
+  min-height: 48px;
+  border: 1px solid #ffd12b;
+  border-radius: 12px;
+  color: #142135;
+  background: #ffd12b;
+  font-weight: 850;
+  padding: 12px 18px;
+}
+.primary:disabled,
+.secondary:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.gift {
+  padding: 14px;
+  margin-bottom: 16px;
+  background: #384349;
+  border: 1px solid #ceb960;
+  border-radius: 12px;
+}
+.giftChoices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+.giftChoices > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.giftChoices strong {
+  font-size: 13px;
+}
+.giftChoices small {
+  color: #d0d9df;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.giftChoices button {
+  margin-top: auto;
+  font-size: 11px;
+  padding-inline: 6px;
+}
+.profileGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  min-height: 0;
+}
+.profilePane {
+  background: #172a41;
+  border-radius: 15px;
+}
+.record,
+.skill {
+  padding: 16px;
+  margin: 12px 0;
+  border: 1px solid #566b84;
+  border-radius: 13px;
+  background: #20364e;
+}
+.record h3,
+.skill h3 {
+  margin: 5px 0 10px;
+  font-size: 18px;
+}
+.record small,
+.skill small {
+  color: #b9cbdc;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.record p {
+  font-size: 13px;
+  margin: 6px 0;
+}
+.skill > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+.skill > div span {
+  font-size: 12px;
+}
+.skill p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+.skill > small {
+  display: block;
+  margin-bottom: 8px;
+}
+.skill button {
+  width: 100%;
+  margin-top: 10px;
+}
+.achievements {
+  display: grid;
+  gap: 10px;
+}
+.achievements article {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #2d4949;
+}
+.achievements strong {
+  color: #a6e6bf;
+  font-size: 13px;
+}
+.achievements small {
+  color: #c3d4df;
+  font-size: 11px;
+  line-height: 1.4;
+}
+@media (max-height: 520px) and (orientation: landscape) {
+  .screen {
+    padding: 10px;
+    gap: 8px;
+    inset: 8px 12px 16px;
+    border-radius: 15px;
+  }
+  .header {
+    gap: 16px;
+  }
+  .header h1 {
+    font-size: 22px;
+  }
+  .header p {
+    display: none;
+  }
+  .header > span {
+    font-size: 10px;
+  }
+  .summary {
+    padding: 7px 12px;
+    gap: 16px;
+  }
+  .summary strong {
+    font-size: 17px;
+  }
+  .summary small {
+    font-size: 9px;
+  }
+  .summary > div {
+    gap: 2px;
+  }
+  .garageGrid {
+    gap: 10px;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  }
+  .showcase,
+  .scroll,
+  .profilePane {
+    padding: 10px;
+  }
+  .modelInfo h2 {
+    font-size: 18px;
+  }
+  .modelInfo p {
+    font-size: 11px;
+  }
+  .vehicleArt {
+    min-height: 105px;
+  }
+  .modelTabs button,
+  .slotTabs button {
+    font-size: 10px;
+    min-height: 40px;
+  }
+  .parts {
+    gap: 5px;
+  }
+  .parts button {
+    padding: 8px;
+    min-height: 65px;
+  }
+  .parts strong {
+    font-size: 10px;
+  }
+  .actions {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .actions > span {
+    max-width: 110px;
+    font-size: 10px;
+  }
+  .primary {
+    font-size: 12px;
+    min-height: 44px;
+    padding: 8px 12px;
+  }
+  .header button {
+    min-height: 40px;
+    padding: 8px 12px;
+  }
+  .profileGrid {
+    gap: 10px;
+  }
+}
+.paints {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+.paints button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  text-align: left;
+  border: 1px solid #6c7d92;
+  color: #fff7e8;
+  background: #263c54;
+  border-radius: 10px;
+  padding: 8px;
+  font-size: 10px;
+}
+.paints button[aria-pressed='true'] {
+  border-color: #ffd12b;
+  opacity: 1;
+}
+.paints button:disabled:not([aria-pressed='true']) {
+  opacity: 0.5;
+}
+.paints i {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.paints small {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  color: #c1d0df;
+}

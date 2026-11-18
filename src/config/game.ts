@@ -1,4 +1,4 @@
-export const BUILD_VERSION = '0.4.1';
+export const BUILD_VERSION = '0.5.0';
 export const PHYSICS = {
   step: 1 / 60,
   maxFrame: 0.1,
@@ -23,7 +23,7 @@ export const CAMERA = {
   response: 4,
   lookAhead: 0.65,
   maxLookAhead: 240,
-  bounds: { x: -600, y: -1400, width: 15600, height: 2600 },
+  bounds: { x: -600, y: -1400, width: 22200, height: 2600 },
 };
 
 export interface VehicleConfig {

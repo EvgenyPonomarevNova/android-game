@@ -1,5 +1,9 @@
 # «Не Разлей!» — Android game workspace
 
+## Current override — Sprint 03 / 0.5.0
+
+The owner explicitly queued Career, Garage & Replayability after GDD v0.4. The integrated first-mission core passed web acceptance (0589351; known limits in docs/stage-1/integration.md). Sprint 03 is now authorized: offline XP/reputation/coins, atomic save v2 migration, physical tuning, two contracts including «Пока горячее!», two mastery skills and career UI. Latest pasted request explicitly requests a final APK and minimal Android checks; this supersedes the previous web-only restriction **only after the new source freeze and integrator handoff**. No APK/device work during parallel implementation. Exact current owners are in the Sprint03 section of docs/STAGE_1.md. Existing profile chats only; no duplicate tasks/boards. Preserve the original mission's stock physical configuration and all old records.
+
 Respond in Russian. The technical foundation is implemented and its recorded validation is in docs/VALIDATION.md. Current work is Stage 1: Menu → Order → Ride → Success/failure → Star-rated result → Retry/Continue, on one coffee route with separate ArtKit assets. Read docs/STAGE_1.md for the authorized scope and exact file owners. GAME_PRODUCT_STATUS.md records status, docs/NEXT_STEPS.md is the roadmap; do not create duplicate task boards or integration plans.
 
 Current user override for Sprint 02 / 0.3.0: develop Gameplay Polish only. Do not build APK, run Capacitor sync, launch Android devices, profile performance or repeat broad QA suites. The owner will playtest the playable version. Use existing chats strictly within their specialisms; tooling/skills chats are idle unless work in their actual domain is needed. Prefer one targeted integration check and minimal changed-logic checks. This overrides older stage delivery requirements below.

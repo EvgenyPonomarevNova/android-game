@@ -1,11 +1,33 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { GameBridge, type GameMode } from '../game/core/GameBridge';
 import { createPlatform } from '../platform/PlatformAdapter';
-import { SaveService, defaultSave, type Settings as SettingsData } from '../platform/SaveService';
+import {
+  SaveService,
+  defaultSave,
+  type SaveData,
+  type Settings as SettingsData,
+} from '../platform/SaveService';
 import { AudioManager } from '../platform/AudioManager';
 import { GameHud } from '../ui/hud/GameHud';
 import { Menu } from '../ui/screens/Menu';
 import { Settings } from '../ui/screens/Settings';
+import { GarageScreen } from '../ui/screens/GarageScreen';
+import { ProfileScreen } from '../ui/screens/ProfileScreen';
+import {
+  currentSetup,
+  settleDelivery,
+  isContractUnlocked,
+  purchasePart,
+  equipPart,
+  claimStarterPart,
+  purchaseVehicle,
+  selectVehicle,
+  toggleSkill,
+  purchasePaint,
+  selectPaint,
+} from '../game/core/Career';
+import { contractForLevel } from '../game/core/Contracts';
+import { defaultVehicleSetup, type CareerState, type RewardReceipt } from '../shared/Progression';
 import { Icon } from '../ui/components/Icon';
 import { BUILD_VERSION } from '../config/game';
 import { OrderScreen } from './OrderScreen';
@@ -50,7 +72,9 @@ export function App() {
   const [selectedLevel, setSelectedLevel] = useState(() => catalog.levels[0]!.level);
   const audioRef = useRef<AudioManager | null>(null);
   const [mode, setMode] = useState<GameMode>('menu');
-  const [screen, setScreen] = useState<'main' | 'settings' | 'garage' | 'orders'>('main');
+  const [screen, setScreen] = useState<'main' | 'settings' | 'garage' | 'orders' | 'profile'>(
+    'main',
+  );
   const [result, setResult] = useState<RatedResult | null>(null);
   const [newBest, setNewBest] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'saving' | 'saved' | 'failed'>('saving');
@@ -66,12 +90,38 @@ export function App() {
   const saveRef = useRef(save);
   const screenRef = useRef(screen);
   const [message, setMessage] = useState('');
+  const [reward, setReward] = useState<RewardReceipt>();
+  const [pendingWrites, setPendingWrites] = useState(0);
+  const [retrySave, setRetrySave] = useState<(() => void) | null>(null);
+  const transactionQueue = useRef<Promise<void>>(Promise.resolve());
+  const runSequence = useRef(0),
+    runId = useRef('');
+  const transact = useCallback(function transact<T>(
+    operation: (current: SaveData) => { data: SaveData; value: T },
+  ): Promise<T> {
+    setPendingWrites((n) => n + 1);
+    const work = transactionQueue.current
+      .catch(() => {})
+      .then(async () => {
+        const { data, value } = operation(saveRef.current);
+        await saves.save(data);
+        saveRef.current = data;
+        setSave(data);
+        return value;
+      });
+    transactionQueue.current = work.then(
+      () => {},
+      () => {},
+    );
+    return work.finally(() => setPendingWrites((n) => n - 1));
+  }, []);
 
   useEffect(() => {
     let disposed = false;
     // Effects are re-created by Fast Refresh/StrictMode; never reuse a disposed manager.
     const audio = new AudioManager(saveRef.current.settings);
     audioRef.current = audio;
+    audio.setRideTheme(bridge.level?.theme === 'rain-evening');
     audio.setMode(bridge.mode);
     audio.menuScreen(screenRef.current);
     const unlockAudio = (event: Event) => {
@@ -98,8 +148,11 @@ export function App() {
           !continuingCheckpoint.current
         ) {
           maximumProgress.current = 0;
+          runId.current = `${Date.now().toString(36)}-${++runSequence.current}-${Math.random().toString(36).slice(2, 8)}`;
           setAttempt((count) => count + 1);
           setResult(null);
+          setReward(undefined);
+          setRetrySave(null);
         }
         if (next === 'playing') {
           continuingCheckpoint.current = false;
@@ -129,52 +182,77 @@ export function App() {
           stats.integrity,
           stats.landingId ?? 0,
           stats.landingImpact ?? 0,
+          stats.wetSurface ?? false,
         );
       }),
       bridge.on('result', (rawResult) => {
-        const rules = bridge.level ? { ...COFFEE_ORDER, ...bridge.level.difficulty } : COFFEE_ORDER;
+        const thermal = bridge.level?.temperature;
+        const rules = bridge.level
+          ? {
+              ...COFFEE_ORDER,
+              ...bridge.level.difficulty,
+              minimumTemperature: thermal?.minimum,
+              silverTemperature: thermal?.silver,
+              goldTemperature: thermal?.gold,
+            }
+          : COFFEE_ORDER;
         const result = rateDelivery({ ...rawResult, progress: maximumProgress.current }, rules);
         setResult(result);
         setNewBest(false);
-        if (!result.success) {
-          audio.effect('failure');
-          return;
-        }
-        audio.effect('finish');
+        setReward(undefined);
+        audio.effect(result.success ? 'finish' : 'failure');
         // Authoring runs never award or overwrite the public mission's record.
         if (workshopMode) return;
-        const recordKey = deliveryRecordKey(result.levelId);
-        const previous = saveRef.current.results[recordKey];
-        const improved = !previous || isBetterResult(result, previous);
-        setNewBest(improved);
-        audio.reward(result.stars, improved);
-        const next = {
-          ...saveRef.current,
-          results: {
-            ...saveRef.current.results,
-            [recordKey]: improved
-              ? {
-                  seconds: result.seconds,
-                  integrity: result.integrity,
-                  stars: result.stars,
-                  score: result.score,
-                  medal: result.medal ?? undefined,
-                  checkpointUsed: result.checkpointUsed,
-                  falls: result.falls,
-                }
-              : previous,
-          },
+        const attemptId = runId.current;
+        const settlementKey = `${attemptId}:${result.checkpointUsed ? 'continued' : 'initial'}`;
+        const settle = () => {
+          setSaveStatus('saving');
+          setRetrySave(null);
+          void transact((current) => {
+            const recordKey = deliveryRecordKey(result.levelId),
+              previous = current.results[recordKey];
+            const improved = result.success && isBetterResult(result, previous);
+            const settled = settleDelivery(current.career, result, settlementKey);
+            const data: SaveData = {
+              ...current,
+              career: settled.career,
+              lastUnlockedLevel: settled.career.contracts['contract_001_surprise_fifth']
+                ? 'contract_002_while_hot'
+                : current.lastUnlockedLevel,
+              results: improved
+                ? {
+                    ...current.results,
+                    [recordKey]: {
+                      seconds: result.seconds,
+                      integrity: result.integrity,
+                      stars: result.stars,
+                      score: result.score,
+                      medal: result.medal ?? undefined,
+                      checkpointUsed: result.checkpointUsed,
+                      falls: result.falls,
+                      temperature: result.temperature,
+                    },
+                  }
+                : current.results,
+            };
+            return { data, value: { reward: settled.reward, improved } };
+          })
+            .then(({ reward, improved }) => {
+              if (runId.current !== attemptId) return;
+              setReward(reward);
+              setNewBest(improved);
+              setSaveStatus('saved');
+              if (result.success && !reward.duplicate && bridge.mode === 'finished')
+                audio.reward(result.stars, improved);
+            })
+            .catch(() => {
+              if (runId.current !== attemptId) return;
+              setSaveStatus('failed');
+              setRetrySave(() => settle);
+              setMessage('Не удалось сохранить доставку. Освободите место и повторите сохранение.');
+            });
         };
-        saveRef.current = next;
-        setSave(next);
-        setSaveStatus('saving');
-        void saves
-          .save(next)
-          .then(() => setSaveStatus('saved'))
-          .catch(() => {
-            setSaveStatus('failed');
-            setMessage('Результат не сохранён. Проверьте свободное место.');
-          });
+        settle();
       }),
     ];
     const detachInput = bridge.input.attach(
@@ -246,7 +324,7 @@ export function App() {
       if (audioRef.current === audio) audioRef.current = null;
       bridge.clear();
     };
-  }, [bridge]);
+  }, [bridge, transact]);
 
   const navigate = (next: typeof screen) => {
     screenRef.current = next;
@@ -255,22 +333,50 @@ export function App() {
     audioRef.current?.playSfx(next === 'main' ? 'ui_back' : 'ui_panel_open');
   };
   const updateSettings = (settings: SettingsData) => {
-    const next = { ...saveRef.current, settings };
-    saveRef.current = next;
-    setSave(next);
     audioRef.current?.configure(settings);
     Object.assign(bridge.preferences, { cameraShake: settings.cameraShake, hints: settings.hints });
     audioRef.current?.playSfx('ui_click_01', 0.6);
-    void saves
-      .save(next)
-      .catch(() => setMessage('Настройки не сохранены. Проверьте доступ к хранилищу.'));
+    void transact((current) => ({ data: { ...current, settings }, value: undefined })).catch(() =>
+      setMessage('Настройки не сохранены. Проверьте доступ к хранилищу.'),
+    );
   };
   const command = (action: 'start' | 'resume' | 'restart') => {
+    if (
+      action === 'start' &&
+      !workshopMode &&
+      !isContractUnlocked(saveRef.current.career, contractForLevel(bridge.level ?? selectedLevel))
+    ) {
+      setMessage('Сначала заверши первый контракт.');
+      return;
+    }
+    if (action !== 'resume') {
+      bridge.configureSetup(
+        workshopMode ? defaultVehicleSetup() : currentSetup(saveRef.current.career),
+      );
+      audioRef.current?.setRideTheme(bridge.level?.theme === 'rain-evening');
+    }
     if (action !== 'resume') setResult(null);
     void audioRef.current?.unlock();
     if (action !== 'resume') audioRef.current?.playSfx('ui_confirm', 0.6);
     bridge.command(action);
   };
+  const changeCareer = (change: (career: CareerState) => CareerState) => {
+    void transact((current) => ({
+      data: { ...current, career: change(current.career) },
+      value: undefined,
+    }))
+      .then(() => audioRef.current?.playSfx('ui_confirm'))
+      .catch((error: unknown) => {
+        audioRef.current?.playSfx('ui_error');
+        setMessage(error instanceof Error ? error.message : 'Не удалось сохранить изменение.');
+      });
+  };
+  const suggestedLevel =
+    catalog.levels.find(
+      ({ level }) =>
+        isContractUnlocked(save.career, contractForLevel(level)) &&
+        !save.career.contracts[level.id]?.completions,
+    )?.level ?? selectedLevel;
   return (
     <div className={styles.app}>
       <GameHost bridge={bridge} />
@@ -288,14 +394,17 @@ export function App() {
           {!workshopMode && screen === 'main' ? (
             <>
               <Menu
-                ready={ready && loaded}
+                ready={ready && loaded && pendingWrites === 0}
                 play={() => {
-                  setSelectedLevel(catalog.levels[0]!.level);
-                  bridge.selectLevel(catalog.levels[0]!.level);
+                  setSelectedLevel(suggestedLevel);
+                  bridge.selectLevel(suggestedLevel);
                   navigate('orders');
                 }}
                 navigate={navigate}
-                best={save.results[deliveryRecordKey(COFFEE_ORDER.levelId)]}
+                best={save.results[deliveryRecordKey(suggestedLevel.id)]}
+                career={save.career}
+                setup={currentSetup(save.career)}
+                contract={contractForLevel(suggestedLevel)}
               />
               {loaded ? (
                 <button
@@ -327,6 +436,7 @@ export function App() {
           ) : null}
           {!workshopMode && screen === 'orders' ? (
             <OrderScreen
+              career={save.career}
               best={save.results[deliveryRecordKey(selectedLevel.id)]}
               level={selectedLevel}
               levels={catalog.levels.map((item) => item.level)}
@@ -345,33 +455,30 @@ export function App() {
             />
           ) : null}
           {!workshopMode && screen === 'garage' ? (
-            <section className={styles.panel}>
-              <button className={styles.back} onClick={() => navigate('main')}>
-                <Icon name="back" />В меню
-              </button>
-              <h1>Гараж</h1>
-              <h2>Скутер курьера</h2>
-              <p>
-                Два колеса, мягкая подвеска
-                <br />и один очень важный кофе.
-              </p>
-              <p className={styles.caption}>
-                Газ и тормоз задают скорость. Наклоны управляют вращением в полёте. Короткий
-                встречный наклон помогает выровнять скутер.
-              </p>
-              <button
-                className={styles.primary}
-                disabled={!ready || !loaded}
-                onClick={() => navigate('orders')}
-              >
-                <Icon name="play" />
-                На трассу
-              </button>
-            </section>
+            <GarageScreen
+              career={save.career}
+              busy={pendingWrites > 0}
+              buyPart={(id) => changeCareer((c) => purchasePart(c, id))}
+              equipPart={(id) => changeCareer((c) => equipPart(c, id))}
+              claimStarter={(id) => changeCareer((c) => claimStarterPart(c, id))}
+              buyVehicle={(id) => changeCareer((c) => purchaseVehicle(c, id))}
+              buyPaint={(id) => changeCareer((c) => purchasePaint(c, id))}
+              selectPaint={(id) => changeCareer((c) => selectPaint(c, id))}
+              selectVehicle={(id) => changeCareer((c) => selectVehicle(c, id))}
+              back={() => navigate('main')}
+            />
+          ) : null}
+          {!workshopMode && screen === 'profile' ? (
+            <ProfileScreen
+              career={save.career}
+              busy={pendingWrites > 0}
+              toggleSkill={(id) => changeCareer((c) => toggleSkill(c, id))}
+              back={() => navigate('main')}
+            />
           ) : null}
           {!workshopMode && screen === 'main' ? (
             <footer className={styles.footer}>
-              НЕ РАЗЛЕЙ!<span>Заказ №001 · {BUILD_VERSION}</span>
+              НЕ РАЗЛЕЙ!<span>Карьера курьера · {BUILD_VERSION}</span>
             </footer>
           ) : null}
         </>
@@ -387,6 +494,12 @@ export function App() {
       {(mode === 'finished' || mode === 'failed') && result ? (
         <ResultScreen
           result={result}
+          reward={reward}
+          career={save.career}
+          garage={() => {
+            bridge.command('menu');
+            navigate('garage');
+          }}
           draft={workshopMode}
           attempt={attempt}
           newBest={newBest}
@@ -400,6 +513,8 @@ export function App() {
           }}
           next={() => {
             bridge.command('menu');
+            setSelectedLevel(suggestedLevel);
+            bridge.selectLevel(suggestedLevel);
             navigate('orders');
           }}
         />
@@ -460,6 +575,11 @@ export function App() {
       {message ? (
         <div className={styles.notice} role="status">
           <span>{message}</span>
+          {retrySave ? (
+            <button onClick={retrySave} disabled={saveStatus === 'saving'}>
+              Повторить сохранение
+            </button>
+          ) : null}
           <button aria-label="Закрыть сообщение" onClick={() => setMessage('')}>
             ×
           </button>

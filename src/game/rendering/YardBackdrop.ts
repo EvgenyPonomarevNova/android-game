@@ -6,10 +6,11 @@ export class YardBackdrop {
   constructor(
     private scene: Scene,
     private horizon = 0.62,
+    theme = 'day',
   ) {
     this.layers = ['sky', 'far', 'mid', 'near'].map((key, i) => ({
       image: scene.add
-        .tileSprite(0, 0, 1, 1, key)
+        .tileSprite(0, 0, 1, 1, theme === 'rain-evening' ? `evening-${key}` : key)
         .setOrigin(0)
         .setScrollFactor(0)
         .setDepth(-100 + i),

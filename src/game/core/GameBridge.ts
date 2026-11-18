@@ -3,11 +3,20 @@ import { InputController } from '../input/InputController';
 import type { CargoDamage } from '../cargo/Cargo';
 import type { CargoImpact } from '../../shared/GameFeedback';
 import type { LevelData } from '../levels/testLevel';
+import { defaultVehicleSetup, type VehicleSetup } from '../../shared/Progression';
 
 export type GameMode = 'menu' | 'playing' | 'paused' | 'finished' | 'failed' | 'error';
 export type GameCommand = 'start' | 'pause' | 'resume' | 'restart' | 'menu' | 'checkpoint';
 export interface MissionState {
-  cargoComponents?: readonly { id: 'cake' | 'drinks'; integrity: number; weight: number }[];
+  cargoComponents?: readonly {
+    id: 'cake' | 'drinks' | 'noodles' | 'soup';
+    integrity: number;
+    weight: number;
+  }[];
+  temperature?: number;
+  cleanLandings?: number;
+  balancedSections?: number;
+  wetSurface?: boolean;
   checkpointUsed?: boolean;
   checkpointAvailable?: boolean;
   falls?: number;
@@ -48,6 +57,15 @@ export class GameBridge extends EventBus<BridgeEvents> {
   readonly preferences = { cameraShake: 0.65, hints: true };
   /** An authoring preview may supply a draft; normal play uses the default contract. */
   level?: LevelData;
+  setup: VehicleSetup = defaultVehicleSetup();
+  configureSetup(setup: VehicleSetup): void {
+    this.setup = {
+      vehicleId: setup.vehicleId,
+      parts: { ...setup.parts },
+      skills: [...setup.skills],
+      paint: setup.paint,
+    };
+  }
   selectLevel(level?: LevelData): void {
     this.level = level;
   }

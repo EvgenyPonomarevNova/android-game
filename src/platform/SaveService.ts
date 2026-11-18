@@ -1,3 +1,6 @@
+import { defaultCareer, migrateCareer, normalizeCareer } from '../game/core/Career';
+import type { CareerState } from '../shared/Progression';
+
 export interface StorageAdapter {
   get(key: string): Promise<string | null>;
   set(key: string, value: string): Promise<void>;
@@ -23,15 +26,18 @@ export interface LevelResult {
   medal?: 'bronze' | 'silver' | 'gold';
   checkpointUsed?: boolean;
   falls?: number;
+  temperature?: number;
 }
 export interface SaveData {
-  version: 1;
+  version: 2;
   settings: Settings;
   lastUnlockedLevel: string;
   results: Record<string, LevelResult>;
+  career: CareerState;
 }
 export const defaultSave = (): SaveData => ({
-  version: 1,
+  version: 2,
+  career: defaultCareer(),
   settings: {
     sound: true,
     music: true,
@@ -56,7 +62,7 @@ const object = (value: unknown): value is Record<string, unknown> =>
 export function decodeSave(raw: string): SaveData {
   const parsed: unknown = JSON.parse(raw);
   if (!object(parsed)) throw new Error('Invalid save');
-  if (typeof parsed.version === 'number' && parsed.version > 1)
+  if (typeof parsed.version === 'number' && parsed.version > 2)
     throw new Error('SAVE_FROM_NEWER_VERSION');
   // A small explicit migration entry point for the first prototype schema.
   if (parsed.version === 0) {
@@ -65,8 +71,13 @@ export function decodeSave(raw: string): SaveData {
     if (typeof parsed.music === 'boolean') migrated.settings.music = parsed.music;
     return migrated;
   }
-  if (parsed.version !== 1 || !object(parsed.settings) || !object(parsed.results))
+  if (
+    (parsed.version !== 1 && parsed.version !== 2) ||
+    !object(parsed.settings) ||
+    !object(parsed.results)
+  )
     throw new Error('Invalid save schema');
+  if (parsed.version === 2 && !object(parsed.career)) throw new Error('Invalid career save');
   const next = defaultSave();
   const s = parsed.settings;
   for (const key of ['sound', 'music', 'showFps', 'leftHanded', 'hints'] as const)
@@ -92,6 +103,8 @@ export function decodeSave(raw: string): SaveData {
       result.integrity <= 100
     ) {
       next.results[id] = { seconds: result.seconds, integrity: result.integrity };
+      if (typeof result.temperature === 'number' && Number.isFinite(result.temperature))
+        next.results[id]!.temperature = Math.max(0, Math.min(100, result.temperature));
       if (result.medal === 'bronze' || result.medal === 'silver' || result.medal === 'gold')
         next.results[id]!.medal = result.medal;
       if (typeof result.checkpointUsed === 'boolean')
@@ -109,6 +122,7 @@ export function decodeSave(raw: string): SaveData {
         next.results[id]!.score = Math.round(result.score);
     }
   }
+  next.career = parsed.version === 2 ? normalizeCareer(parsed.career) : migrateCareer(next.results);
   return next;
 }
 

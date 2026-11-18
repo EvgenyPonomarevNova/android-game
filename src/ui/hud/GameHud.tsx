@@ -69,6 +69,10 @@ export function GameHud({
   const critical = stats.integrity < minimum + 10;
   const components = stats.cargoComponents ?? [];
   const hasComponents = components.length > 0;
+  const hot = level.cargo === 'hot-meal';
+  const temperature = stats.temperature ?? level.temperature?.initial;
+  const cold =
+    hot && temperature !== undefined && temperature < (level.temperature?.minimum ?? 0) + 8;
   const remaining =
     stats.remainingSeconds ??
     (level.difficulty.deadlineSeconds === undefined
@@ -95,17 +99,31 @@ export function GameHud({
             : hints && stats.grounded === false && stats.progress > 0.015
               ? 'Выровняй колёса по дороге перед приземлением'
               : '');
-  const feedback = warning || (hints && playing && guide.showHint ? guide.current.hint : '');
+  const feedback =
+    warning ||
+    (cold
+      ? 'Еда остывает — выбирай короткий путь'
+      : hints && playing && guide.showHint
+        ? guide.current.hint
+        : '');
   return (
     <>
-      <div className={`${styles.hud} ${hasComponents ? styles.hudBundle : ''}`}>
+      <div
+        className={`${styles.hud} ${hasComponents ? styles.hudBundle : ''} ${hot ? styles.hudHot : ''}`}
+      >
         <div
           className={styles.cargo}
           data-components={hasComponents}
           data-condition={critical ? 'critical' : stressHigh ? 'stress' : 'normal'}
         >
           <span className={styles.cup} aria-hidden="true">
-            {hasComponents ? <CakeMark /> : <CoffeeMark />}
+            {hot ? (
+              <span className={styles.hotMark}>♨</span>
+            ) : hasComponents ? (
+              <CakeMark />
+            ) : (
+              <CoffeeMark />
+            )}
           </span>
           <div>
             <span className={styles.small}>Сохранность</span>
@@ -118,12 +136,25 @@ export function GameHud({
             <div className={styles.cargoParts}>
               {components.map((part) => (
                 <span key={part.id}>
-                  {part.id === 'cake' ? 'Торт' : 'Напитки'}{' '}
+                  {{ cake: 'Торт', drinks: 'Напитки', noodles: 'Лапша', soup: 'Суп' }[part.id]}{' '}
                   <b>{integrityPercent(part.integrity)}%</b>
                 </span>
               ))}
             </div>
           ) : null}
+          {hot && temperature !== undefined && (
+            <div className={styles.temperature} data-cold={cold}>
+              <span>Температура</span>
+              <strong>{Math.round(temperature)}°C</strong>
+              <meter
+                aria-label="Температура заказа"
+                min={level.temperature?.ambient ?? 0}
+                max={level.temperature?.initial ?? 90}
+                low={level.temperature?.minimum ?? 0}
+                value={temperature}
+              />
+            </div>
+          )}
           <meter
             min={0}
             max={100}

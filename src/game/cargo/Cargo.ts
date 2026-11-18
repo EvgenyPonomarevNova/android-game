@@ -5,7 +5,7 @@ import type { CargoImpact, VehicleMotion } from '../../shared/GameFeedback';
 
 export interface CargoConfig {
   id: string;
-  type: 'coffee' | 'surprise';
+  type: 'coffee' | 'surprise' | 'hot-meal';
   mass: number;
   impactThreshold: number;
   sensitivity: number;
@@ -37,8 +37,14 @@ export const SURPRISE: CargoConfig = {
   type: 'surprise',
   allowedDamage: 50,
 };
+export const HOT_MEAL: CargoConfig = { ...SURPRISE, id: 'hot-meal-1', type: 'hot-meal', mass: 1.8 };
+export interface CargoMountOptions {
+  frequencyHz?: number;
+  dampingRatio?: number;
+  softLanding?: boolean;
+}
 export interface CargoComponent {
-  readonly id: 'cake' | 'drinks';
+  readonly id: 'cake' | 'drinks' | 'noodles' | 'soup';
   readonly integrity: number;
   readonly weight: number;
 }
@@ -57,7 +63,9 @@ export interface CargoEvents {
 
 export class Cargo {
   readonly body: Body;
-  private parts: Array<{ id: 'cake' | 'drinks'; integrity: number; weight: number }> = [
+  readonly mount: WeldJoint;
+  private cushionActive = false;
+  private parts: Array<{ id: CargoComponent['id']; integrity: number; weight: number }> = [
     { id: 'cake', integrity: 100, weight: 0.6 },
     { id: 'drinks', integrity: 100, weight: 0.4 },
   ];
@@ -94,7 +102,14 @@ export class Cargo {
     chassis: Body,
     readonly config: CargoConfig,
     private events: EventBus<CargoEvents>,
+    private mountOptions: CargoMountOptions = {},
   ) {
+    if (config.type === 'hot-meal') {
+      this.parts = [
+        { id: 'noodles', integrity: 100, weight: 0.6 },
+        { id: 'soup', integrity: 100, weight: 0.4 },
+      ];
+    }
     this.gravity = physics.world.getGravity().clone();
     this.chassis = chassis;
     const mount = chassis.getWorldPoint(Vec2(-0.45, 0.45));
@@ -104,14 +119,19 @@ export class Cargo {
       friction: 0.5,
       filterGroupIndex: -1,
     });
-    physics.world.createJoint(
+    const mountJoint = physics.world.createJoint(
       new WeldJoint(
-        { frequencyHz: 5, dampingRatio: 0.8 },
+        {
+          frequencyHz: mountOptions.frequencyHz ?? 5,
+          dampingRatio: mountOptions.dampingRatio ?? 0.8,
+        },
         chassis,
         this.body,
         chassis.getWorldPoint(Vec2(-0.45, 0.22)),
       ),
     );
+    if (!mountJoint) throw new Error('Cargo joint creation failed');
+    this.mount = mountJoint;
     physics.world.on('begin-contact', (contact) => {
       const a = contact.getFixtureA(),
         b = contact.getFixtureB();
@@ -189,16 +209,24 @@ export class Cargo {
     const loss = Math.max(0, deltaVelocity - this.config.impactThreshold) * this.config.sensitivity;
     if (this.integrity <= 0) return;
     const before = this.integrity;
-    if (this.config.type === 'surprise') {
+    if (this.config.type === 'surprise' || this.config.type === 'hot-meal') {
       const verticalLoad = Math.max(0, Math.min(1, vertical));
       const tiltLoad = Math.max(0, Math.min(1, tilt));
       this.parts[0]!.integrity = Math.max(
         0,
-        this.parts[0]!.integrity - loss * (0.55 + 0.7 * verticalLoad),
+        this.parts[0]!.integrity -
+          loss *
+            (this.config.type === 'hot-meal'
+              ? 0.65 + 0.55 * verticalLoad
+              : 0.55 + 0.7 * verticalLoad),
       );
       this.parts[1]!.integrity = Math.max(
         0,
-        this.parts[1]!.integrity - loss * (0.55 + 0.8 * tiltLoad + 0.15 * (1 - verticalLoad)),
+        this.parts[1]!.integrity -
+          loss *
+            (this.config.type === 'hot-meal'
+              ? 0.55 + 1.05 * tiltLoad + 0.2 * (1 - verticalLoad)
+              : 0.55 + 0.8 * tiltLoad + 0.15 * (1 - verticalLoad)),
       );
     } else this.integrity = Math.max(0, this.integrity - loss);
     const payload = {
@@ -235,8 +263,15 @@ export class Cargo {
     }
   }
 
-  afterStep(dt: number, motion?: VehicleMotion): void {
+  afterStep(dt: number, motion?: VehicleMotion, correctLanding = false): void {
     if (!Number.isFinite(dt) || dt <= 0) return;
+    if (this.mountOptions.softLanding && this.cushionActive !== correctLanding) {
+      this.cushionActive = correctLanding;
+      this.mount.setFrequency((this.mountOptions.frequencyHz ?? 5) * (correctLanding ? 0.95 : 1));
+      this.mount.setDampingRatio(
+        (this.mountOptions.dampingRatio ?? 0.8) * (correctLanding ? 1.05 : 1),
+      );
+    }
     const velocity = this.body.getLinearVelocity();
     // Subtract free-fall acceleration. Resting support is ~1g, harmless.
     const acceleration = Math.hypot(

@@ -1,6 +1,21 @@
 # Этап 1 — оформленная и проверяемая доставка кофе
 
-> Очередь владельца от 18 ноября: Sprint 03 — Career, Garage & Replayability. Начать **только после** интеграции и веб-приёмки GDD v0.4 / 0.4.1. Полное поручение: `C:/Users/AORUS/.codex/attachments/baafc6b9-3996-4656-985c-6b3fc606a2ab/Вставленный текст.txt`. Оно разрешает карьеру, экономику, реальный тюнинг, второй контракт «Пока горячее!», навыки и миграцию сохранений. Финальная Android APK снова явно запрошена в этом новом этапе; текущая приёмка 0.4.1 остаётся только WEB. До её завершения runtime заморожен, новые задачи профилям не запущены.
+## Текущая работа — Sprint 03 / 0.5.0
+
+Основа0.4.1 принята по основному игровому циклу, commit0589351. Границы приёмки и известные замечания — integration.md. Новое прямое поручение владельца разрешает карьеру/гараж/второй заказ и финальную APK после source freeze. Старые запреты экономики и второй трассы ниже относятся к завершённым этапам.
+
+| ID | Владелец | Результат и точные файлы | Статус |
+| --- | --- | --- | --- |
+| C-SYS | Основной чат | src/shared/Progression.ts, src/config/career.ts, src/content/contracts.json, src/game/core/{Career,Contracts,Orders,GameBridge,LevelCatalog}.ts, src/platform, src/app/App.tsx, LevelWorkshop/authoring/CLI при необходимости, tests/career/save/orders/audio/authoring, package/lock, общие документы | IN_PROGRESS |
+| C-PHY | Физика и геймплей | src/config/game.ts, src/game/{physics,vehicle,cargo,levels}, src/game/core/Simulation.ts, tests/{physics,route,tuning,hotMeal}.test.ts, docs/stage-1/physics.md. Реальный тюнинг, вторая самостоятельная трасса, температура, измеренное мастерство | IN_PROGRESS |
+| C-ART | Интерфейс и графика | src/ui, src/game/{scenes,rendering,camera}, public/assets (кроме audio), src/app/{OrderScreen,ResultScreen}.tsx и slice.module.css, DESIGN.md, docs/stage-1/art.md. Гараж/профиль/награда/контракты, мокрый вечер и визуал установленного оборудования | IN_PROGRESS |
+| C-QA | Android и QA | Завершить запись0.4.1; затем ждать нового freeze. Будущая цель — один интеграционный цикл карьера→покупка→миссия2→reload, итоговая APK/Android после передачи root | WAITING |
+
+Файлы переданы явно: OrderScreen/ResultScreen/slice.module.css теперь у ART; App, сохранения/экономика и Bridge остаются у root. Профили не одни в checkout; чужие изменения не откатывать, Git/index/ветки не трогать. Разные проверки не дублировать.
+
+Контракты: общие сериализуемые VehicleSetup/CareerState/RewardReceipt/PartDefinition уже опубликованы в Progression.ts. PHY добавляет pure-data vehicle/Tuning.ts: PART_CATALOG, VEHICLE_MODELS, describeVehicleSetup(setup):TuningStat[], физический resolver; Simulation(level, setup=defaultVehicleSetup()). LevelData расширяется cargo:'hot-meal', surface:'wet-asphalt', theme?:'day'|'rain-evening', temperature?:{initial,ambient,coolingPerSecond,minimum,silver,gold}. Второй уровень hotMealLevel.ts / hotMealLevel, IDcontract_002_while_hot. Симуляция публикует temperature?:number, cleanLandings:number, balancedSections:number; новые cargo component IDs noodles/soup. ART передаёт эти фактические поля через root-owned Bridge и использует bridge.setup. Root даёт read-only Career helpers, покупками управляет только App/SaveService. Результаты черновиков не получают карьерных наград.
+
+> История очереди владельца от18ноября: Sprint03 разрешено начать после интеграции/веб-приёмки0.4.1. Условие выполнено0589351/b288cec, текущая работа указана выше. Полное поручение: `C:/Users/AORUS/.codex/attachments/baafc6b9-3996-4656-985c-6b3fc606a2ab/Вставленный текст.txt`. Финальная APK вновь явно запрошена для нового карьерного этапа; приёмка0.4.1 осталась только WEB.
 
 Поручение владельца 17 ноября 2026: продолжать разработку профильными чатами поэтапно. Основа: codex/game-foundation, commit 554f2bb, draft PR #2. Исходный арт-пак: `C:/Users/AORUS/Downloads/NeRazley_ArtKit_v1.zip`.
 

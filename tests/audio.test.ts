@@ -88,6 +88,25 @@ afterEach(() => {
 });
 
 describe('AudioKit lifecycle', () => {
+  it('uses the night score and wet contact cues only while riding on wet ground', async () => {
+    await audio.unlock();
+    audio.setRideTheme(true);
+    audio.setMode('playing');
+    await settle();
+    expect(
+      Context.last.sources.some((s) => s.loop && s.buffer?.key.includes('music_ride_night_loop')),
+    ).toBe(true);
+    audio.engine(25, true, true, 0, 100, 0, 0, true);
+    await settle();
+    expect(Context.last.sources.some((s) => s.buffer?.key.includes('coffee_splash_light'))).toBe(
+      true,
+    );
+    const count = Context.last.sources.length;
+    audio.setMode('paused');
+    audio.engine(25, true, true, 0, 100, 0, 0, true);
+    await settle();
+    expect(Context.last.sources.length).toBe(count);
+  });
   it('applies independent music, engine and effects sliders to live buses', async () => {
     await audio.unlock();
     await settle();

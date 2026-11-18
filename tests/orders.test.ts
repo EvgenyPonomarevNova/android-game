@@ -7,6 +7,23 @@ import {
 } from '../src/game/core/Orders';
 import { integrityPercent } from '../src/shared/GameFeedback';
 const run = { seconds: COFFEE_ORDER.targetSeconds - 2, integrity: 95, levelId: 'test-yard' };
+it('grades hot meals by measured temperature as well as speed and integrity', () => {
+  const rules = {
+    ...COFFEE_ORDER,
+    targetSeconds: 100,
+    silverSeconds: 125,
+    minimumTemperature: 50,
+    silverTemperature: 60,
+    goldTemperature: 68,
+  };
+  const hot = { ...run, seconds: 90, temperature: 68 };
+  expect(rateDelivery(hot, rules).medal).toBe('gold');
+  expect(rateDelivery({ ...hot, temperature: 67.99 }, rules).medal).toBe('silver');
+  expect(rateDelivery({ ...hot, temperature: 59.9 }, rules).medal).toBe('bronze');
+  for (const temperature of [49.9, NaN, undefined])
+    expect(rateDelivery({ ...hot, temperature }, rules).success).toBe(false);
+  expect(rateDelivery({ ...hot, checkpointUsed: true }, rules).medal).toBe('bronze');
+});
 it('rates delivery using raw integrity, medal deadlines and checkpoint cap', () => {
   expect(rateDelivery(run).stars).toBe(3);
   expect(rateDelivery({ ...run, seconds: COFFEE_ORDER.targetSeconds + 1 }).stars).toBe(2);

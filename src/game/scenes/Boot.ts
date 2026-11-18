@@ -4,6 +4,7 @@ import { queueAssets } from '../rendering/AssetLoader';
 import { artManifest } from '../../assets/artkit';
 import { routeAssets } from '../rendering/routeAssets';
 import { cargoAssets } from '../rendering/cargoArt';
+import { eveningAssets } from '../rendering/eveningAssets';
 
 export class Boot extends Scene {
   constructor(private bridge: GameBridge) {
@@ -12,7 +13,10 @@ export class Boot extends Scene {
   preload(): void {
     queueAssets(
       this,
-      { ...artManifest, images: [...(artManifest.images ?? []), ...routeAssets, ...cargoAssets] },
+      {
+        ...artManifest,
+        images: [...(artManifest.images ?? []), ...routeAssets, ...cargoAssets, ...eveningAssets],
+      },
       (key) => this.bridge.emit('error', `Не найден ресурс: ${key}`),
     );
   }

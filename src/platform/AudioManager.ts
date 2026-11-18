@@ -50,6 +50,7 @@ export class AudioManager {
   private throttle = false;
   private danger = false;
   private lastLandingId = 0;
+  private rainyRide = false;
 
   constructor(settings: Settings) {
     this.settings = settings;
@@ -158,6 +159,11 @@ export class AudioManager {
     this.syncLoops();
   }
 
+  setRideTheme(rainy: boolean): void {
+    this.rainyRide = rainy;
+    this.syncLoops();
+  }
+
   suspend(): void {
     this.background = true;
     this.epoch++;
@@ -173,6 +179,7 @@ export class AudioManager {
     integrity = 100,
     landingId = 0,
     landingImpact = 0,
+    wetSurface = false,
   ): void {
     this.speed = Number.isFinite(speed) ? Math.max(0, Math.min(70, speed)) : 0;
     this.grounded = grounded;
@@ -181,6 +188,9 @@ export class AudioManager {
       this.playSfx(landingImpact > 4.2 ? 'land_hard' : 'land_safe', 0.6, 0, 200);
     }
     this.lastLandingId = landingId;
+    // AudioKit's light liquid splash is reused for small road puddles. No random damage.
+    if (this.mode === 'playing' && wetSurface && grounded && this.speed > 6)
+      this.playSfx('coffee_splash_light', Math.min(0.2, this.speed / 180), 0, 1600);
     const danger = stress >= 0.7 || integrity < 30;
     if (this.mode === 'playing' && danger && !this.danger)
       this.playSfx('cargo_danger', 0.55, 0, 3500);
@@ -199,7 +209,9 @@ export class AudioManager {
             : this.screen === 'orders'
               ? 'music_map_choices_loop'
               : 'music_menu_sunny_loop'
-          : 'music_ride_day_loop';
+          : this.rainyRide
+            ? 'music_ride_night_loop'
+            : 'music_ride_day_loop';
       result.set(key, {
         gain: this.mode === 'finished' || this.mode === 'failed' ? 0.25 : 1,
         rate: 1,
@@ -220,7 +232,10 @@ export class AudioManager {
         gain: Math.max(0, speed * 2 - 1) * 0.65,
         rate: 0.9 + rev + speed * 0.25 + (this.grounded ? 0 : 0.1),
       });
-      result.set('ambient_city_day_loop', { gain: 0.7, rate: 1 });
+      result.set(this.rainyRide ? 'ambient_wind_loop' : 'ambient_city_day_loop', {
+        gain: this.rainyRide ? 0.4 : 0.7,
+        rate: 1,
+      });
     }
     return result;
   }

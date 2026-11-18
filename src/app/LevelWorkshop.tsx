@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   generateLevel,
   levelBounds,
@@ -43,6 +43,7 @@ export function LevelWorkshop({
     'Черновик. Проверка геометрии не доказывает проходимость.',
   );
   const [catalog] = useState(getLevelCatalog);
+  const jsonField = useRef<HTMLTextAreaElement>(null);
   const apply = (next: LevelDocument) => {
     setDoc(next);
     setJson(serializeLevel(next));
@@ -72,8 +73,28 @@ export function LevelWorkshop({
     const a = document.createElement('a');
     a.href = url;
     a.download = `${doc.level.id}.json`;
+    a.hidden = true;
+    document.body.append(a);
     a.click();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    a.remove();
+    // Keep the URL alive while the browser hands the file to its download UI.
+    setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    setMessage('Если браузер не сохранил файл, скопируй JSON кнопкой рядом.');
+  };
+  const copyJson = async () => {
+    const text = serializeLevel(doc);
+    setJson(text);
+    try {
+      if (!navigator.clipboard) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(text);
+      setMessage('JSON скопирован. Сохрани его в файл .json или вставь в другой черновик.');
+    } catch {
+      requestAnimationFrame(() => {
+        jsonField.current?.focus();
+        jsonField.current?.select();
+      });
+      setMessage('JSON выделен ниже. Нажми Ctrl+C или «Копировать» в меню устройства.');
+    }
   };
   return (
     <main className={styles.workshop}>
@@ -252,6 +273,7 @@ export function LevelWorkshop({
               {ready ? 'Проехать черновик' : 'Готовим сцену…'}
             </button>
             <button onClick={exportFile}>Скачать JSON</button>
+            <button onClick={() => void copyJson()}>Копировать JSON</button>
           </div>
           <details open>
             <summary>Геометрия и параметры JSON</summary>
@@ -260,6 +282,7 @@ export function LevelWorkshop({
               Черновые заезды не меняют рекорды игры.
             </p>
             <textarea
+              ref={jsonField}
               aria-label="JSON уровня"
               spellCheck={false}
               value={json}

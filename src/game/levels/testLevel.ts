@@ -1,6 +1,7 @@
 export const SURFACES = {
   asphalt: { friction: 1 },
   gravel: { friction: 0.35 },
+  'wet-asphalt': { friction: 0.24 },
 } as const;
 export type SurfaceType = keyof typeof SURFACES;
 export interface SurfaceRange {
@@ -23,7 +24,16 @@ export interface LevelData {
   finish: { x: number; y: number; width: number };
   ground: Array<readonly [number, number]>;
   obstacles: Array<{ x: number; y: number; width: number; height: number }>;
-  cargo: 'coffee' | 'surprise';
+  cargo: 'coffee' | 'surprise' | 'hot-meal';
+  theme?: 'day' | 'rain-evening';
+  temperature?: {
+    initial: number;
+    ambient: number;
+    coolingPerSecond: number;
+    minimum: number;
+    silver: number;
+    gold: number;
+  };
   platforms?: LevelPlatform[];
   fork?: { fromX: number; toX: number; decisionX: number; riskyMinY: number };
   checkpoint?: { x: number; y: number; radius: number };
@@ -157,7 +167,11 @@ export function validateLevel(value: unknown): LevelData {
   const text = (s: unknown): s is string => typeof s === 'string' && s.trim().length > 0;
   if (!value || typeof value !== 'object') return fail('Level must be an object');
   const level = value as LevelData;
-  if (!text(level.id) || !text(level.name) || !['coffee', 'surprise'].includes(level.cargo))
+  if (
+    !text(level.id) ||
+    !text(level.name) ||
+    !['coffee', 'surprise', 'hot-meal'].includes(level.cargo)
+  )
     return fail('Invalid level identity or cargo');
   const line = (points: unknown): points is Array<readonly [number, number]> => {
     if (!Array.isArray(points) || points.length < 2) return false;
@@ -282,6 +296,32 @@ export function validateLevel(value: unknown): LevelData {
       cp.x + cp.radius > right)
   )
     return fail('Invalid checkpoint bounds');
+  if (level.theme !== undefined && !['day', 'rain-evening'].includes(level.theme))
+    return fail('Invalid theme');
+  const heat = level.temperature;
+  if (level.cargo === 'hot-meal' && heat === undefined)
+    return fail('Hot meal needs temperature rules');
+  if (
+    heat !== undefined &&
+    (!heat ||
+      ![
+        heat.initial,
+        heat.ambient,
+        heat.coolingPerSecond,
+        heat.minimum,
+        heat.silver,
+        heat.gold,
+      ].every(finite) ||
+      heat.coolingPerSecond <= 0 ||
+      !(
+        heat.ambient <= heat.minimum &&
+        heat.minimum <= heat.silver &&
+        heat.silver <= heat.gold &&
+        heat.gold <= heat.initial
+      ) ||
+      heat.initial <= heat.ambient)
+  )
+    return fail('Invalid temperature rules');
   return level;
 }
 

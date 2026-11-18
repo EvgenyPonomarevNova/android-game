@@ -3,6 +3,9 @@ import { testLevel, type LevelData } from '../game/levels/testLevel';
 import type { LevelResult } from '../platform/SaveService';
 import { integrityPercent } from '../shared/GameFeedback';
 import styles from './slice.module.css';
+import { contractForLevel } from '../game/core/Contracts';
+import { isContractUnlocked } from '../game/core/Career';
+import type { CareerState } from '../shared/Progression';
 
 export function OrderScreen({
   best,
@@ -13,6 +16,7 @@ export function OrderScreen({
   level = testLevel,
   levels = [testLevel],
   selectLevel,
+  career,
 }: {
   best?: LevelResult;
   previousRouteBest?: LevelResult;
@@ -22,10 +26,14 @@ export function OrderScreen({
   level?: LevelData;
   levels?: readonly LevelData[];
   selectLevel?: (level: LevelData) => void;
+  career: CareerState;
 }) {
   const order = { ...COFFEE_ORDER, ...level.difficulty, title: level.name, levelId: level.id };
+  const contract = contractForLevel(level);
+  const unlocked = isContractUnlocked(career, contract);
+  const hot = level.cargo === 'hot-meal';
   const firstContract = level.id === testLevel.id;
-  const cargoLabel = level.cargo === 'surprise' ? 'Мини-торт + два напитка' : 'Горячий кофе';
+  const cargoLabel = contract.cargoLabel;
   const from = level.start.x,
     to = level.finish.x;
   const points = [
@@ -51,49 +59,82 @@ export function OrderScreen({
         </button>
         <div className={styles.orderBody}>
           {levels.length > 1 && selectLevel ? (
-            <label className={styles.levelPicker}>
-              Контракт
-              <select
-                value={level.id}
-                onChange={(event) => {
-                  const selected = levels.find((item) => item.id === event.target.value);
-                  if (selected) selectLevel(selected);
-                }}
-              >
-                {levels.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <nav className={styles.contractTabs} aria-label="Выбрать контракт">
+              {levels.map((item) => {
+                const card = contractForLevel(item);
+                const open = isContractUnlocked(career, card);
+                return (
+                  <button
+                    key={item.id}
+                    aria-pressed={level.id === item.id}
+                    onClick={() => selectLevel(item)}
+                  >
+                    <span>
+                      №{card.number} · {open ? 'Доступен' : 'Закрыт'}
+                    </span>
+                    <strong>{card.title}</strong>
+                  </button>
+                );
+              })}
+            </nav>
           ) : null}
           <div className={styles.orderGrid}>
             <div>
               <p className={styles.eyebrow}>
-                {firstContract ? 'КОНТРАКТ №001' : 'КОНТРАКТ'} · СПАЛЬНЫЙ РАЙОН
+                КОНТРАКТ №{contract.number} · {contract.difficultyLabel}
               </p>
               <h1 id="order-title">{order.title}</h1>
-              <p className={styles.lead}>
-                {firstContract
-                  ? order.description
-                  : `Новый маршрут через дворы. Довези заказ, выбирая скорость и контролируя баланс.`}
-              </p>
+              <p className={styles.lead}>{contract.description}</p>
               <div className={styles.destination}>
                 <span>ЗАКАЗ</span>
                 <strong>
-                  {cargoLabel} → {firstContract ? order.customer : 'точка доставки'}
+                  {cargoLabel} → {contract.customer}
                 </strong>
               </div>
               <p className={styles.hint}>
                 Дедлайн — {order.deadlineSeconds} с.{' '}
-                {level.cargo === 'surprise'
-                  ? 'Торт — 60% оценки, напитки — 40%.'
-                  : 'Береги кофе на неровностях.'}{' '}
+                {hot
+                  ? `Еда остывает: довези не ниже ${level.temperature?.minimum}°C. `
+                  : level.cargo === 'surprise'
+                    ? 'Торт — 60% оценки, напитки — 40%.'
+                    : 'Береги кофе на неровностях.'}{' '}
                 {firstContract
                   ? 'На базовом «Дворике-50» доступно золото.'
                   : 'Цели медалей указаны справа.'}
               </p>
+              <div className={styles.cargoIllustration} aria-label={cargoLabel}>
+                {(hot
+                  ? ['noodles', 'soup']
+                  : level.cargo === 'surprise'
+                    ? ['cake', 'drinks']
+                    : []
+                ).map((key) => (
+                  <img
+                    key={key}
+                    src={`${import.meta.env.BASE_URL}assets/cargo/${key}.${key === 'soup' ? 'svg' : 'png'}`}
+                    alt={
+                      key === 'noodles'
+                        ? 'Лапша'
+                        : key === 'soup'
+                          ? 'Суп'
+                          : key === 'cake'
+                            ? 'Мини-торт'
+                            : 'Два напитка'
+                    }
+                  />
+                ))}
+                <p>
+                  <strong>
+                    {contract.rewardCoins} монет + {contract.rewardXp} XP
+                  </strong>
+                  <small>За первую доставку · медали и испытания дают бонусы</small>
+                </p>
+              </div>
+              {!unlocked && (
+                <p className={styles.locked} role="status">
+                  Откроется после успешной доставки «Сюрприз на пятом».
+                </p>
+              )}
             </div>
             <div className={styles.routeCard}>
               <div className={styles.routeHeading}>
@@ -148,6 +189,7 @@ export function OrderScreen({
                   <strong>Бронза · доставить</strong>
                   <small>
                     от {order.minimumIntegrity}% · до {order.deadlineSeconds} с
+                    {hot ? ` · от ${level.temperature?.minimum}°C` : ''}
                   </small>
                 </p>
                 <p>
@@ -155,6 +197,7 @@ export function OrderScreen({
                   <strong>Серебро · без продолжения</strong>
                   <small>
                     от {order.goodIntegrity}% · до {order.silverSeconds} с
+                    {hot ? ` · от ${level.temperature?.silver}°C` : ''}
                   </small>
                 </p>
                 <p>
@@ -162,6 +205,7 @@ export function OrderScreen({
                   <strong>Золото · чисто и быстро</strong>
                   <small>
                     {order.excellentIntegrity}% · до {order.targetSeconds} с
+                    {hot ? ` · от ${level.temperature?.gold}°C` : ''}
                   </small>
                 </p>
               </div>
@@ -194,8 +238,8 @@ export function OrderScreen({
             <br />
             <small>На сенсорном экране — две педали и два наклона.</small>
           </p>
-          <button className={styles.primary} disabled={!ready} onClick={start}>
-            {ready ? 'На маршрут →' : 'Готовим маршрут…'}
+          <button className={styles.primary} disabled={!ready || !unlocked} onClick={start}>
+            {!unlocked ? 'Контракт пока закрыт' : ready ? 'На маршрут →' : 'Готовим маршрут…'}
           </button>
         </div>
       </section>

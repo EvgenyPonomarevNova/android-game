@@ -105,19 +105,43 @@ export function drawRouteScenery(scene: Scene, level: LevelData): RouteSceneryVi
       const dx = (b[0] - a[0]) * scale,
         dy = -(b[1] - a[1]) * scale;
       scene.add
+        .graphics()
+        .fillStyle(0x424c60)
+        .fillRect(0, 0, Math.hypot(dx, dy), 32)
+        .setPosition(a[0] * scale, -a[1] * scale)
+        .setRotation(Math.atan2(dy, dx))
+        .setDepth(-6);
+      const plank = scene.add
         .tileSprite(
           a[0] * scale,
           -a[1] * scale,
           Math.hypot(dx, dy),
-          17,
-          platform.surface === 'gravel' ? 'gravel' : 'road',
+          32,
+          platform.surface === 'gravel'
+            ? 'gravel'
+            : platform.surface === 'wet-asphalt'
+              ? 'wet-asphalt'
+              : 'road',
         )
         .setOrigin(0)
         .setRotation(Math.atan2(dy, dx))
         .setDepth(-6);
+      // Road ArtKit has a transparent 20 px strip above its pavement.
+      plank.tilePositionY = 24;
       deck
-        .lineStyle(3, 0xfff7e8)
+        .lineStyle(4, 0xffe091)
         .lineBetween(a[0] * scale, -a[1] * scale, b[0] * scale, -b[1] * scale);
+      // A visible underslung beam follows the real platform, leaving the lower route open.
+      deck
+        .lineStyle(7, 0x26384e)
+        .lineBetween(a[0] * scale, -a[1] * scale + 28, b[0] * scale, -b[1] * scale + 28);
+      const length = Math.hypot(dx, dy);
+      for (let mark = 24; mark < length; mark += 90) {
+        const t = mark / length;
+        const x = a[0] * scale + dx * t,
+          y = -a[1] * scale + dy * t;
+        deck.lineStyle(3, 0xffd12b).lineBetween(x, y + 6, x + 14, y + 23);
+      }
     }
     const first = points[0]!,
       last = points[points.length - 1]!;

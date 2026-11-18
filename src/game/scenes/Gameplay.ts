@@ -28,7 +28,7 @@ export class Gameplay extends Scene {
   }
 
   create(): void {
-    const simulation = new Simulation(this.bridge.level);
+    const simulation = new Simulation(this.bridge.level, this.bridge.setup);
     this.simulation = simulation;
     this.views = [];
     this.telemetryAt = 0;
@@ -42,8 +42,10 @@ export class Gameplay extends Scene {
     preference.addEventListener('change', syncPreference);
     // FollowCamera computes scroll in visible world units. Keep the zoom pivot at top-left.
     this.cameras.main.setOrigin(0, 0);
-    this.cameras.main.setBackgroundColor(0x72c6ff);
-    this.backdrop = new YardBackdrop(this, 0.68);
+    this.cameras.main.setBackgroundColor(
+      simulation.level.theme === 'rain-evening' ? 0x243961 : 0x72c6ff,
+    );
+    this.backdrop = new YardBackdrop(this, 0.68, simulation.level.theme);
     this.drawLevel(simulation);
     this.attachVehicleViews(simulation);
     const resize = () =>
@@ -103,17 +105,22 @@ export class Gameplay extends Scene {
     this.ride?.destroy();
     this.views.forEach((view) => view.view.destroy());
     this.views = [];
-    const chassis = scooterArt(this);
+    const chassis = scooterArt(this, sim.vehicle.config, this.bridge.setup);
     this.views.push(new BodyView(sim.vehicle.chassis, chassis));
     const wheels = sim.vehicle.wheels.map((body) => {
-      const wheel = wheelArt(this, body);
+      const wheel = wheelArt(this, body, this.bridge.setup);
       this.views.push(new BodyView(body, wheel));
       return wheel;
     });
-    const coffee = sim.level.cargo === 'surprise' ? undefined : coffeeArt(this, sim.cargo.body);
+    const coffee = sim.level.cargo === 'coffee' ? coffeeArt(this, sim.cargo.body) : undefined;
     const bundle = coffee
       ? { view: this.add.container(0, 0, [coffee]), drinks: coffee }
-      : surpriseArt(this, sim.cargo.body);
+      : surpriseArt(this, sim.cargo.body, sim.level.cargo === 'hot-meal');
+    if (this.bridge.setup.parts.cargo_mount === 'reinforced_mount') {
+      const box = this.add.graphics().lineStyle(2, 0xf4a95b).strokeRoundedRect(-15, -21, 30, 42, 3);
+      box.lineBetween(-9, -21, -9, 21).lineBetween(9, -21, 9, 21);
+      bundle.view.addAt(box, 0);
+    }
     this.views.push(new BodyView(sim.cargo.body, bundle.view));
     this.ride = new RidePresentation(this, chassis, bundle.drinks, bundle.view, wheels[0]!);
     this.ride.reset(sim.vehicle.motion.landingId);
@@ -122,13 +129,17 @@ export class Gameplay extends Scene {
   private missionState(sim: Simulation): MissionState {
     return {
       cargoComponents:
-        sim.level.cargo === 'surprise'
+        sim.level.cargo !== 'coffee'
           ? sim.cargo.components.map((part) => ({ ...part }))
           : undefined,
       checkpointUsed: sim.checkpointUsed,
       checkpointAvailable: sim.checkpointAvailable,
       falls: sim.falls,
       routeChoice: sim.routeChoice,
+      temperature: sim.temperature,
+      cleanLandings: sim.cleanLandings,
+      balancedSections: sim.balancedSections,
+      wetSurface: surfaceAt(sim.level, sim.vehicle.chassis.getPosition().x) === 'wet-asphalt',
       remainingSeconds:
         sim.level.difficulty.deadlineSeconds === undefined
           ? undefined
@@ -165,13 +176,27 @@ export class Gameplay extends Scene {
         const endX = xs[j]!;
         const y = a.y + (b.y - a.y) * ((x - a.x) / (b.x - a.x));
         const endY = a.y + (b.y - a.y) * ((endX - a.x) / (b.x - a.x));
+        const surface = surfaceAt(sim.level, (x + endX) / 2 / scale);
         const texture =
-          surfaceAt(sim.level, (x + endX) / 2 / scale) === 'gravel' ? 'gravel' : 'road';
+          surface === 'gravel' ? 'gravel' : surface === 'wet-asphalt' ? 'wet-asphalt' : 'road';
         this.add
           .tileSprite(x, y, Math.hypot(endX - x, endY - y), 80, texture)
           .setOrigin(0)
           .setRotation(Math.atan2(endY - y, endX - x))
           .setDepth(-9);
+        if (surface === 'wet-asphalt' && endX - x > 150 && Math.abs(endY - y) < 25) {
+          this.add
+            .ellipse(
+              (x + endX) / 2,
+              (y + endY) / 2 + 9,
+              Math.min(110, (endX - x) * 0.35),
+              9,
+              0x9dc8db,
+              0.42,
+            )
+            .setRotation(Math.atan2(endY - y, endX - x))
+            .setDepth(-8);
+        }
       }
     }
     const edge = this.add.graphics().setDepth(-8);
@@ -249,6 +274,7 @@ export class Gameplay extends Scene {
         accident,
         visualActive ? deltaMs / 1000 : 0,
         this.reducedMotion,
+        surfaceAt(sim.level, sim.vehicle.chassis.getPosition().x) === 'wet-asphalt',
       );
       const view = this.views[0]!.view;
       const lookDistance =
