@@ -6,10 +6,10 @@
 
 | ID | Владелец | Результат и точные файлы | Статус |
 | --- | --- | --- | --- |
-| C-SYS | Основной чат | src/shared/Progression.ts, src/config/career.ts, src/content/contracts.json, src/game/core/{Career,Contracts,Orders,GameBridge,LevelCatalog}.ts, src/platform, src/app/App.tsx, LevelWorkshop/authoring/CLI при необходимости, tests/career/save/orders/audio/authoring, package/lock, общие документы | IN_PROGRESS |
-| C-PHY | Физика и геймплей | src/config/game.ts, src/game/{physics,vehicle,cargo,levels}, src/game/core/Simulation.ts, tests/{physics,route,tuning,hotMeal}.test.ts, docs/stage-1/physics.md. Реальный тюнинг, вторая самостоятельная трасса, температура, измеренное мастерство | IN_PROGRESS |
-| C-ART | Интерфейс и графика | src/ui, src/game/{scenes,rendering,camera}, public/assets (кроме audio), src/app/{OrderScreen,ResultScreen}.tsx и slice.module.css, DESIGN.md, docs/stage-1/art.md. Гараж/профиль/награда/контракты, мокрый вечер и визуал установленного оборудования | IN_PROGRESS |
-| C-QA | Android и QA | Завершить запись0.4.1; затем ждать нового freeze. Будущая цель — один интеграционный цикл карьера→покупка→миссия2→reload, итоговая APK/Android после передачи root | WAITING |
+| C-SYS | Основной чат | src/shared/Progression.ts, src/config/career.ts, src/content/contracts.json, src/game/core/{Career,Contracts,Orders,GameBridge,LevelCatalog}.ts, src/platform, src/app/App.tsx, LevelWorkshop/authoring/CLI при необходимости, tests/career/save/orders/audio/authoring, package/lock, общие документы | INTEGRATED c2a55bf |
+| C-PHY | Физика и геймплей | src/config/game.ts, src/game/{physics,vehicle,cargo,levels}, src/game/core/Simulation.ts, tests/{physics,route,tuning,hotMeal}.test.ts, docs/stage-1/physics.md. Реальный тюнинг, вторая самостоятельная трасса, температура, измеренное мастерство | DONE |
+| C-ART | Интерфейс и графика | src/ui, src/game/{scenes,rendering,camera}, public/assets (кроме audio), src/app/{OrderScreen,ResultScreen}.tsx и slice.module.css, DESIGN.md, docs/stage-1/art.md. Гараж/профиль/награда/контракты, мокрый вечер и визуал установленного оборудования | DONE |
+| C-QA | Android и QA | Один интеграционный цикл карьера → покупка → миссия 2 → reload; итоговая APK/Android на source freeze c2a55bf. Оба контракта доставлены в WEB и Android, сохранения/звук/холодный offline проверены; границы в android.md | DONE |
 
 Файлы переданы явно: OrderScreen/ResultScreen/slice.module.css теперь у ART; App, сохранения/экономика и Bridge остаются у root. Профили не одни в checkout; чужие изменения не откатывать, Git/index/ветки не трогать. Разные проверки не дублировать.
 
