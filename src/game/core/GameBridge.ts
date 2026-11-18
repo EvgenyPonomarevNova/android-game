@@ -1,10 +1,20 @@
 import { EventBus } from '../../shared/EventBus';
 import { InputController } from '../input/InputController';
 import type { CargoDamage } from '../cargo/Cargo';
+import type { CargoImpact } from '../../shared/GameFeedback';
+import type { LevelData } from '../levels/testLevel';
 
 export type GameMode = 'menu' | 'playing' | 'paused' | 'finished' | 'failed' | 'error';
-export type GameCommand = 'start' | 'pause' | 'resume' | 'restart' | 'menu';
-export interface Telemetry {
+export type GameCommand = 'start' | 'pause' | 'resume' | 'restart' | 'menu' | 'checkpoint';
+export interface MissionState {
+  cargoComponents?: readonly { id: 'cake' | 'drinks'; integrity: number; weight: number }[];
+  checkpointUsed?: boolean;
+  checkpointAvailable?: boolean;
+  falls?: number;
+  routeChoice?: 'safe' | 'risky' | null;
+  remainingSeconds?: number;
+}
+export interface Telemetry extends MissionState {
   integrity: number;
   seconds: number;
   speed: number;
@@ -12,6 +22,10 @@ export interface Telemetry {
   fps: number;
   bodies: number;
   physicsMs: number;
+  stress?: number;
+  grounded?: boolean;
+  landingId?: number;
+  landingImpact?: number;
 }
 interface BridgeEvents {
   command: GameCommand;
@@ -20,7 +34,8 @@ interface BridgeEvents {
   ready: undefined;
   error: string;
   damage: CargoDamage;
-  result: {
+  impact: CargoImpact;
+  result: MissionState & {
     seconds: number;
     integrity: number;
     levelId: string;
@@ -30,6 +45,12 @@ interface BridgeEvents {
 }
 export class GameBridge extends EventBus<BridgeEvents> {
   readonly input = new InputController();
+  readonly preferences = { cameraShake: 0.65, hints: true };
+  /** An authoring preview may supply a draft; normal play uses the default contract. */
+  level?: LevelData;
+  selectLevel(level?: LevelData): void {
+    this.level = level;
+  }
   mode: GameMode = 'menu';
   command(command: GameCommand): void {
     this.emit('command', command);

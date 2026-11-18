@@ -1,6 +1,6 @@
 {
   "name": "nerazley",
-  "version": "0.2.0",
+  "version": "0.4.1",
   "private": true,
   "type": "module",
   "engines": {
@@ -15,6 +15,8 @@
     "format": "prettier --write src tests/*.test.ts *.ts package.json package-lock.json tsconfig.json .prettierrc.json index.html",
     "format:check": "prettier --check src tests/*.test.ts *.ts package.json package-lock.json tsconfig.json .prettierrc.json index.html",
     "test": "vitest run",
+    "level:new": "node tools/level-cli.mjs new",
+    "level:check": "node tools/level-cli.mjs check",
     "android:sync": "npm run build && cap sync android",
     "android:debug": "pwsh -NoProfile -File tools/build-android.ps1"
   },

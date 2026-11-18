@@ -1,7 +1,8 @@
 import { Scene } from 'phaser';
-import { scooterArt, coffeeArt } from '../rendering/vehicleArt';
+import { scooterArt } from '../rendering/vehicleArt';
 import { YardBackdrop } from '../rendering/YardBackdrop';
 import { SCOOTER } from '../../config/game';
+import { surpriseArt } from '../rendering/cargoArt';
 
 export class MainMenu extends Scene {
   constructor() {
@@ -12,7 +13,7 @@ export class MainMenu extends Scene {
       this.children.removeAll(true);
       const { width, height } = this.scale;
       new YardBackdrop(this, 0.85);
-      const roadY = height * 0.82;
+      const roadY = height * 0.8;
       this.add
         .graphics()
         .fillStyle(0x424c60)
@@ -27,10 +28,10 @@ export class MainMenu extends Scene {
             .setDisplaySize(radius * 2, radius * 2),
         );
       }
-      scooter.add(coffeeArt(this).setPosition(-27, -27));
-      const scale = Math.min(width / 380, height / 190);
+      scooter.add(surpriseArt(this).view.setPosition(-27, -27));
+      const scale = Math.min(width / 420, height / 200) * 0.85;
       scooter
-        .setPosition(width * 0.75, roadY - (SCOOTER.wheel.drop * 60 + radius) * scale)
+        .setPosition(width * 0.29, roadY - (SCOOTER.wheel.drop * 60 + radius) * scale)
         .setScale(scale);
     };
     redraw();

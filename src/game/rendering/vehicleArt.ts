@@ -13,6 +13,7 @@ export function scooterArt(scene: Scene): GameObjects.Container {
   body.setOrigin(axleMidX / 700, originY / 318).setScale(scale);
   // Static cutout, not a sprite-sheet animation. Hip, hand and foot align with seat/handle/deck.
   const rider = scene.add.sprite(-14, -4, 'courier');
+  rider.setName('courier');
   rider.setOrigin(100 / 274, 235 / 361).setScale(0.33);
   view.add([rider, body]);
   return view;

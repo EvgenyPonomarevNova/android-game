@@ -2,6 +2,8 @@
 
 Respond in Russian. The technical foundation is implemented and its recorded validation is in docs/VALIDATION.md. Current work is Stage 1: Menu → Order → Ride → Success/failure → Star-rated result → Retry/Continue, on one coffee route with separate ArtKit assets. Read docs/STAGE_1.md for the authorized scope and exact file owners. GAME_PRODUCT_STATUS.md records status, docs/NEXT_STEPS.md is the roadmap; do not create duplicate task boards or integration plans.
 
+Current user override for Sprint 02 / 0.3.0: develop Gameplay Polish only. Do not build APK, run Capacitor sync, launch Android devices, profile performance or repeat broad QA suites. The owner will playtest the playable version. Use existing chats strictly within their specialisms; tooling/skills chats are idle unless work in their actual domain is needed. Prefer one targeted integration check and minimal changed-logic checks. This overrides older stage delivery requirements below.
+
 ## Product and architecture
 
 - Read README.md, PRODUCT.md, docs/ARCHITECTURE.md and docs/STAGE_1.md to resume work; docs/preparation.md preserves setup history.
@@ -43,3 +45,6 @@ Respond in Russian. The technical foundation is implemented and its recorded val
 - CI checks repository tooling, skill integrity, commit conventions, application lint/tests and the TypeScript + production web build. Android APK builds are local through tools/build-android.ps1. Dependencies, lockfiles, shared configs and cap sync are serialized by the integrator; Android QA performs the authorized APK/device phase after handoff.
 - Debug and release builds are different deliverables. For an APK handoff report package, version, SHA-256, size, signature verification and actual device-test status.
 - Run checks appropriate to the change. Do not report a device test, successful build or deployed game without evidence.
+
+Latest owner supplement (18 November, Mission 01): continue the current phase autonomously, title «Заказ №001 — Кофе на пятый», prioritize honest trial physics and complete playability, then sound/UI. This latest instruction explicitly authorizes ONE final debug APK build and targeted Android/game-emulator audio + gameplay verification after source freeze; it supersedes the earlier blanket APK/device ban for that final handoff only. Do not run broad repeated suites or affect Fit tools/devices. Existing profile ownership remains in docs/STAGE_1.md.
+Latest owner instruction after approving GDD v0.4 (18 November): follow README_FOR_CODEX.md and CODEX_EXECUTION_PROMPT.md; adapt the current first mission to «Сюрприз на пятом». WEB ONLY now: no new APK build, cap sync or Android/device run. This supersedes the immediately previous one-build authorization for new work. Add a practical data-driven level-authoring/generation foundation, without publishing a second level. Keep the existing profile file ownership; P1 tuning/career are design/types only until separately implemented.

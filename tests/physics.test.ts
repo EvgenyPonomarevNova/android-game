@@ -7,6 +7,7 @@ import { testLevel, validateLevel, type LevelData } from '../src/game/levels/tes
 import type { ControlState } from '../src/game/input/InputController';
 import { InputController } from '../src/game/input/InputController';
 import { SCOOTER } from '../src/config/game';
+import type { CargoImpact } from '../src/shared/GameFeedback';
 
 const idle: ControlState = { throttle: false, brake: false, lean: 0 };
 const gas: ControlState = { ...idle, throttle: true };
@@ -18,10 +19,62 @@ const flat: LevelData = {
     [1000, 0],
   ],
   obstacles: [],
+  platforms: [],
+  fork: undefined,
+  checkpoint: undefined,
 };
+it('warns before real drops, distinguishes impact tiers and charges each landing jolt once', () => {
+  const strengths: number[] = [];
+  for (const [height, severity] of [
+    [3.5, 'light'],
+    [4, 'medium'],
+    [8, 'heavy'],
+  ] as const) {
+    const sim = new Simulation({ ...flat, start: { x: 3, y: height } });
+    const impacts: CargoImpact[] = [];
+    sim.events.on('cargo:impact', (impact) => impacts.push(impact));
+    let warning = 0;
+    let landingId = 0;
+    for (let i = 0; i < 180 && !sim.finished; i++) {
+      if (!impacts.length) warning = Math.max(warning, sim.cargo.stress);
+      sim.advance(1 / 60, idle);
+      expect(sim.vehicle.motion.landingId).toBeGreaterThanOrEqual(landingId);
+      landingId = sim.vehicle.motion.landingId;
+    }
+    expect(warning).toBeGreaterThan(0.3);
+    expect(impacts).toHaveLength(1);
+    expect(impacts[0]!.severity).toBe(severity);
+    expect(impacts[0]!.loss).toBeCloseTo(100 - sim.cargo.integrity);
+    expect(sim.vehicle.motion.grounded).toBe(true);
+    expect(landingId).toBeGreaterThan(0);
+    expect(sim.cargo.stress).toBeGreaterThanOrEqual(0);
+    expect(sim.cargo.stress).toBeLessThanOrEqual(1);
+    strengths.push(impacts[0]!.strength);
+    sim.dispose();
+  }
+  expect(strengths[1]!).toBeGreaterThan(strengths[0]!);
+  expect(strengths[2]!).toBeGreaterThan(strengths[1]!);
+});
 function run(sim: Simulation, seconds: number, fps: number, input = idle) {
   for (let i = 0; i < seconds * fps; i++) sim.advance(1 / fps, input);
 }
+
+it('weighs cake/drinks 60/40 and gives vertical and tilted impacts different deterministic responses', () => {
+  const vertical = new Simulation(flat);
+  vertical.cargo.applyImpact(4, 1, 0);
+  const [cake, drinks] = vertical.cargo.components;
+  expect(cake!.id).toBe('cake');
+  expect(drinks!.id).toBe('drinks');
+  expect(cake!.weight).toBe(0.6);
+  expect(drinks!.weight).toBe(0.4);
+  expect(cake!.integrity).toBeLessThan(drinks!.integrity);
+  expect(vertical.cargo.integrity).toBe(cake!.integrity * 0.6 + drinks!.integrity * 0.4);
+  const tilted = new Simulation(flat);
+  tilted.cargo.applyImpact(4, 0, 1);
+  expect(tilted.cargo.components[1]!.integrity).toBeLessThan(tilted.cargo.components[0]!.integrity);
+  vertical.dispose();
+  tilted.dispose();
+});
 
 describe('fixed-step Planck simulation', () => {
   it('produces the same trajectory at 30, 60 and 120 render FPS', () => {
@@ -99,6 +152,24 @@ describe('fixed-step Planck simulation', () => {
     run(sim, 3, 60, { ...idle, brake: true });
     expect(sim.vehicle.chassis.getLinearVelocity().x).toBeLessThan(-0.3);
     sim.dispose();
+  });
+
+  it('ramps launch torque and waits before smoothly engaging reverse from rest', () => {
+    const sim = new Simulation(flat);
+    run(sim, 2, 60);
+    sim.advance(1 / 60, gas);
+    expect(sim.vehicle.joints[0]!.getMaxMotorTorque()).toBeLessThan(SCOOTER.motor.torque / 4);
+    run(sim, 0.5, 60, gas);
+    expect(sim.vehicle.chassis.getLinearVelocity().x).toBeGreaterThan(0.3);
+    sim.dispose();
+
+    const reversing = new Simulation(flat);
+    run(reversing, 2, 60);
+    run(reversing, 0.1, 60, { ...idle, brake: true });
+    expect(Math.abs(reversing.vehicle.chassis.getLinearVelocity().x)).toBeLessThan(0.05);
+    run(reversing, 0.7, 60, { ...idle, brake: true });
+    expect(reversing.vehicle.chassis.getLinearVelocity().x).toBeLessThan(-0.3);
+    reversing.dispose();
   });
 
   it('cuts propulsion at the forward and reverse limits without clamping external velocity', () => {
@@ -187,6 +258,19 @@ describe('fixed-step Planck simulation', () => {
     physics.dispose();
   });
 
+  it('permits a full airborne rotation and deliberate counter-rotation before contact', () => {
+    const sim = new Simulation({ ...flat, start: { x: 3, y: 40 } });
+    run(sim, 2.3, 60, { ...idle, lean: 1 });
+    expect(sim.vehicle.chassis.getAngle()).toBeGreaterThan(2 * Math.PI);
+    expect(sim.vehicle.motion.grounded).toBe(false);
+    expect(sim.outcome).toBeNull();
+    const spin = sim.vehicle.chassis.getAngularVelocity();
+    run(sim, 0.2, 60, { ...idle, lean: -1 });
+    expect(sim.vehicle.chassis.getAngularVelocity()).toBeLessThan(spin);
+    expect(sim.outcome).toBeNull();
+    sim.dispose();
+  });
+
   it('interpolates between snapshots and reverses the physical Y axis', () => {
     const physics = new PhysicsWorld();
     const body = physics.track(physics.world.createDynamicBody(Vec2(1, 10)));
@@ -254,7 +338,12 @@ describe('fixed-step Planck simulation', () => {
   });
 
   it('damages coffee from a real impact and emits critical/destroyed once', () => {
-    const sim = new Simulation({ ...flat, start: { x: 3, y: 8 } });
+    const sim = new Simulation({
+      ...flat,
+      cargo: 'coffee',
+      difficulty: { ...flat.difficulty, minimumIntegrity: 0 },
+      start: { x: 3, y: 8 },
+    });
     let critical = 0,
       destroyed = 0;
     sim.events.on('cargo:critical', () => critical++);
@@ -272,6 +361,15 @@ describe('fixed-step Planck simulation', () => {
 
   it('validates level geometry and resets the whole simulation for a fresh run', () => {
     expect(validateLevel(testLevel)).toBe(testLevel);
+    expect(validateLevel({ ...testLevel, sections: undefined }).sections).toBeUndefined();
+    const sign = { x: 3, title: 'Баланс', hint: 'Удерживай наклон' };
+    for (const sections of [
+      [{ ...sign, x: NaN }],
+      [{ ...sign, x: 251 }],
+      [{ ...sign, title: ' ' }],
+      [sign, { ...sign, x: 2 }],
+    ])
+      expect(() => validateLevel({ ...testLevel, sections })).toThrow();
     expect(() =>
       validateLevel({
         ...testLevel,

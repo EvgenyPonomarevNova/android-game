@@ -1,12 +1,16 @@
 import { Scene, Math as PhaserMath } from 'phaser';
-import { PHYSICS } from '../../config/game';
+import { PHYSICS, RACE_RULES } from '../../config/game';
 import { FollowCamera } from '../camera/FollowCamera';
-import type { GameBridge } from '../core/GameBridge';
+import type { GameBridge, MissionState } from '../core/GameBridge';
 import { Simulation } from '../core/Simulation';
 import { BodyView } from '../rendering/BodyView';
 import { scooterArt, wheelArt, coffeeArt } from '../rendering/vehicleArt';
 import { YardBackdrop } from '../rendering/YardBackdrop';
 import { surfaceAt } from '../levels/testLevel';
+import { RidePresentation } from '../rendering/RidePresentation';
+import { drawRouteScenery, type RouteSceneryView } from '../rendering/RouteScenery';
+import { routeHeight } from '../rendering/routePresentation';
+import { surpriseArt } from '../rendering/cargoArt';
 
 export class Gameplay extends Scene {
   private simulation?: Simulation;
@@ -15,47 +19,121 @@ export class Gameplay extends Scene {
   private telemetryAt = 0;
   private resultSent = false;
   private backdrop?: YardBackdrop;
+  private ride?: RidePresentation;
+  private reducedMotion = false;
+  private finishFeedbackMs = 0;
+  private markers?: RouteSceneryView;
   constructor(private bridge: GameBridge) {
     super('Gameplay');
   }
 
   create(): void {
-    const simulation = new Simulation();
+    const simulation = new Simulation(this.bridge.level);
     this.simulation = simulation;
     this.views = [];
     this.telemetryAt = 0;
     this.resultSent = false;
+    this.finishFeedbackMs = 0;
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncPreference = () => {
+      this.reducedMotion = preference.matches;
+    };
+    syncPreference();
+    preference.addEventListener('change', syncPreference);
     // FollowCamera computes scroll in visible world units. Keep the zoom pivot at top-left.
     this.cameras.main.setOrigin(0, 0);
     this.cameras.main.setBackgroundColor(0x72c6ff);
     this.backdrop = new YardBackdrop(this, 0.68);
     this.drawLevel(simulation);
-    const chassis = scooterArt(this);
-    this.views.push(new BodyView(simulation.vehicle.chassis, chassis));
-    simulation.vehicle.wheels.forEach((body) => {
-      const wheel = wheelArt(this, body);
-      this.views.push(new BodyView(body, wheel));
-    });
-    const coffee = coffeeArt(this, simulation.cargo.body);
-    this.views.push(new BodyView(simulation.cargo.body, coffee));
+    this.attachVehicleViews(simulation);
     const resize = () =>
       this.cameras.main.setZoom(Math.min(this.scale.width / 1280, this.scale.height / 720));
     resize();
     this.scale.on('resize', resize);
-    this.follow = new FollowCamera(this.cameras.main);
+    const terrainPoints = [
+      ...simulation.level.ground,
+      ...(simulation.level.platforms ?? []).flatMap((p) => p.points),
+    ];
+    const xs = terrainPoints.map(([x]) => x * PHYSICS.pixelsPerMeter);
+    const ys = terrainPoints.map(([, y]) => -y * PHYSICS.pixelsPerMeter);
+    this.follow = new FollowCamera(this.cameras.main, {
+      x: Math.min(...xs) - 900,
+      y: Math.min(...ys) - 1400,
+      width: Math.max(...xs) - Math.min(...xs) + 1800,
+      height: Math.max(...ys) - Math.min(...ys) + 2800,
+    });
     const unDamage = simulation.events.on('cargo:damaged', (event) =>
       this.bridge.emit('damage', event),
     );
+    const unImpact = simulation.events.on('cargo:impact', (event) => {
+      this.ride?.impact(event);
+      if (event.severity === 'heavy' && !this.reducedMotion) this.follow?.impulse(1);
+      this.bridge.emit('impact', event);
+    });
+    const offCommand = this.bridge.on('command', (command) => {
+      if (command !== 'checkpoint' || !simulation.continueFromCheckpoint()) return;
+      this.attachVehicleViews(simulation);
+      this.resultSent = false;
+      this.finishFeedbackMs = 0;
+      this.follow?.reset();
+      this.bridge.input.reset();
+      this.publish(0);
+      this.telemetryAt = this.time.now + 100;
+      this.bridge.setMode('playing');
+    });
     this.events.once('shutdown', () => {
       this.scale.off('resize', resize);
       unDamage();
+      unImpact();
+      offCommand();
+      preference.removeEventListener('change', syncPreference);
+      this.ride?.destroy();
+      this.ride = undefined;
       simulation.dispose();
       this.views = [];
       this.backdrop = undefined;
+      this.markers = undefined;
       this.simulation = undefined;
       this.bridge.input.reset();
     });
     this.publish(0);
+  }
+
+  private attachVehicleViews(sim: Simulation): void {
+    this.ride?.destroy();
+    this.views.forEach((view) => view.view.destroy());
+    this.views = [];
+    const chassis = scooterArt(this);
+    this.views.push(new BodyView(sim.vehicle.chassis, chassis));
+    const wheels = sim.vehicle.wheels.map((body) => {
+      const wheel = wheelArt(this, body);
+      this.views.push(new BodyView(body, wheel));
+      return wheel;
+    });
+    const coffee = sim.level.cargo === 'surprise' ? undefined : coffeeArt(this, sim.cargo.body);
+    const bundle = coffee
+      ? { view: this.add.container(0, 0, [coffee]), drinks: coffee }
+      : surpriseArt(this, sim.cargo.body);
+    this.views.push(new BodyView(sim.cargo.body, bundle.view));
+    this.ride = new RidePresentation(this, chassis, bundle.drinks, bundle.view, wheels[0]!);
+    this.ride.reset(sim.vehicle.motion.landingId);
+  }
+
+  private missionState(sim: Simulation): MissionState {
+    return {
+      cargoComponents:
+        sim.level.cargo === 'surprise'
+          ? sim.cargo.components.map((part) => ({ ...part }))
+          : undefined,
+      checkpointUsed: sim.checkpointUsed,
+      checkpointAvailable: sim.checkpointAvailable,
+      falls: sim.falls,
+      routeChoice: sim.routeChoice,
+      remainingSeconds:
+        sim.level.difficulty.deadlineSeconds === undefined
+          ? undefined
+          : Math.max(0, sim.level.difficulty.deadlineSeconds - sim.elapsed),
+    };
   }
 
   private drawLevel(sim: Simulation): void {
@@ -63,9 +141,14 @@ export class Gameplay extends Scene {
     // Geometry comes from the level; the surface textures only dress those segments.
     const scale = PHYSICS.pixelsPerMeter;
     const points = sim.level.ground.map(([x, y]) => new PhaserMath.Vector2(x * scale, -y * scale));
+    const bottom = Math.max(...points.map((p) => p.y)) + 1800;
     g.fillStyle(0x424c60);
     g.fillPoints(
-      [...points, new PhaserMath.Vector2(4800, 900), new PhaserMath.Vector2(-900, 900)],
+      [
+        ...points,
+        new PhaserMath.Vector2(points[points.length - 1]!.x, bottom),
+        new PhaserMath.Vector2(points[0]!.x, bottom),
+      ],
       true,
     );
     for (let i = 1; i < points.length; i++) {
@@ -115,12 +198,13 @@ export class Gameplay extends Scene {
           16,
           16,
         );
-    this.add.text(finishX - 25, finishY - 230, 'КОФЕ СЮДА', {
+    this.add.text(finishX - 25, finishY - 230, 'ДОСТАВКА', {
       fontFamily: 'Onest Variable, sans-serif',
       fontSize: '20px',
       color: '#252a2a',
       fontStyle: 'bold',
     });
+    this.markers = drawRouteScenery(this, sim.level);
   }
 
   update(time: number, deltaMs: number): void {
@@ -133,8 +217,12 @@ export class Gameplay extends Scene {
         if (sim.outcome && !this.resultSent) {
           this.resultSent = true;
           this.bridge.input.reset();
+          // Flush the terminal snapshot before mode/result listeners render the summary.
+          this.publish(deltaMs);
+          this.telemetryAt = time + 100;
           this.bridge.setMode(sim.outcome.success ? 'finished' : 'failed');
           this.bridge.emit('result', {
+            ...this.missionState(sim),
             seconds: sim.elapsed,
             integrity: sim.cargo.integrity,
             levelId: sim.level.id,
@@ -144,13 +232,48 @@ export class Gameplay extends Scene {
         }
       }
       this.views.forEach((v) => v.sync(sim.physics));
+      const accident =
+        sim.outcome?.reason === 'overturned' ||
+        sim.outcome?.reason === 'out-of-bounds' ||
+        sim.outcome?.reason === 'cargo-destroyed';
+      const visualActive =
+        this.bridge.mode === 'playing' ||
+        (this.bridge.mode === 'failed' && this.finishFeedbackMs < 450);
+      if (this.bridge.mode === 'failed') this.finishFeedbackMs += deltaMs;
+      const velocityX = sim.vehicle.chassis.getLinearVelocity().x;
+      this.ride?.update(
+        sim.vehicle.motion,
+        sim.cargo.stress,
+        sim.outcome ? 0 : velocityX,
+        surfaceAt(sim.level, sim.vehicle.chassis.getPosition().x) === 'gravel',
+        accident,
+        visualActive ? deltaMs / 1000 : 0,
+        this.reducedMotion,
+      );
       const view = this.views[0]!.view;
+      const lookDistance =
+        Math.sign(velocityX || 1) * Math.max(2, Math.min(8, Math.abs(velocityX) * 0.65));
+      const aheadHeight = routeHeight(
+        sim.level,
+        sim.vehicle.chassis.getPosition().x + lookDistance,
+        sim.vehicle.chassis.getPosition().y,
+      );
+      // Don't aim at the bottom of a fatal pit while the rider must see its landing lip.
+      const terrainY =
+        aheadHeight > RACE_RULES.minWorldY + 2
+          ? -aheadHeight * PHYSICS.pixelsPerMeter
+          : view.y + 60;
       this.follow?.update(
         view.x,
         view.y,
-        sim.vehicle.chassis.getLinearVelocity().x,
+        velocityX,
         deltaMs / 1000,
+        visualActive,
+        this.reducedMotion,
+        terrainY,
+        this.bridge.preferences.cameraShake,
       );
+      this.markers?.setCheckpoint(sim.checkpointUsed, sim.checkpointAvailable);
       this.backdrop?.update();
       if (time >= this.telemetryAt) {
         this.publish(deltaMs);
@@ -166,7 +289,12 @@ export class Gameplay extends Scene {
   private publish(deltaMs: number): void {
     const sim = this.simulation!;
     this.bridge.emit('telemetry', {
+      ...this.missionState(sim),
       integrity: sim.cargo.integrity,
+      stress: sim.cargo.stress,
+      grounded: sim.vehicle.motion.grounded,
+      landingId: sim.vehicle.motion.landingId,
+      landingImpact: sim.vehicle.motion.landingImpact,
       seconds: sim.elapsed,
       speed: Math.abs(sim.vehicle.chassis.getLinearVelocity().x) * 3.6,
       progress: Math.max(

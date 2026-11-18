@@ -27,7 +27,7 @@ export class GameController {
     this.disposeCommand = bridge.on('command', (command) => this.command(command));
     const canvas = () => this.game.canvas;
     this.game.events.once('ready', () => {
-      canvas().setAttribute('aria-label', 'Тестовая трасса доставки кофе');
+      canvas().setAttribute('aria-label', 'Контракт №001 — Сюрприз на пятом');
       canvas().addEventListener(
         'webglcontextlost',
         (event) => {
